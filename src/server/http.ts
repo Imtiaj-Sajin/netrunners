@@ -58,6 +58,8 @@ function lightNetrunner(n: Netrunner) {
   return { ...rest, memoryCount: memories.length, voice: genome.voice, attachment: genome.attachment, desire: genome.coreDesire, fear: genome.coreFear };
 }
 
+const liveInfo = () => (engine && engine.status !== "terminated" ? engine.statusInfo() : null);
+
 function liveState() {
   if (!engine) return null;
   const s = engine.state;
@@ -101,7 +103,7 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
 
   if (p === "/api/stream") {
     res.writeHead(200, { "content-type": "text/event-stream", "cache-control": "no-store", connection: "keep-alive" });
-    res.write(`event: hello\ndata: ${JSON.stringify({ live: engine?.statusInfo() ?? null })}\n\n`);
+    res.write(`event: hello\ndata: ${JSON.stringify({ live: liveInfo() })}\n\n`);
     clients.add(res);
     const ping = setInterval(() => res.write(": ping\n\n"), 20000);
     req.on("close", () => { clearInterval(ping); clients.delete(res); });
@@ -114,7 +116,7 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
       settings: { operator: s.operator, key: keyStatus(s), defaults: s.defaults },
       defaults: defaultConfig(s),
       models: MODELS,
-      live: engine?.statusInfo() ?? null,
+      live: liveInfo(),
       sessions: listSessions(),
       shards: listShards(),
       catalog: { traits: TRAITS, groups: TRAIT_GROUP_LABELS, emotions: EMOTIONS, needs: NEEDS, skills: SKILLS },

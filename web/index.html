@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Netrunners · Operator Console</title>
+  <meta name="description" content="Operator console for Netrunners: a living virtual world of autonomous AI minds.">
+  <link rel="icon" href="/docs/assets/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body data-status="none">
+  <header class="topbar">
+    <button id="btn-home" class="brand" title="All sessions"><span class="glitch" data-text="NETRUNNERS">NETRUNNERS</span></button>
+    <a id="nav-live" class="navlink" href="#/live" hidden>live world</a>
+    <div class="clocks-mini">
+      <div><span class="dim">world</span> <b id="world-clock">--</b> <span id="tick" class="dim small"></span></div>
+      <div><span class="dim">real</span> <b id="real-clock">--</b> <span id="active-time" class="dim small"></span></div>
+    </div>
+    <span id="status-pill" class="pill idle">IDLE</span>
+    <span id="session-name" class="mono dim small session-name">no world running</span>
+    <div id="live-controls" class="controls" hidden>
+      <button id="btn-freeze" class="freeze-switch" aria-pressed="false" title="Freeze / resume the whole world (Space)">
+        <span class="knob"></span><span class="lbl">FREEZE WORLD</span>
+      </button>
+      <label class="speed" title="Real time between ticks">
+        <span class="dim small">speed</span>
+        <select id="speed">
+          <option value="12000">slow (12s)</option>
+          <option value="6000">calm (6s)</option>
+          <option value="3000">normal (3s)</option>
+          <option value="1000">fast (1s)</option>
+          <option value="0">max</option>
+        </select>
+      </label>
+      <button id="btn-note" class="btn ghost" title="Write a note onto the timeline">note</button>
+      <button id="btn-terminate" class="btn danger" title="End this world (asks 3 times)">terminate</button>
+    </div>
+    <button id="btn-usage" class="btn ghost chip-cost" title="Tokens & cost"><span class="v">usage</span></button>
+    <button id="btn-settings" class="btn ghost" title="API key & operator name">settings</button>
+    <span id="conn" class="conn" title="connection to the world"></span>
+  </header>
+
+  <main>
+    <section id="view-home"></section>
+
+    <section id="view-live" hidden>
+      <div id="freeze-banner" class="freeze" hidden></div>
+      <div class="live-grid">
+        <div class="panel map-panel"><div id="map" class="map-wrap"></div><div id="contracts" class="contracts"></div></div>
+        <div class="panel feed-panel">
+          <div id="filters" class="filters"></div>
+          <div id="feed" class="feed" aria-live="polite"></div>
+        </div>
+        <div class="panel side">
+          <div id="roster" class="roster"></div>
+          <div id="detail" class="detail" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-report" hidden></section>
+  </main>
+
+  <dialog id="terminate-dialog" class="dlg">
+    <form method="dialog">
+      <div id="terminate-body"></div>
+      <div class="dlg-actions">
+        <button value="cancel" class="btn ghost">No, keep it alive</button>
+        <button id="terminate-next" class="btn danger">Yes, continue</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settings-dialog" class="dlg">
+    <form method="dialog">
+      <div id="settings-body"></div>
+      <div class="dlg-actions"><button value="cancel" class="btn ghost">Cancel</button><button value="ok" class="btn primary">Save</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="usage-dialog" class="dlg wide">
+    <form method="dialog"><div id="usage-body"></div><div class="dlg-actions"><button value="ok" class="btn">Close</button></div></form>
+  </dialog>
+
+  <dialog id="note-dialog" class="dlg">
+    <form method="dialog">
+      <h2>Operator note</h2>
+      <p class="dim">Written onto the session timeline with both clocks. The netrunners never see it.</p>
+      <textarea id="note-input" rows="4" placeholder="e.g. Kade is about to betray the crew, watch this"></textarea>
+      <div class="dlg-actions"><button value="cancel" class="btn ghost">Cancel</button><button value="ok" class="btn primary">Record note</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="truth-dialog" class="dlg truth-dlg">
+    <form method="dialog">
+      <div class="eyebrow">⚑ OPERATOR ALERT</div>
+      <h1 class="glitch" data-text="THE TRUTH WAS FOUND">THE TRUTH WAS FOUND</h1>
+      <p id="truth-text"></p>
+      <p id="truth-when" class="dim mono small"></p>
+      <div class="dlg-actions"><button value="cancel" class="btn ghost">Dismiss</button><button id="truth-follow" value="ok" class="btn primary">Follow them</button></div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
