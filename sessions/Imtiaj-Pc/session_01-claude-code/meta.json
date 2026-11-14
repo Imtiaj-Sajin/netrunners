@@ -12,9 +12,9 @@
   "netrunnerCount": 5,
   "status": "running",
   "createdAt": "2026-11-14T09:34:38.634Z",
-  "realActiveMs": 2406186,
-  "lastTick": 371,
-  "lastWorldMinutes": 5565,
+  "realActiveMs": 2937242,
+  "lastTick": 462,
+  "lastWorldMinutes": 6930,
   "alive": 5,
   "costUsd": 0
 }

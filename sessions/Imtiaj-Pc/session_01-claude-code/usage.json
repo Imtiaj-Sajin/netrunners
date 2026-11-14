@@ -1,6 +1,6 @@
 {
   "total": {
-    "calls": 693,
+    "calls": 852,
     "input": 0,
     "output": 0,
     "cacheRead": 0,
@@ -11,7 +11,7 @@
   },
   "byModel": {
     "claude-code": {
-      "calls": 693,
+      "calls": 852,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -23,7 +23,7 @@
   },
   "byPurpose": {
     "decide": {
-      "calls": 636,
+      "calls": 781,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -33,7 +33,7 @@
       "errors": 0
     },
     "reflect": {
-      "calls": 57,
+      "calls": 71,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -45,7 +45,7 @@
   },
   "byNetrunner": {
     "nr04": {
-      "calls": 126,
+      "calls": 159,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -55,7 +55,7 @@
       "errors": 0
     },
     "nr05": {
-      "calls": 136,
+      "calls": 168,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -65,7 +65,7 @@
       "errors": 0
     },
     "nr02": {
-      "calls": 128,
+      "calls": 153,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -75,7 +75,7 @@
       "errors": 0
     },
     "nr01": {
-      "calls": 150,
+      "calls": 189,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -85,7 +85,7 @@
       "errors": 0
     },
     "nr03": {
-      "calls": 153,
+      "calls": 183,
       "input": 0,
       "output": 0,
       "cacheRead": 0,

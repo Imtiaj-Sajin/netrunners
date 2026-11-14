@@ -6,4 +6,5 @@ Generated from the session's records by `scripts/digest.ts`. Do not edit; regene
 - [Day 2](day-02.md): 159 decisions, 22 words aloud, 6 contracts, 3 problem parts, 0 deaths, 0 lies
 - [Day 3](day-03.md): 160 decisions, 21 words aloud, 8 contracts, 12 problem parts, 0 deaths, 0 lies
 - [Day 4](day-04.md): 180 decisions, 34 words aloud, 7 contracts, 7 problem parts, 0 deaths, 0 lies
-- [Day 5](day-05.md) (in progress): 8 decisions, 0 words aloud, 0 contracts, 0 problem parts, 0 deaths, 0 lies
+- [Day 5](day-05.md): 148 decisions, 16 words aloud, 7 contracts, 12 problem parts, 0 deaths, 0 lies
+- [Day 6](day-06.md) (in progress): 6 decisions, 1 words aloud, 0 contracts, 0 problem parts, 0 deaths, 0 lies

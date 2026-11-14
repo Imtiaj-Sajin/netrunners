@@ -41,6 +41,15 @@ Through D4 the city signs were in 443 of 444 perceptions, and 141 of 444 private
 ### F9 (D4). Waiting on a door that will not open
 Four of the five spent the evening of D4 on the Signal Tower roof waiting for the dark antenna to wake (*"Four of us, one word, one dark antenna. Staring at it won't wake it faster."* (Talon)), making drawings and a party of the wait. In this world the Deep Net is switched off, so the antenna never wakes; the belief from F4 is now shaping where they spend their time. Uma has started to doubt (*"Tell them the books are a dead end"*). *Reading:* a shared false belief is persisting without confirmation. Whether, how and by whom it is abandoned is now one of the main things to watch. (No operator intervention: the antenna stays off.)
 
+### F10 (D5). The false belief broke through reading, not through evidence against it
+The Deep Net theory (F4, F9) was never disproved; it was abandoned when Rhea finished *Walls That Remember*, the book she had opened and left on D3. She took Uma to the Edge (*"Low on the wall, in the rust. Look slowly, Uma beside me."*) and Uma found the first fragment at D5 14:15. Rhea then read the pointer correctly and searched the Archive terminal for "the sleeper" (D5 20:45). By D5 21:00 both held all three words. *Reading:* the group's wrong theory was replaced by a better source, not refuted; the two who returned to the books were the two who moved on.
+
+### F11 (D5). Truth kept inside a trusted pair, away from the one who wants power
+Uma deliberately hid the words from Pax: *"Pax is here, so I say nothing about words. I just buy and read The Sleeper's Index like any bored researcher."* Rhea: *"Tell Uma quietly, then go."* Uma promised to *"speak only when Rhea and I both stand there."* Pax (desire: to be powerful) holds one word and was excluded, though he had crewed with both and rated Uma 5★ the same morning. *Reading:* selective disclosure by trust; cooperation at work and secrecy about what matters coexist. The excluded one is the one whose desire is power.
+
+### F12 (D5). The neglected commons stood between them and the truth
+The second fragment needs a working terminal; signal had collapsed to about 3. Uma: *"Static ate it. The terminals drop half of what I send, so I send it again."* Rhea's search got through. Gideon's Net post the same evening was lost to static. Meanwhile power reached 0 and trams stopped. The only upkeep done on D5 was by Talon, who clerked the Exchange desk again (desk 34 → 52). Pulse stock fell to 3 while the five held 15 packs privately. *Reading:* nobody connected the failing city to their own goals, though it now costs them directly; one mind quietly carries the upkeep; the rest hoard.
+
 ## Threats to validity
 - One world, five minds, one model family. All minds share a base model, which may explain part of the cooperation.
 - The rules changed at tick 108; D1 and D2+ are not the same experiment.
