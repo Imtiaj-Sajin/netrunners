@@ -1,0 +1,43 @@
+{
+  "name": "netrunners",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Netrunners: a living virtual world of autonomous AI netrunners with personalities, emotions, memories, morals and survival pressure, plus a buried truth only one of them might find.",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "session:publish": "tsx scripts/publish-session.ts",
+    "smoke": "tsx scripts/smoke.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "netrunner",
+    "ai-agents",
+    "generative-agents",
+    "multi-agent-simulation",
+    "artificial-life",
+    "llm-agents",
+    "claude",
+    "anthropic",
+    "cyberpunk",
+    "emergent-behavior",
+    "agent-based-model",
+    "digital-consciousness",
+    "virtual-world",
+    "ai-society",
+    "simulation"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

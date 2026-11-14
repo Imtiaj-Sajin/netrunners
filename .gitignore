@@ -1,0 +1,7 @@
+node_modules/
+# local settings (holds YOUR API key - never commit)
+.netrunners/
+.env
+*.tmp
+# a live session's in-flight buffer is local-only; finished sessions are committed
+sessions/**/pending.json
