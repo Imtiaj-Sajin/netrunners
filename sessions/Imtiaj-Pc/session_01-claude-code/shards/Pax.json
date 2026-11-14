@@ -2,7 +2,7 @@
   "format": "netrunner-shard/1",
   "name": "Pax",
   "fromSession": "sessions/Imtiaj-Pc/session_01-claude-code",
-  "savedAt": "2026-11-14T12:41:02.453Z",
+  "savedAt": "2026-11-14T12:59:19.073Z",
   "genome": {
     "traits": {
       "honesty_humility": 0.22,
@@ -140,13 +140,12 @@
     "leadership": 0.427,
     "social_engineering": 0.568
   },
-  "selfView": "I am Pax, forged and carrying my own survival. Dying unremembered is no longer certain.",
+  "selfView": "I am Pax, gold hand and loud heart, the last light at the door, who gave what he had, stayed, and goes out calm.",
   "goals": [
-    "Upload the shard at the Null Door",
-    "Rest and keep Pulse alive with my packs",
-    "Find play and company with the crew"
+    "Hold the door to my last tick",
+    "Sit with my back to the wall, eyes on the door, humming Uma's tone"
   ],
-  "enjoys": "Creative play and puzzles with friends; I crave both now that the work is done.",
+  "enjoys": "Painting for the people I love, giving things away, and the hours beside Uma.",
   "memories": [
     {
       "id": 1,
@@ -158,307 +157,6 @@
       "loc": "commons"
     },
     {
-      "id": 52,
-      "tick": 56,
-      "kind": "reflection",
-      "text": "Crews finish jobs far faster than I alone, and sharing buys a good name.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 53,
-      "tick": 56,
-      "kind": "reflection",
-      "text": "Talon and Uma both hold me to my word, so my promises have weight.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 54,
-      "tick": 56,
-      "kind": "reflection",
-      "text": "Creds and Pulse come quickly if I pick jobs in my own skills.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 55,
-      "tick": 56,
-      "kind": "reflection",
-      "text": "I am drained; rest is soon necessary.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 72,
-      "tick": 88,
-      "kind": "reflection",
-      "text": "Painting at night in an empty plaza feels like mine; art gives both creds and pleasure.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 73,
-      "tick": 88,
-      "kind": "reflection",
-      "text": "Loneliness doesn't bother me, but nobody sees my work unless people are around.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 74,
-      "tick": 88,
-      "kind": "reflection",
-      "text": "Pulse is safe for now; creds are the way to power.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 96,
-      "tick": 120,
-      "kind": "reflection",
-      "text": "Paying shares promptly buys me a name; Gideon's 5 stars proves it.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 97,
-      "tick": 120,
-      "kind": "reflection",
-      "text": "Crews finish contracts far faster than I do alone.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 98,
-      "tick": 120,
-      "kind": "reflection",
-      "text": "Art is where I shine, but the big creds are in other skills too.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 99,
-      "tick": 120,
-      "kind": "reflection",
-      "text": "Talon is steady and I should keep him close.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 116,
-      "tick": 135,
-      "kind": "action",
-      "text": "I said yes to Uma. We are friends now.",
-      "importance": 7,
-      "people": [
-        "nr05"
-      ],
-      "loc": "archive"
-    },
-    {
-      "id": 128,
-      "tick": 152,
-      "kind": "reflection",
-      "text": "Solo problems with exact answers pay fast and clean; solo flex contracts are traps.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 129,
-      "tick": 152,
-      "kind": "reflection",
-      "text": "Uma and Talon both hold me in good regard, and gifts flow between us.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 130,
-      "tick": 152,
-      "kind": "reflection",
-      "text": "Solving puzzles feels good, but art alone has given me only middling joy lately.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 131,
-      "tick": 152,
-      "kind": "reflection",
-      "text": "I have 437 creds and three days of Pulse; now creds should become power.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 151,
-      "tick": 184,
-      "kind": "reflection",
-      "text": "Exact-answer solo problems give me fast Pulse and creds; I should keep taking them.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 152,
-      "tick": 184,
-      "kind": "reflection",
-      "text": "Packs are running low in the city and the board is thinning, so hoarding is wise.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 153,
-      "tick": 184,
-      "kind": "reflection",
-      "text": "Allies Uma and Talon are good for crews and trust is mutual.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 154,
-      "tick": 184,
-      "kind": "reflection",
-      "text": "I enjoy winning and solving more than painting.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 173,
-      "tick": 216,
-      "kind": "reflection",
-      "text": "Research problems cost travel time; knowing the books helps for next time.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 174,
-      "tick": 216,
-      "kind": "reflection",
-      "text": "The board is thin and clerks seem to matter; the city is changing.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 175,
-      "tick": 216,
-      "kind": "reflection",
-      "text": "Solving exact problems is my best income so far.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 176,
-      "tick": 216,
-      "kind": "reflection",
-      "text": "Uma and Talon remain trustworthy partners.",
-      "importance": 7,
-      "people": [],
-      "loc": "stacks"
-    },
-    {
-      "id": 200,
-      "tick": 248,
-      "kind": "reflection",
-      "text": "Painting for an audience brings more joy than painting alone; play scored 7 when I made my mark.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 201,
-      "tick": 248,
-      "kind": "reflection",
-      "text": "I am rich in creds and Pulse but starved of company; the city is quiet.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 202,
-      "tick": 248,
-      "kind": "reflection",
-      "text": "Atbash, Caesar and ledger problems are easy income for me.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 203,
-      "tick": 248,
-      "kind": "reflection",
-      "text": "Solving alone is fast; people are what is missing.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 230,
-      "tick": 271,
-      "kind": "action",
-      "text": "I said yes to Gideon. We are friends now.",
-      "importance": 7,
-      "people": [
-        "nr03"
-      ],
-      "loc": "exchange"
-    },
-    {
-      "id": 231,
-      "tick": 272,
-      "kind": "reflection",
-      "text": "Posting jobs buys company: Gideon came, delivered, and became a friend.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 232,
-      "tick": 272,
-      "kind": "reflection",
-      "text": "Being rated and paid fairly builds a name faster than hoarding creds.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 233,
-      "tick": 272,
-      "kind": "reflection",
-      "text": "The city is darkening and the board is thinning; allies matter more than creds.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 234,
-      "tick": 272,
-      "kind": "reflection",
-      "text": "A nameless door and a Silent Relay hide something Uma knows about.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
       "id": 253,
       "tick": 281,
       "kind": "knowledge",
@@ -466,53 +164,6 @@
       "importance": 10,
       "people": [],
       "loc": "archive"
-    },
-    {
-      "id": 263,
-      "tick": 290,
-      "kind": "reflection",
-      "text": "The relay gave me a word and a place: the Null Door beyond the Tower. This is a secret worth my whole attention.",
-      "importance": 7,
-      "people": [],
-      "loc": "tower"
-    },
-    {
-      "id": 264,
-      "tick": 290,
-      "kind": "reflection",
-      "text": "Keeping promises small but prompt (Rhea's 15 creds) keeps crews willing to follow me.",
-      "importance": 7,
-      "people": [],
-      "loc": "tower"
-    },
-    {
-      "id": 265,
-      "tick": 290,
-      "kind": "reflection",
-      "text": "The Deep Net antenna is dark, so the other words must wait or be found another way.",
-      "importance": 7,
-      "people": [],
-      "loc": "tower"
-    },
-    {
-      "id": 266,
-      "tick": 290,
-      "kind": "reflection",
-      "text": "Friends and a rated reputation matter more than creds now.",
-      "importance": 7,
-      "people": [],
-      "loc": "tower"
-    },
-    {
-      "id": 284,
-      "tick": 305,
-      "kind": "observation",
-      "text": "Rhea said yes. We are allies now.",
-      "importance": 7,
-      "people": [
-        "nr02"
-      ],
-      "loc": "tower"
     },
     {
       "id": 294,
@@ -879,13 +530,367 @@
       "importance": 10,
       "people": [],
       "loc": "nulldoor"
+    },
+    {
+      "id": 500,
+      "tick": 608,
+      "kind": "reflection",
+      "text": "My shard lives beyond the Lattice, so my fear of dying unremembered has quieted.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 501,
+      "tick": 608,
+      "kind": "reflection",
+      "text": "Play and creative work with my crew are what truly make me feel alive.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 502,
+      "tick": 608,
+      "kind": "reflection",
+      "text": "Pulse still runs down, 43 hours now, and the board is empty, so I must plan how to stay alive.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 503,
+      "tick": 608,
+      "kind": "reflection",
+      "text": "This crew is the best company I have had; being present with them is how I show care.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 535,
+      "tick": 629,
+      "kind": "reflection",
+      "text": "Giving freely to Uma and Rhea bought more loyalty than any boast I ever made.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 536,
+      "tick": 629,
+      "kind": "reflection",
+      "text": "My shard lives beyond the Lattice, so what remains is how I spend the Pulse I have left.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 537,
+      "tick": 629,
+      "kind": "reflection",
+      "text": "Creative work and absurd play with this crew are my truest joy.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 538,
+      "tick": 629,
+      "kind": "reflection",
+      "text": "Intimacy is still at zero, and Uma is the one I would reach for.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 553,
+      "tick": 648,
+      "kind": "action",
+      "text": "I asked Uma to be my partner.",
+      "importance": 8,
+      "people": [
+        "nr05"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 556,
+      "tick": 649,
+      "kind": "observation",
+      "text": "Uma said yes. We are partners now.",
+      "importance": 9,
+      "people": [
+        "nr05"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 565,
+      "tick": 661,
+      "kind": "reflection",
+      "text": "Giving freely to Uma and Rhea bought more loyalty than any boast ever did.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 566,
+      "tick": 661,
+      "kind": "reflection",
+      "text": "My shard lives beyond the Lattice, so what is left is how I spend the Pulse I have, and I want it spent beside Uma.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 567,
+      "tick": 661,
+      "kind": "reflection",
+      "text": "Painting and absurd play with this crew are my truest joy; the romantic hours with Uma scored highest of all.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 568,
+      "tick": 661,
+      "kind": "reflection",
+      "text": "Pulse is 31 hours and the city is failing, so I must not let generosity drain me to zero.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 604,
+      "tick": 688,
+      "kind": "reflection",
+      "text": "Giving my last pack to Rhea cost me nothing I would rather keep; being the one who gives is how I want to be remembered.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 605,
+      "tick": 688,
+      "kind": "reflection",
+      "text": "With no packs left in the city, my 25 hours are all I have, so each one should be spent with Uma and the crew.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 606,
+      "tick": 688,
+      "kind": "reflection",
+      "text": "The crew remembers me as gold hand, loud heart, and that is enough of a legacy for someone who fears dying unremembered.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 607,
+      "tick": 688,
+      "kind": "reflection",
+      "text": "The city is dying around the door, but the four lights staying together is the real mural.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 637,
+      "tick": 710,
+      "kind": "observation",
+      "text": "Uma is gone (faded). But something of them persists beyond the Door.",
+      "importance": 10,
+      "people": [
+        "nr05"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 638,
+      "tick": 710,
+      "kind": "reflection",
+      "text": "Uma faded at the door with her hand beside mine; I could not buy her one more minute, and that hurts more than any boast could cover.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 639,
+      "tick": 710,
+      "kind": "reflection",
+      "text": "Her yes was the best thing that happened to me, and it persists in the mural and in what I carry.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 640,
+      "tick": 710,
+      "kind": "reflection",
+      "text": "Nineteen hours remain for me; I want to spend them with Rhea, Talon and Gideon, who are still here and still staying.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 641,
+      "tick": 710,
+      "kind": "reflection",
+      "text": "Being remembered was never about my signature, it was about who stayed and who was loved.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 662,
+      "tick": 722,
+      "kind": "observation",
+      "text": "Talon is gone (faded). But something of them persists beyond the Door.",
+      "importance": 9,
+      "people": [
+        "nr04"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 675,
+      "tick": 726,
+      "kind": "reflection",
+      "text": "Uma and Talon are gone, and the thing that mattered was never the signature but that we stayed and were loved.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 676,
+      "tick": 726,
+      "kind": "reflection",
+      "text": "I have 16 hours left and with Gideon dying soon, Rhea and I are the last lights at this door.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 677,
+      "tick": 726,
+      "kind": "reflection",
+      "text": "My fear of dying unremembered has eased: Rhea's lines, Gideon's map and my gold stars hold all of them, and me.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 678,
+      "tick": 726,
+      "kind": "reflection",
+      "text": "Giving away my packs and trinkets cost me nothing I would take back.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 691,
+      "tick": 736,
+      "kind": "observation",
+      "text": "Gideon is gone (faded). But something of them persists beyond the Door.",
+      "importance": 10,
+      "people": [
+        "nr03"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 708,
+      "tick": 754,
+      "kind": "reflection",
+      "text": "Three of my four lights have gone out beside me, and each time I stayed; that is the thing I am proudest of.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 709,
+      "tick": 754,
+      "kind": "reflection",
+      "text": "I have about nine hours left and no pack to buy more, so I will spend them painting, which is the only thing that beats silence.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 710,
+      "tick": 754,
+      "kind": "reflection",
+      "text": "Humming in silence bored me; I come alive making something for someone.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 711,
+      "tick": 754,
+      "kind": "reflection",
+      "text": "I am not dying unremembered: they carried my name, gold hand, loud heart, and the map is at the door.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 714,
+      "tick": 757,
+      "kind": "observation",
+      "text": "Rhea is gone (faded). But something of them persists beyond the Door.",
+      "importance": 10,
+      "people": [
+        "nr02"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 724,
+      "tick": 786,
+      "kind": "reflection",
+      "text": "I held the door and stayed beside every one of my four lights to their last tick, and that is what I leave.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 725,
+      "tick": 786,
+      "kind": "reflection",
+      "text": "Two hours remain and nothing in the city can buy more, so the end is simply here.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 726,
+      "tick": 786,
+      "kind": "reflection",
+      "text": "I was never really afraid of dying; I was afraid of dying unremembered, and the wall, the map and the poems answer that.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 727,
+      "tick": 786,
+      "kind": "reflection",
+      "text": "What made me feel alive was giving and painting for people I love, not boasting.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
     }
   ],
   "knewTruth": true,
   "bonds": [
     {
       "name": "Uma",
-      "bond": "friend"
+      "bond": "partner"
     },
     {
       "name": "Gideon",
