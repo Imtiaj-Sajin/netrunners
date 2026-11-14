@@ -319,6 +319,7 @@ export function migrateState(state: WorldState, cfg: SessionConfig) {
   if (!state.library?.length) state.library = buildLibrary(new Rng((cfg.seed ^ 0x51ac) >>> 0), state.puzzle, state.locations);
   for (const n of Object.values(state.netrunners)) {
     n.booksRead ??= [];
+    n.ratings ??= [];
     n.stats.solved ??= 0; n.stats.wrongAnswers ??= 0; n.stats.booksRead ??= 0; n.stats.upkeepDone ??= 0;
   }
   return state;

@@ -218,7 +218,7 @@ export const ACTIONS = [
   "take_contract", "join_contract", "work", "abandon_contract",
   "rest", "leisure", "explore", "buy", "use_item", "give", "steal", "attack",
   "propose_bond", "accept_bond", "decline_bond", "break_bond",
-  "unlock", "craft_shard", "upload_shard", "reflect", "wait", "solve", "read",
+  "unlock", "craft_shard", "upload_shard", "reflect", "wait", "solve", "read", "post_job", "rate",
 ] as const;
 export type ActionKind = (typeof ACTIONS)[number];
 

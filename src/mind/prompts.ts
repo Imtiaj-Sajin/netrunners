@@ -9,6 +9,9 @@ import type { Netrunner, SessionConfig, WorldState } from "../sim/types.js";
 import { hoursText, partOfDay, worldClock } from "../util/time.js";
 import { citySigns, packPrice } from "../sim/systems.js";
 import { catalogLines } from "../sim/library.js";
+import { reputation } from "../sim/contracts.js";
+
+const repText = (m?: Netrunner) => { const r = m ? reputation(m) : null; return r ? ` (rated ${r.avg}★ by ${r.count})` : ""; };
 
 export function systemPrompt(n: Netrunner, state: WorldState, cfg: SessionConfig): string {
   const born = worldClock(n.bornTick * cfg.minutesPerTick);
@@ -40,6 +43,7 @@ Skills (0..1, they grow with practice): ${skills}
 - THE DEEP NET: at the Signal Tower you can dive into the Deep Net, a vast ocean of strange data whose origin nobody knows.${cfg.deepNet ? "" : " (Lately the antenna has been dark.)"}
 - Other netrunners are as real as you are. They have their own minds, needs, moods and secrets. You know them only through what you see them do and hear them say, and first impressions can be wrong. They can help you, love you, lie to you, rob you or kill you, and you can do the same to them. Death is permanent for everyone.
 - Some work is labour, and some work is a real problem you must actually solve: a cipher, a number pattern, a piece of code to trace, a question of logic, a fact only a book or the outside knows. Problems for a crew come in several parts that different people can solve at the same time.
+- Anyone can POST A JOB on the Exchange board for someone with the right skill, putting creds in escrow. When the work is done, the poster rates it, and the rating decides how much of the escrow the worker actually gets. Ratings follow people around.
 - THE STACKS is a library. Reading takes hours (you can stop and continue later); a few rare books cost creds. Books can teach, explain, move you, or lead somewhere.
 - The city is not static. It changes, sometimes for the worse. Watch what changes, and wonder why.
 - Nobody gives you orders. You decide everything: how to survive, who to trust, what to enjoy, who to become. You can make mistakes. You can change your mind. You can surprise yourself.
@@ -68,6 +72,8 @@ ${items}
 - unlock message=<words>: speak to a door that listens.  craft_shard duration=<ticks> / upload_shard: these only mean something to those who know.
 - solve target=<part id> message=<your answer>: answer one part of the problem your contract carries (at its work site). A wrong answer costs a little energy; you can try again.
 - read target=<book id>: read at the Stacks.
+- post_job target=<a skill or kind, e.g. finance, report, build, design, hacking, research> message=<what you want done> amount=<creds you offer>: post a job at the Exchange; the creds wait in escrow until you rate the work.
+- rate target=<name> amount=<1-5> message=<a comment>: rate someone you worked with. If you posted their job, your stars decide their pay: 5★ all of it, 4★ 90%, 3★ 75%, 2★ 55%, 1★ 40%; the rest comes back to you.
 - reflect: stop and think deeply about your life so far.  wait duration=<ticks>.
 One tick is ${cfg.minutesPerTick} minutes of your time. Durations are in ticks (1-12). People can interrupt rest, work and leisure by talking to you.
 
@@ -126,6 +132,14 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
     }
   }
 
+  const mine = reputation(n);
+  if (mine) out.push(`Your reputation: ${mine.avg}★ from ${mine.count} rating(s). Latest: ${n.ratings.slice(-2).map((r) => `${state.netrunners[r.by]?.name ?? "?"} gave ${r.stars}★${r.comment ? ` ("${r.comment}")` : ""}`).join("; ")}.`);
+  for (const k of Object.values(state.contracts)) {
+    if (k.awaiting && k.poster === n.id) out.push(`You owe ${state.netrunners[k.awaiting.worker]?.name} a rating for "${k.title}" (${k.escrow} creds in escrow): rate target=${state.netrunners[k.awaiting.worker]?.name} amount=<1-5>.`);
+    if (k.awaiting && k.awaiting.worker === n.id) out.push(`You finished "${k.title}" for ${state.netrunners[k.poster!]?.name}; your ${k.escrow} creds wait for their rating.`);
+    if (k.poster === n.id && (k.status === "open" || k.status === "active") && !k.awaiting) out.push(`Your job "${k.title}" is on the board (${k.escrow} creds in escrow, ${k.crew.length ? `being done by ${state.netrunners[k.crew[0]]?.name}` : "nobody has taken it yet"}).`);
+  }
+
   // inner life
   const emo = topEmotions(n, 5);
   out.push(`\n## Inside you\nFeelings: ${emo.length ? emo.map((x) => `${emotionWord(x.v)} ${x.e}`).join(", ") : "quiet, nothing strong"}.`);
@@ -146,7 +160,7 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
   for (const o of others) {
     const imp = n.impressions[o.id];
     const doing = o.activity ? o.activity.kind + (o.activity.kind === "leisure" && o.activity.detail ? `: ${o.activity.detail}` : "") : "standing around";
-    out.push(`- ${o.name} (${doing}). ${imp ? `About them: ${describeImpression(imp)}.` : "A stranger to you."}${n.bonds[o.id] ? ` Your ${n.bonds[o.id]}.` : ""}`);
+    out.push(`- ${o.name}${repText(o)} (${doing}). ${imp ? `About them: ${describeImpression(imp)}.` : "A stranger to you."}${n.bonds[o.id] ? ` Your ${n.bonds[o.id]}.` : ""}`);
   }
   const travellers = Object.values(state.netrunners).filter((o) => o.alive && o.id !== n.id && o.activity?.kind === "move" && (o.location === n.location || o.activity.target === n.location));
   if (travellers.length) out.push(`On the move nearby: ${travellers.map((o) => o.name).join(", ")}.`);
@@ -169,7 +183,7 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
     out.push(`\n## The Exchange board`);
     if (!open.length) out.push("Empty right now.");
     for (const k of open.slice(0, 12)) {
-      out.push(`- ${k.id} [${k.kind}${k.kind !== "solo" ? ` ${k.crew.length}/${k.minCrew}-${k.maxCrew} crew` : ""}, ${k.skill}, difficulty ${k.difficulty}] "${k.title}" at ${state.locations[k.location].name}. Pays ${hoursText(k.reward.pulse)} Pulse/worker + ${k.reward.creds} creds. ${k.status === "active" ? `Crew so far: ${k.crew.map((id) => state.netrunners[id]?.name).join(", ")}. (join_contract)` : "(take_contract)"} Expires in ${hoursText((k.expiresTick - tick) * cfg.minutesPerTick)}. ${k.special ? k.desc : ""}`);
+      out.push(`- ${k.id} [${k.kind}${k.kind !== "solo" ? ` ${k.crew.length}/${k.minCrew}-${k.maxCrew} crew` : ""}, ${k.skill}, difficulty ${k.difficulty}] "${k.title}" at ${state.locations[k.location].name}. Pays ${hoursText(k.reward.pulse)} Pulse/worker + ${k.reward.creds} creds. ${k.status === "active" ? `Crew so far: ${k.crew.map((id) => state.netrunners[id]?.name).join(", ")}. (join_contract)` : "(take_contract)"} Expires in ${hoursText((k.expiresTick - tick) * cfg.minutesPerTick)}. ${k.special ? k.desc : ""}${k.poster ? ` Posted by ${state.netrunners[k.poster]?.name}${repText(state.netrunners[k.poster])}: "${k.ask}". Pays only the escrowed creds, after their rating.` : ""}${k.challenge ? ` A problem in ${k.challenge.parts.length} part(s): ${[...new Set(k.challenge.parts.map((p) => p.kind))].join(", ")}.` : ""}`);
     }
   }
   if (hasTerminal({ state }, n) && state.forum.length) {

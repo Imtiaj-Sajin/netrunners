@@ -6,7 +6,7 @@ import { byName, presentAt, ticksForMinutes, type SimCtx } from "./ctx.js";
 import type { ActionKind, LeisureCategory } from "./catalog.js";
 import type { Contract, Decision, Netrunner, WorldState } from "./types.js";
 import { packPrice, signalFails, travelFactor } from "./systems.js";
-import { solvePart } from "./contracts.js";
+import { postJob, rateNetrunner, resolveSkill, solvePart } from "./contracts.js";
 import { findBook } from "./library.js";
 
 const plural = (b: string) => (b === "ally" ? "allies" : `${b}s`);
@@ -657,6 +657,33 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       }
       setActivity(ctx, n, "read", dur(d, Math.min(12, Math.ceil((book.hours * 60) / cfg.minutesPerTick))), { target: book.id, detail: book.title });
       ctx.emit("book.open", [n.id], `${n.name} opens "${book.title}".`, { loc: n.location, data: { book: book.id, category: book.category } });
+      return true;
+    }
+
+    case "post_job": {
+      if (!here.features.includes("contracts")) return fail(ctx, n, "jobs are posted at the Exchange", d);
+      const skill = resolveSkill(d.target || d.message);
+      if (!skill) return fail(ctx, n, `say what kind of job in target (a skill like analysis, engineering, art, hacking... or words like finance, report, build, design)`, d);
+      if (!d.message.trim()) return fail(ctx, n, "describe what you want done in message", d);
+      const amount = Math.round(d.amount);
+      if (amount < 5) return fail(ctx, n, "offer at least 5 creds (amount)", d);
+      if (amount > n.creds) return fail(ctx, n, `you only have ${n.creds} creds to put in escrow`, d);
+      const open = Object.values(state.contracts).filter((c) => c.poster === n.id && (c.status === "open" || c.status === "active")).length;
+      if (open >= 2) return fail(ctx, n, "you already have two jobs waiting on the board", d);
+      postJob(ctx, n, skill, d.message, amount);
+      setActivity(ctx, n, "post_job", 1);
+      n.interrupt = true;
+      return true;
+    }
+
+    case "rate": {
+      const t = byName(state, d.target);
+      if (!t || t.id === n.id) return fail(ctx, n, `rate whom? (target = a name)`, d);
+      if (!(d.amount >= 1 && d.amount <= 5)) return fail(ctx, n, "give 1 to 5 stars in amount", d);
+      const r = rateNetrunner(ctx, n, t, d.amount, d.message);
+      if (!r.ok) return fail(ctx, n, r.text, d);
+      setActivity(ctx, n, "rate", 1);
+      n.interrupt = true;
       return true;
     }
 

@@ -29,6 +29,17 @@ export function offlineDecide(n: Netrunner, state: WorldState, jobId: string): D
     const like = n.impressions[p.from]?.liking ?? 0;
     return base(`${from?.name} wants a bond. I ${like > 0 ? "like" : "don't trust"} them.`, like > -0.05 ? "accept_bond" : "decline_bond", { target: from?.name ?? "" });
   }
+  const owed = Object.values(state.contracts).find((k) => k.awaiting && k.poster === n.id);
+  if (owed) {
+    const w = state.netrunners[owed.awaiting!.worker];
+    const stars = T(n, "greed") > 0.6 ? rng.int(2, 3) : T(n, "fairness") > 0.6 ? 5 : rng.int(3, 5);
+    return base(`${w?.name} did my job. ${stars} stars.`, "rate", { target: w?.name ?? "", amount: stars, message: stars >= 4 ? "clean work" : "slow" });
+  }
+  if (here.features.includes("contracts") && n.creds > 140 && !n.contractId && rng.chance(0.12) && !Object.values(state.contracts).some((k) => k.poster === n.id && (k.status === "open" || k.status === "active"))) {
+    const weakest = (Object.entries(n.skills) as [string, number][]).sort((x, y) => x[1] - y[1])[0][0];
+    const wantsReport = rng.chance(0.5);
+    return base("I'll pay someone better at this.", "post_job", { target: wantsReport ? "finance" : weakest, message: wantsReport ? "make my balance summary and tell me what I need to stay alive" : `help with something that needs ${weakest.replace("_", " ")}`, amount: rng.int(25, 60) });
+  }
   if (n.knowsTruth && !n.shard.crafted) {
     if (n.location !== "foundry") return base("The Foundry. I have to forge it.", "move", { target: "foundry" });
     if (n.creds >= 300 || n.shard.progress > 0) return base("Forging.", "craft_shard", { duration: 6 });

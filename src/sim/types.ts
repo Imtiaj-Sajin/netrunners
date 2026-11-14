@@ -94,6 +94,8 @@ export interface NetrunnerStats {
   wrongAnswers?: number;
   booksRead?: number;
   upkeepDone?: number;
+  jobsPosted?: number;
+  ratingsGiven?: number;
 }
 
 export interface Netrunner {
@@ -139,6 +141,8 @@ export interface Netrunner {
   shard: { progress: number; crafted: boolean; uploaded: boolean; uploadedTick?: number };
   booksRead: string[];
   reading?: { bookId: string; hours: number };
+  ratings: Rating[];
+  report?: string; // the last balance summary someone prepared for them
   pastLife?: { from: string; name: string };
   stats: NetrunnerStats;
 }
@@ -161,13 +165,19 @@ export type SystemKey = "power" | "signal" | "transit" | "order" | "exchange";
 /** The city's body. Everything wears down; upkeep work keeps it alive. supply = Pulse packs in stock. */
 export interface Systems { power: number; signal: number; transit: number; order: number; exchange: number; supply: number }
 
-export type ChallengeKind = "cipher" | "sequence" | "trace" | "logic" | "convert" | "lore" | "outside";
+export type ChallengeKind =
+  | "cipher" | "sequence" | "trace" | "logic" | "convert" | "lore" | "outside"
+  | "finance" | "build" | "design" | "dosage" | "route" | "split" | "schedule" | "tactics" | "liar" | "report";
+
+/** How an answer is checked when it is not a single exact value. */
+export type AnswerCheck = { type: "acrostic"; word: string; words: number } | { type: "set"; items: string[] } | { type: "sentence"; count: number; must: string };
 
 export interface ChallengePart {
   id: string;
   kind: ChallengeKind;
   prompt: string;
   answer: string;
+  check?: AnswerCheck;
   solvedBy?: string;
   solvedTick?: number;
   attempts: { by: string; answer: string; tick: number }[];
@@ -216,7 +226,14 @@ export interface Contract {
   special?: "relay";
   system?: SystemKey | "supply"; // upkeep / production work that keeps the city alive
   challenge?: Challenge;
+  /** a job one netrunner posted for another; creds are held in escrow until the poster rates the work */
+  poster?: string;
+  escrow?: number;
+  awaiting?: { worker: string; sinceTick: number };
+  ask?: string;
 }
+
+export interface Rating { by: string; stars: number; tick: number; comment: string; contract?: string }
 
 export interface ForumPost {
   id: number;
