@@ -55,7 +55,9 @@ async function body(req: http.IncomingMessage): Promise<any> {
 
 function lightNetrunner(n: Netrunner) {
   const { memories, inbox, genome, ...rest } = n;
-  return { ...rest, memoryCount: memories.length, voice: genome.voice, attachment: genome.attachment, desire: genome.coreDesire, fear: genome.coreFear };
+  const t = genome.traits;
+  const look = { openness: t.openness, extraversion: t.extraversion, emotionality: t.emotionality, neuroticism: t.neuroticism, psychopathy: t.psychopathy };
+  return { ...rest, look, memoryCount: memories.length, voice: genome.voice, attachment: genome.attachment, desire: genome.coreDesire, fear: genome.coreFear };
 }
 
 const liveInfo = () => (engine && engine.status !== "terminated" ? engine.statusInfo() : null);

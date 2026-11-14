@@ -71,8 +71,8 @@ export function meter(label, value, opts = {}) {
   const signed = !!opts.signed;
   const v = Math.max(signed ? -1 : 0, Math.min(1, value ?? 0));
   const fill = signed
-    ? h("span", { class: "fill", style: { left: v < 0 ? `${50 + v * 50}%` : "50%", width: `${Math.abs(v) * 50}%`, background: v < 0 ? "var(--red)" : "var(--green)" } })
-    : h("span", { class: "fill", style: { width: `${v * 100}%`, background: opts.color || "var(--cyan)" } });
+    ? h("span", { class: "fill", style: { left: v < 0 ? `${50 + v * 50}%` : "50%", width: `${Math.abs(v) * 50}%`, background: v < 0 ? "var(--blood)" : "var(--paper)" } })
+    : h("span", { class: "fill", style: { width: `${v * 100}%`, background: opts.color || "var(--fog)" } });
   return h("div", { class: `meter${signed ? " signed" : ""}`, title: opts.title || "" },
     h("span", { class: "m-label" }, label),
     h("span", { class: "m-track" }, fill),
