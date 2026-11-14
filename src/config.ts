@@ -22,6 +22,7 @@ export const MODELS: { id: MindModel; label: string }[] = [
   { id: "claude-haiku-5-5", label: "Claude Haiku 5.5 (fast, cheapest)" },
   { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5 (deeper minds)" },
   { id: "offline", label: "Offline rule-based minds (free, for testing)" },
+  { id: "claude-code", label: "Claude Code bridge (one agent per mind, no API key)" },
 ];
 
 export interface LocalSettings {
@@ -83,5 +84,6 @@ export function defaultConfig(s: LocalSettings): SessionConfig {
 }
 
 export function modelTag(m: MindModel) {
-  return m === "offline" ? "offline" : m.replace(/^claude-/, "");
+  if (m === "offline" || m === "claude-code") return m;
+  return m.replace(/^claude-/, "");
 }

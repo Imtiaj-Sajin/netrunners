@@ -4,7 +4,8 @@ import type {
 import type { RngState } from "../util/rng.js";
 
 export type ModelId = "claude-haiku-5-5" | "claude-sonnet-5-5";
-export type MindModel = ModelId | "offline";
+/** "claude-code" = the bridge: Claude Code agents (one per netrunner) answer each moment through files. */
+export type MindModel = ModelId | "offline" | "claude-code";
 
 export interface Genome {
   traits: Record<string, number>; // 110 traits, 0..1

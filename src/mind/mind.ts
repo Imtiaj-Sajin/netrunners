@@ -1,8 +1,9 @@
 import { ClaudeMinds } from "./claude.js";
+import { askBridge } from "./bridge.js";
 import { offlineDecide, offlineReflect } from "./offline.js";
 import { sanitizeDecision, sanitizeReflection } from "./schema.js";
 import { costOf, type CallUsage } from "./usage.js";
-import type { Decision, MindModel, Netrunner, Reflection, WorldState } from "../sim/types.js";
+import type { Decision, MindModel, ModelId, Netrunner, Reflection, WorldState } from "../sim/types.js";
 
 export type JobKind = "decide" | "reflect" | "deepnet";
 
@@ -66,10 +67,20 @@ export class Mind {
       return done({ ok: true, text: "Static. Endless static, and under it, something like voices in a language you almost know." });
     }
 
+    if (job.model === "claude-code") {
+      if (job.kind === "deepnet") return done({ ok: true, model: "claude-code", text: "Static. The antenna hums, but nothing comes through tonight." });
+      const a = await askBridge(job, ctx.n.name);
+      const base = { model: "claude-code", raw: a.text?.slice(0, 4000), error: a.error };
+      if (!a.ok) return done(base);
+      if (job.kind === "decide") return done({ ...base, ok: true, decision: sanitizeDecision(a.json) });
+      return done({ ...base, ok: true, reflection: sanitizeReflection(a.json) });
+    }
+
     const api = this.api();
+    const model = job.model as ModelId;
     const raw = job.kind === "deepnet"
-      ? await api.deepNet(job.model, job.query ?? "")
-      : await api.structured(job.model, job.kind, job.system ?? "", job.user ?? "", job.effort);
+      ? await api.deepNet(model, job.query ?? "")
+      : await api.structured(model, job.kind, job.system ?? "", job.user ?? "", job.effort);
     const cost = costOf(raw.model, raw.usage);
     const base = { model: raw.model, usage: raw.usage, costUsd: cost, raw: raw.text?.slice(0, 4000), error: raw.error, refusal: raw.refusal, fatal: raw.fatal };
     if (!raw.ok) return done(base);

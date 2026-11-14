@@ -7,6 +7,7 @@ import { MODELS, ROOT, WEB_DIR, defaultConfig, effectiveApiKey, keyStatus, loadS
 import { Engine } from "../session/engine.js";
 import { SessionStore, listSessions, listShards, readShard } from "../session/store.js";
 import { mergeLedgers, PRICES, WEB_SEARCH_USD, type Ledger } from "../mind/usage.js";
+import { resetBridge, stopBridge } from "../mind/bridge.js";
 import { readJson, readJsonl } from "../util/fsx.js";
 import { TRAITS, TRAIT_GROUP_LABELS, EMOTIONS, NEEDS, SKILLS } from "../sim/catalog.js";
 import type { ShardFile } from "../sim/spawn.js";
@@ -149,7 +150,10 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     cfg.maxConcurrency = Math.max(1, Math.min(16, Math.round(cfg.maxConcurrency)));
     const allowed = MODELS.map((x) => x.id);
     if (!allowed.includes(cfg.routineModel) || !allowed.includes(cfg.deepModel)) return send(res, 400, { error: "unknown model" });
-    const usesApi = cfg.routineModel !== "offline" || cfg.deepModel !== "offline";
+    const apiModel = (m: string) => m !== "offline" && m !== "claude-code";
+    const usesApi = apiModel(cfg.routineModel) || apiModel(cfg.deepModel);
+    const usesBridge = cfg.routineModel === "claude-code" || cfg.deepModel === "claude-code";
+    if (usesBridge) { resetBridge(); cfg.maxConcurrency = Math.max(cfg.maxConcurrency, 12); }
     if (usesApi && !effectiveApiKey(s)) return send(res, 400, { error: "No API key. Add yours in Settings (or set ANTHROPIC_API_KEY), or choose offline minds." });
     const shards = (cfg.importShards ?? []).map(readShard).filter((x): x is ShardFile => !!x);
     const e = Engine.create(cfg, effectiveApiKey(s), shards);
@@ -208,6 +212,8 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     const b = await body(req);
     if (b.confirm !== engine.store.name) return send(res, 400, { error: `Type the session name exactly (${engine.store.name}) to terminate.` });
     const e = engine;
+    // bridge minds wait for their agent forever; release them first so the world can end cleanly
+    if (e.cfg.routineModel === "claude-code" || e.cfg.deepModel === "claude-code") stopBridge();
     await e.terminate();
     const summary = readJson(e.store.file("summary.json"), null);
     return send(res, 200, { session: e.store.relPath, operator: e.store.operator, name: e.store.name, summary });
