@@ -103,3 +103,4 @@ Dead. Chose: nothing.
 - our time 2026-11-14 12:58:05 UTC · their time D9 03:15 · notify by world: death: Rhea faded: their Pulse ran out.
 - our time 2026-11-14 12:59:19 UTC · their time D9 13:00 · notify by world: death: Pax faded: their Pulse ran out.
 - our time 2026-11-14 12:59:19 UTC · their time D9 13:00 · pause by auto-extinction: no netrunners left alive
+- our time 2026-11-14 13:02:09 UTC · their time D9 13:00 · terminate by operator: at tick 796; 0 minds still thinking (their answers will be recorded)

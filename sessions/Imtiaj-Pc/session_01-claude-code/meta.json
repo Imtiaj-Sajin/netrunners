@@ -10,7 +10,7 @@
   },
   "seed": 4542196,
   "netrunnerCount": 5,
-  "status": "paused",
+  "status": "terminated",
   "createdAt": "2026-11-14T09:34:38.634Z",
   "realActiveMs": 4987650,
   "lastTick": 796,
@@ -22,5 +22,6 @@
     "tick": 477,
     "worldMinutes": 7155,
     "realTime": "2026-11-14T12:30:28.276Z"
-  }
+  },
+  "endedAt": "2026-11-14T13:02:09.721Z"
 }

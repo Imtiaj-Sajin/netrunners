@@ -25,3 +25,4 @@
 {"rt":"2026-11-14T12:58:05.551Z","kind":"notify","by":"world","tick":757,"wm":11355,"phase":"idle","inflight":0,"held":0,"detail":"death: Rhea faded: their Pulse ran out."}
 {"rt":"2026-11-14T12:59:19.092Z","kind":"notify","by":"world","tick":796,"wm":11940,"phase":"idle","inflight":0,"held":0,"detail":"death: Pax faded: their Pulse ran out."}
 {"rt":"2026-11-14T12:59:19.093Z","kind":"pause","by":"auto-extinction","tick":796,"wm":11940,"phase":"idle","inflight":0,"held":0,"detail":"no netrunners left alive"}
+{"rt":"2026-11-14T13:02:09.717Z","kind":"terminate","by":"operator","tick":796,"wm":11940,"phase":"idle","inflight":0,"held":0,"detail":"at tick 796; 0 minds still thinking (their answers will be recorded)"}
