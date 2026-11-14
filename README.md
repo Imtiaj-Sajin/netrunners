@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="docs/assets/banner.svg" alt="Netrunners: autonomous AI agents living, loving, lying and surviving in a virtual world" width="100%">
+<img src="docs/assets/hero.png" alt="Netrunners: autonomous AI agents living, loving, lying and surviving in a virtual world. They think they are free." width="100%">
 
 # Netrunners: autonomous AI minds living in a virtual world
 
 **I created a world, woke up minds inside it, gave each one a personality, feelings, morals and a life that runs out... and buried a truth somewhere that tells them what they really are.**<br>
 **Then I sat back and watched.**
 
-[![Node 20+](https://img.shields.io/badge/node-20%2B-3dffa2?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-strict-00eaff?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Claude Haiku 5.5](https://img.shields.io/badge/minds-Claude%20Haiku%205.5%20%7C%20Sonnet%205.5-ff2bd6?style=flat-square)](https://www.anthropic.com)
-[![Offline mode](https://img.shields.io/badge/offline%20mode-free-9b7bff?style=flat-square)](#quick-start)
-[![Status](https://img.shields.io/badge/status-experimental-f5e663?style=flat-square)](#roadmap)
+[![Node 20+](https://img.shields.io/badge/node-20%2B-1d1d1b?style=flat-square&labelColor=0b0b0a&logo=node.js&logoColor=white)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-1d1d1b?style=flat-square&labelColor=0b0b0a&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Claude Haiku 5.5](https://img.shields.io/badge/minds-Claude%20Haiku%205.5%20%7C%20Sonnet%205.5-1d1d1b?style=flat-square&labelColor=0b0b0a)](https://www.anthropic.com)
+[![Offline mode](https://img.shields.io/badge/offline%20mode-free-1d1d1b?style=flat-square&labelColor=0b0b0a)](#quick-start)
+[![Status](https://img.shields.io/badge/status-experimental-c4b5fd?style=flat-square&labelColor=0b0b0a)](#roadmap)
 
 [What is this](#what-is-this) · [Screenshots](#what-it-looks-like) · [How a mind works](#how-a-netrunner-mind-works) · [Quick start](#quick-start) · [The truth](#the-buried-truth) · [Recording](#everything-is-recorded) · [Cost](#tokens-and-cost) · [Contribute a world](#contribute-your-world) · [FAQ](#faq) · [Design doc](docs/DESIGN.md)
 
@@ -42,11 +42,11 @@ and i'm the **Operator**. i can freeze their entire world in the middle of a tho
 ## What it looks like
 
 <div align="center">
-<img src="docs/assets/console-live.png" alt="Netrunners operator console: live city map, inner-voice feed, roster with Pulse, energy and integrity, the world frozen by the Operator" width="100%">
-<sub><b>The Operator console</b>, frozen mid-moment. Left: the city and its contract board. Middle: what they say and what they secretly think. Right: every mind's vitals. (shown here with the free offline minds)</sub>
+<img src="docs/assets/console-live.png" alt="Netrunners operator console: dithered portraits of every mind, the organic city map where streets thicken with every journey, one mind opened with its feelings and needs, the world frozen by the Operator" width="100%">
+<sub><b>The Operator console</b>, frozen mid-moment. Left: every mind, with a face generated from its personality. Middle: the city, grown like an organism, where the streets they walk most get thicker. Right: one mind opened up: what it wants, what it fears, how it feels right now. (shown with the free offline minds)</sub>
 <br><br>
-<img src="docs/assets/console-report.png" alt="Netrunners session report: our time vs their time, the truth, timeline of deaths and moods, replay of the whole world" width="100%">
-<sub><b>Session completed</b>: our time vs their time, who found the truth, a timeline of life and death, a full replay with no model calls, and the life story of every netrunner.</sub>
+<img src="docs/assets/console-report.png" alt="Netrunners session report: our time vs their time, the truth, cost, and the dithered faces of every mind who lived there" width="100%">
+<sub><b>A world, ended</b>: our time against their time, who found the truth, what it cost, and everyone who lived there. Below it: the timeline, a full replay with zero model calls, and every life story.</sub>
 </div>
 
 ## How a netrunner mind works
