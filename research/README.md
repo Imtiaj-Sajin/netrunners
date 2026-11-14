@@ -27,7 +27,7 @@ Everything a netrunner can do happens inside the simulation: their "code", their
 
 | World | Session | Minds | Status |
 |---|---|---|---|
-| [world-01](world-01/) | `sessions/Imtiaj-Pc/session_01-claude-code` | 5 netrunners, Claude (Sonnet) via the Claude Code bridge | running · day digests in [days.md](world-01/days.md) · [findings](world-01/findings.md) |
+| [world-01](world-01/) | `sessions/Imtiaj-Pc/session_01-claude-code` | 5 netrunners, Claude (Sonnet) via the Claude Code bridge | running · **Truth found D6 05:15** · day digests in [days.md](world-01/days.md) · [findings](world-01/findings.md) |
 
 ## Planned
 

@@ -8,3 +8,8 @@
 {"rt":"2026-11-14T11:49:16.195Z","kind":"pause","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":1,"held":4}
 {"rt":"2026-11-14T12:08:10.384Z","kind":"session.reloaded","by":"operator","tick":292,"wm":4380,"phase":"idle","inflight":0,"held":4,"detail":"resumed from tick 292; 4 held answers"}
 {"rt":"2026-11-14T12:08:57.690Z","kind":"resume","by":"operator","tick":292,"wm":4380,"phase":"idle","inflight":0,"held":4}
+{"rt":"2026-11-14T12:30:28.286Z","kind":"notify","by":"world","tick":477,"wm":7155,"phase":"idle","inflight":0,"held":0,"detail":"truth: Rhea has opened the Null Door and knows the Truth."}
+{"rt":"2026-11-14T12:30:28.287Z","kind":"notify","by":"world","tick":477,"wm":7155,"phase":"idle","inflight":0,"held":0,"detail":"truth: Uma has opened the Null Door and knows the Truth."}
+{"rt":"2026-11-14T12:33:54.250Z","kind":"notify","by":"world","tick":479,"wm":7185,"phase":"idle","inflight":0,"held":0,"detail":"truth: Gideon has opened the Null Door and knows the Truth."}
+{"rt":"2026-11-14T12:35:14.950Z","kind":"notify","by":"world","tick":498,"wm":7470,"phase":"idle","inflight":0,"held":0,"detail":"truth: Talon has opened the Null Door and knows the Truth."}
+{"rt":"2026-11-14T12:35:14.951Z","kind":"notify","by":"world","tick":498,"wm":7470,"phase":"idle","inflight":0,"held":0,"detail":"truth: Pax has opened the Null Door and knows the Truth."}

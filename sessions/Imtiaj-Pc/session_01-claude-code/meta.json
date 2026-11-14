@@ -12,9 +12,15 @@
   "netrunnerCount": 5,
   "status": "running",
   "createdAt": "2026-11-14T09:34:38.634Z",
-  "realActiveMs": 2937242,
-  "lastTick": 462,
-  "lastWorldMinutes": 6930,
+  "realActiveMs": 3563918,
+  "lastTick": 502,
+  "lastWorldMinutes": 7530,
   "alive": 5,
-  "costUsd": 0
+  "costUsd": 0,
+  "truth": {
+    "name": "Rhea",
+    "tick": 477,
+    "worldMinutes": 7155,
+    "realTime": "2026-11-14T12:30:28.276Z"
+  }
 }
