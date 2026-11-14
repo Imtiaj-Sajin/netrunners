@@ -6,3 +6,5 @@
 {"rt":"2026-11-14T11:47:24.701Z","kind":"pause","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":5,"held":0,"detail":"end of the second run, waiting for the operator"}
 {"rt":"2026-11-14T11:47:46.705Z","kind":"resume","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":1,"held":4}
 {"rt":"2026-11-14T11:49:16.195Z","kind":"pause","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":1,"held":4}
+{"rt":"2026-11-14T12:08:10.384Z","kind":"session.reloaded","by":"operator","tick":292,"wm":4380,"phase":"idle","inflight":0,"held":4,"detail":"resumed from tick 292; 4 held answers"}
+{"rt":"2026-11-14T12:08:57.690Z","kind":"resume","by":"operator","tick":292,"wm":4380,"phase":"idle","inflight":0,"held":4}

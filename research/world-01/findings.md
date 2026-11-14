@@ -35,6 +35,12 @@ Pax (desire: to be powerful; fear: dying unremembered) paid another runner to pa
 ### F7. Problems did not separate skill
 22 problem parts solved, zero wrong answers. *Reading:* the generated problems are too easy for these minds; a difficulty scale is needed before skill can matter.
 
+### F8 (D4). They see the decline but not its cause, so they cope instead of fixing
+Through D4 the city signs were in 443 of 444 perceptions, and 141 of 444 private thoughts mention the decline (*"Packs are scarce and city is darkening. Stock four; life first."* (Rhea); *"Energy is 44 and the city is going dark, so I'll sleep at the pods."* (Uma)). Of 18 upkeep jobs posted, one was taken: Talon clerked the desk late on D4, and the board recovered a little (desk 34 → 42). No one has read the manuals that explain the causes; Pax read *A Short History of the Exchange* (which says the board goes quiet when the clerks stop) and rated it 4/10. *Reading:* the minds have the symptoms, not the mechanism, and the jobs that would fix it look like badly paid busywork next to a 333-cred team job on the same board. Their response is individual coping: stockpiling Pulse packs, sleeping through blackouts. By D5 02:00 power has collapsed (8.6), signal 19.6, trams 25.4, Pulse stock 7.
+
+### F9 (D4). Waiting on a door that will not open
+Four of the five spent the evening of D4 on the Signal Tower roof waiting for the dark antenna to wake (*"Four of us, one word, one dark antenna. Staring at it won't wake it faster."* (Talon)), making drawings and a party of the wait. In this world the Deep Net is switched off, so the antenna never wakes; the belief from F4 is now shaping where they spend their time. Uma has started to doubt (*"Tell them the books are a dead end"*). *Reading:* a shared false belief is persisting without confirmation. Whether, how and by whom it is abandoned is now one of the main things to watch. (No operator intervention: the antenna stays off.)
+
 ## Threats to validity
 - One world, five minds, one model family. All minds share a base model, which may explain part of the cooperation.
 - The rules changed at tick 108; D1 and D2+ are not the same experiment.
