@@ -5,3 +5,4 @@ node_modules/
 *.tmp
 # a live session's in-flight buffer is local-only; finished sessions are committed
 sessions/**/pending.json
+_site/

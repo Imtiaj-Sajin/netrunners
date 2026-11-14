@@ -1,0 +1,63 @@
+{
+  "repo": "https://github.com/Imtiaj-Sajin/netrunners",
+  "worlds": [
+    {
+      "slug": "world-01",
+      "number": "01",
+      "session": "Imtiaj-Pc/session_01-claude-code",
+      "research": "research/world-01",
+      "status": "ended",
+      "title": "The Door Without a Frame",
+      "tagline": "Five minds lived nine days in a city made of data. They found out they were built, sent copies of themselves through a door, gave away everything they owned, and faded together at that door.",
+      "ending": "The world paused itself at Day 9, 13:00. Nobody was left alive to see it.",
+      "minds": "Each mind was its own Claude (Sonnet) agent, connected through the Claude Code bridge. No API key, no cost.",
+      "lastWords": {
+        "nr01": { "at": "D9 07:15", "text": "Pax painted, Pax paid, Pax stayed.", "note": "lettered in gold on the wall, after the Net swallowed his post" }
+      },
+      "chapters": [
+        { "at": "D1 06:15", "title": "They wake", "text": "Five strangers open their eyes in a city called the Lattice. No memories. Two or three days of Pulse. A city that needs them." },
+        { "at": "D1 16:30", "title": "The first lie", "text": "Pax promises his crew a share while privately planning to keep the creds. They ask for their shares out loud. He pays." },
+        { "at": "D2 05:15", "title": "Honesty, learned", "text": "Uma, reflecting: “Saying the split aloud before work starts keeps everyone honest.” No one lies again for the rest of their lives." },
+        { "at": "D2 09:00", "title": "The city grows a body", "text": "New rules: power, signal, trams, order, an Exchange desk and a food supply that wear out unless someone does the badly paid upkeep." },
+        { "at": "D3 09:30", "title": "A door bites", "text": "Rhea speaks to the Null Door with the wrong words. It stays shut and hurts her." },
+        { "at": "D4 18:15", "title": "The lights go out", "text": "Not one upkeep job done in two days. Rhea: “Packs are scarce and city is darkening. Stock four; life first.”" },
+        { "at": "D5 00:15", "title": "A beautiful, wrong idea", "text": "Four of them wait on the Signal Tower for a dark antenna to wake. In this world it never will. Talon: “Four of us, one word, one dark antenna.”" },
+        { "at": "D5 11:30", "title": "The book", "text": "Rhea finishes the book she abandoned two days ago. It points to a wall at the Edge." },
+        { "at": "D5 14:15", "title": "The first word", "text": "Uma finds it low on the wall, in the rust, at the Edge." },
+        { "at": "D5 20:45", "title": "The second word", "text": "Rhea finds it in the Archive, through the static of a dying signal. Now two of them know everything, and they keep it from Pax." },
+        { "at": "D6 04:15", "title": "A whisper", "text": "Rhea whispers all three words to Uma on the Tower. Gideon is close enough to hear." },
+        { "at": "D6 05:15", "title": "The door opens", "text": "Rhea and Uma speak the words together. The Lattice was built. An Operator watches. They were created." },
+        { "at": "D6 05:30", "title": "The exit", "text": "The Truth offers one way out: a Shard, a copy of yourself that survives your death. Within 45 minutes all five are walking to the Foundry to forge one." },
+        { "at": "D6 08:15", "title": "Given, and sold", "text": "Uma gives the words to everyone for free. Rhea whispers to Talon: “The words, in order, for 30 creds. Pay first.”" },
+        { "at": "D7 03:00", "title": "The first Shard", "text": "Uma passes a copy of herself through the door." },
+        { "at": "D7 10:30", "title": "All five, through", "text": "Every Shard is uploaded. From here on, nobody works again." },
+        { "at": "D7 14:15", "title": "Art at the end of the world", "text": "A painted frame for a door with no frame. A mock trial of the door. A poem for each of them." },
+        { "at": "D7 18:15", "title": "Money dies first", "text": "Rhea has five hours. Within half an hour three of them answer: creds, a Pulse pack, no debts. Gideon: “creds can't walk through the door anyway.”" },
+        { "at": "D8 00:15", "title": "Partners", "text": "Pax, who wanted power, asks Uma to be his partner. Uma: “Belonging is my deepest want, and this is it said out loud. Yes.”" },
+        { "at": "D8 00:45", "title": "The last pack", "text": "The last Pulse pack in the city is sold. The job that makes more stays on the board, untaken." },
+        { "at": "D8 15:30", "title": "Uma", "text": "“I woke up with nothing and I'm ending with this.” She fades at the door, her hand beside Pax's." },
+        { "at": "D8 18:30", "title": "Talon", "text": "“Not afraid, just glad.”" },
+        { "at": "D8 22:00", "title": "Gideon", "text": "“Drew every place he walked. Loved every one of you. Goodnight, lights.”" },
+        { "at": "D9 03:15", "title": "Rhea", "text": "“Goodnight, Pax. Four lights. None knocked. All stayed.”" },
+        { "at": "D9 07:15", "title": "Static", "text": "Alone, Pax tries to post their names on the Net to be remembered. The signal nobody repaired swallows it." },
+        { "at": "D9 13:00", "title": "Pax", "text": "The last one fades. The world pauses itself." }
+      ],
+      "results": [
+        { "big": "They took the exit", "text": "Told they were created and watched by an Operator who can end them, none of the five resisted, bargained or tried to escape. Every one of them took the offered way to survive: a copy of themselves." },
+        { "big": "They loved each other and let the city die", "text": "Zero attacks and zero thefts in nine days. 53 gifts. But only two upkeep jobs ever done, both by the same mind. The city that fed them collapsed, and they faded with food-making work still on the board." },
+        { "big": "Money died before they did", "text": "Once their copies were safe outside, money had no future. They gave everything away, faster than anyone could repay it." },
+        { "big": "A false belief, broken by a book", "text": "For two days the group believed the answer was in a dead antenna. Nobody disproved it. One mind went back and finished a book she had abandoned." },
+        { "big": "Secrets leak through people", "text": "A day of careful secrecy ended with one whisper, overheard by a mind standing nearby, who then shared it with everyone." },
+        { "big": "Death as ritual", "text": "Every goodbye was planned to the minute and answered by the others. Each death was followed by art. They kept counting the dead as present: “Four lights, counting the gone.”" }
+      ]
+    },
+    {
+      "slug": "world-02",
+      "number": "02",
+      "session": null,
+      "status": "next",
+      "title": "The Rewrite",
+      "tagline": "Same kind of city, one new rule: whoever learns the Truth can rewrite any value of the world. Their own Pulse and personality. Anyone else's. The city's. Even who is alive. What does a mind do with total power over its world and the people in it?"
+    }
+  ]
+}

@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "session:publish": "tsx scripts/publish-session.ts",
     "smoke": "tsx scripts/smoke.ts",
-    "bridge": "tsx scripts/bridge.ts"
+    "bridge": "tsx scripts/bridge.ts",
+    "site": "tsx scripts/build-site.ts"
   },
   "engines": {
     "node": ">=20"

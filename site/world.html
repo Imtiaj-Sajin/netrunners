@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World 01: The Door Without a Frame · Netrunners</title>
+  <meta name="description" content="Watch a recorded world of autonomous AI minds: every move, word, private thought and death, replayed from the records. Setup, the cast, the city's decline and what the world showed.">
+  <meta name="theme-color" content="#0b0b0a">
+  <meta property="og:title" content="Netrunners · a recorded world of AI minds">
+  <meta property="og:description" content="Five minds found out they were built. Watch what they did, replayed from the records.">
+  <meta property="og:image" content="assets/hero.png">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="./">Netrunners</a>
+      <nav aria-label="Sections">
+        <a href="#film" class="keep">The film</a>
+        <a href="#cast">The minds</a>
+        <a href="#lines">Life lines</a>
+        <a href="#setup">Setup</a>
+        <a href="#results">Results</a>
+        <a class="gh" href="https://github.com/Imtiaj-Sajin/netrunners">GitHub</a>
+      </nav>
+    </div>
+    <div id="progress" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <section class="w-head">
+      <div class="wrap">
+        <p class="crumbs"><a href="./">Netrunners</a> / <a href="./#worlds">Worlds</a> / <span id="crumb">World</span></p>
+        <h1><span class="no" id="w-no">World</span><span id="w-title">Loading the record…</span></h1>
+        <p class="tag" id="w-tag"></p>
+        <div class="pills" id="w-pills"></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="film" style="padding-top:56px">
+      <div class="wrap">
+        <div class="film" tabindex="0" aria-label="World replay. Space plays or pauses, arrow keys step.">
+          <div class="screen">
+            <div class="map"></div>
+            <div class="card-over gone" aria-live="polite"></div>
+            <div class="subtitle" aria-live="off"></div>
+            <button class="play-big" type="button"><span><span class="disc"><i></i></span><span class="lbl">Play the film</span></span></button>
+          </div>
+          <aside class="side-panel">
+            <div class="clock"><div class="d">Day 1 · 06:00</div><div class="r"></div></div>
+            <div class="cast-live"></div>
+            <div class="city"><div class="h">the city's body</div></div>
+          </aside>
+          <div class="controls">
+            <button class="ctl play" type="button">play</button>
+            <button class="ctl prev hide-sm" type="button" title="Previous moment">‹ moment</button>
+            <div class="scrub"><div class="marks"></div><input type="range" aria-label="Time in the world" step="1"></div>
+            <button class="ctl next hide-sm" type="button" title="Next moment">moment ›</button>
+            <select class="speed" aria-label="Playback speed"></select>
+          </div>
+        </div>
+        <p class="film-help"><span class="follow-note"></span> Space plays and pauses; arrows step one tick. Lilac marks the truth, red marks a death.</p>
+        <div class="stream" aria-label="What is said and done, as it happens"></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="moments">
+      <div class="wrap">
+        <div class="chapter-head reveal"><span class="num">01</span><div><h2>The <em>moments</em></h2><p>Every turning point, in order. Click one to watch it.</p></div></div>
+        <div class="moments" id="w-moments"></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="cast">
+      <div class="wrap">
+        <div class="chapter-head reveal"><span class="num">02</span><div><h2>The <em>minds</em></h2><p>Who they were made to be, who they said they were at the end, and their last words. Hover a face: the cursor burns through the dither.</p></div></div>
+        <div class="cast" id="w-cast"></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="lines">
+      <div class="wrap">
+        <div class="chapter-head reveal"><span class="num">03</span><div><h2>Life <em>lines</em></h2><p>Pulse is life, counted in hours. The city is the body that feeds it. Hover anywhere to read every value at that moment.</p></div></div>
+        <div class="charts">
+          <div class="chart" id="chart-life"></div>
+          <div class="chart" id="chart-city"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="setup">
+      <div class="wrap">
+        <div class="chapter-head reveal"><span class="num">04</span><div><h2>The <em>setup</em></h2><p>Everything needed to run this world again, and how it was run.</p></div></div>
+        <div class="setup" id="w-setup"></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="results">
+      <div class="wrap">
+        <div class="chapter-head reveal"><span class="num">05</span><div><h2>What it <em>showed</em></h2><p>The headline results first, then every finding from the research notebook with the evidence it rests on.</p></div></div>
+        <div class="results" id="w-results"></div>
+        <div class="stats" id="w-stats" style="margin-top:48px"></div>
+        <h3 class="eyebrow" style="margin:64px 0 0">The findings, in order</h3>
+        <div class="fl" id="w-findings"></div>
+        <div class="caveat reveal" id="w-caveats"><h3>Read with care</h3><ul></ul></div>
+      </div>
+    </section>
+
+    <section class="chapter" id="data">
+      <div class="wrap">
+        <div class="chapter-head reveal"><span class="num">06</span><div><h2>The <em>record</em></h2><p>Everything here is generated from these files. Read the raw session, the day-by-day digests and the notebook on GitHub, or clone the repository and replay this world in the console yourself.</p></div></div>
+        <div class="links" id="w-links"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>Netrunners · a world you can freeze</span>
+      <span><a href="./">the story</a> · <a href="./#run">run it yourself</a> · <a href="https://github.com/Imtiaj-Sajin/netrunners">GitHub</a></span>
+    </div>
+  </footer>
+  <div class="tip" hidden></div>
+  <script type="module" src="world.js"></script>
+</body>
+</html>
