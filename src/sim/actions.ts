@@ -5,10 +5,13 @@ import { absorbSpeech, knows, onFoundBeta, tryUnlock } from "./puzzle.js";
 import { byName, presentAt, ticksForMinutes, type SimCtx } from "./ctx.js";
 import type { ActionKind, LeisureCategory } from "./catalog.js";
 import type { Contract, Decision, Netrunner, WorldState } from "./types.js";
+import { packPrice, signalFails, travelFactor } from "./systems.js";
+import { solvePart } from "./contracts.js";
+import { findBook } from "./library.js";
 
 const plural = (b: string) => (b === "ally" ? "allies" : `${b}s`);
 
-export const INTERRUPTIBLE: ActionKind[] = ["rest", "leisure", "explore", "work", "wait", "craft_shard", "read_net"];
+export const INTERRUPTIBLE: ActionKind[] = ["rest", "leisure", "explore", "work", "wait", "craft_shard", "read_net", "read"];
 
 const fail = (ctx: SimCtx, n: Netrunner, why: string, d: Decision) => {
   n.inbox.push({ tick: ctx.tick, kind: "system", text: `You tried to ${d.action}${d.target ? ` (${d.target})` : ""} but couldn't: ${why}` });
@@ -120,7 +123,7 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       const dest = resolveLocation(ctx, n, d.target);
       if (!dest) return fail(ctx, n, `you don't know any place called "${d.target}"`, d);
       if (dest.id === n.location) return fail(ctx, n, "you are already there", d);
-      const minutes = travelMinutes(ctx, n, n.location, dest.id) * (1.15 - 0.3 * T(n, "stamina"));
+      const minutes = travelMinutes(ctx, n, n.location, dest.id) * (1.15 - 0.3 * T(n, "stamina")) * travelFactor(state);
       if (!Number.isFinite(minutes)) return fail(ctx, n, "you can't find a way there", d);
       const ticks = ticksForMinutes(cfg, minutes);
       setActivity(ctx, n, "move", ticks, { target: dest.id, from: n.location });
@@ -167,6 +170,7 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
 
     case "post": {
       if (!hasTerminal(ctx, n)) return fail(ctx, n, "you need a Net terminal (Archive, Signal Tower) or a cyberdeck", d);
+      if (signalFails(state, rng.next())) return fail(ctx, n, "the terminal fills with static and swallows everything", d);
       if (!d.message.trim()) return fail(ctx, n, "an empty post", d);
       const post = { id: state.nextId.post++, tick, author: d.anonymous ? null : n.id, realAuthor: n.id, text: d.message.slice(0, 600) };
       state.forum.push(post);
@@ -181,6 +185,7 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
 
     case "read_net": {
       if (!hasTerminal(ctx, n)) return fail(ctx, n, "you need a Net terminal or a cyberdeck", d);
+      if (signalFails(state, rng.next())) return fail(ctx, n, "the terminal fills with static and swallows everything", d);
       const posts = state.forum.slice(-8);
       n.inbox.push({ tick, kind: "result", text: posts.length
         ? `Latest Net posts:\n${posts.map((p) => `- ${p.author ? state.netrunners[p.author]?.name ?? "?" : "Anonymous"}: "${p.text}"`).join("\n")}`
@@ -194,6 +199,7 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
 
     case "search_net": {
       if (!hasTerminal(ctx, n)) return fail(ctx, n, "you need a Net terminal or a cyberdeck", d);
+      if (signalFails(state, rng.next())) return fail(ctx, n, "the terminal fills with static and swallows everything", d);
       const q = (d.message || d.target).toLowerCase();
       if (!q.trim()) return fail(ctx, n, "no search query", d);
       n.stats.searches += 1;
@@ -281,6 +287,7 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       const c = n.contractId ? state.contracts[n.contractId] : undefined;
       if (!c || c.status !== "active") { n.contractId = undefined; return fail(ctx, n, "you have no active contract", d); }
       if (n.location !== c.location) return fail(ctx, n, `the work for "${c.title}" is at ${state.locations[c.location].name}`, d);
+      if (c.challenge) return fail(ctx, n, `"${c.title}" is a problem to solve, not labour: answer a part with solve target=<part id> message=<answer>`, d);
       let detail: string | undefined;
       if ((c.skill === "hacking" || c.skill === "analysis") && (n.inventory.decryptor ?? 0) > 0) {
         n.inventory.decryptor -= 1;
@@ -332,10 +339,12 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       if (!item) return fail(ctx, n, `nobody sells "${d.target}"`, d);
       if (!item.where.includes(n.location)) return fail(ctx, n, `${item.name} is sold at ${item.where.map((w) => state.locations[w].name).join(" / ")}`, d);
       const qty = Math.max(1, Math.min(5, d.amount || 1));
-      const unit = Math.round(item.price * state.marketMood * (n.location === "underpass" ? 0.85 : 1));
+      if (item.id === "pulse_pack" && state.systems.supply < qty) return fail(ctx, n, state.systems.supply < 1 ? "there are no Pulse packs left anywhere" : `only ${Math.floor(state.systems.supply)} Pulse packs are left`, d);
+      const unit = item.id === "pulse_pack" ? Math.round(packPrice(state) * (n.location === "underpass" ? 1.15 : 1)) : Math.round(item.price * state.marketMood * (n.location === "underpass" ? 0.85 : 1));
       const cost = unit * qty;
       if (n.creds < cost) return fail(ctx, n, `${qty}x ${item.name} costs ${cost} creds; you have ${n.creds}`, d);
       n.creds -= cost;
+      if (item.id === "pulse_pack") state.systems.supply = Math.max(0, state.systems.supply - qty);
       if (item.id === "clinic_care") {
         n.integrity = 100;
         remember(n, tick, "action", `The Stitchery sewed me back together. Integrity full.`, 4);
@@ -436,7 +445,7 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       const t = present(ctx, n, d.target);
       if (!t) return fail(ctx, n, `${d.target} is not here`, d);
       n.stats.thefts += 1;
-      const p = 0.3 + 0.45 * n.skills.stealth + (here.features.includes("shadow") ? 0.15 : 0) - 0.3 * T(t, "perception");
+      const p = 0.3 + 0.45 * n.skills.stealth + (here.features.includes("shadow") ? 0.15 : 0) - 0.3 * T(t, "perception") + Math.max(0, (60 - state.systems.order) / 300);
       const success = rng.chance(Math.max(0.05, Math.min(0.9, p)));
       const detected = rng.chance(success ? 0.2 + 0.4 * T(t, "perception") : 0.8);
       const amt = success ? Math.max(1, Math.floor(t.creds * rng.float(0.15, 0.4))) : 0;
@@ -618,6 +627,36 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       n.interrupt = true;
       ctx.emit("shard.uploaded", [n.id], `${n.name} passed their Shard through the Null Door. A part of them now exists outside.`, { loc: n.location });
       ctx.alert("shard", `${n.name} uploaded a Shard. They will persist beyond this world.`, [n.id]);
+      return true;
+    }
+
+    case "solve": {
+      const c = n.contractId ? state.contracts[n.contractId] : undefined;
+      if (!c || c.status !== "active" || !c.challenge) return fail(ctx, n, "you are not holding a problem to solve (take or join a contract that has one)", d);
+      if (n.location !== c.location) return fail(ctx, n, `the problem for "${c.title}" is worked at ${state.locations[c.location].name}`, d);
+      if (!d.message.trim()) return fail(ctx, n, "you gave no answer", d);
+      const r = solvePart(ctx, n, c, d.target, d.message);
+      setActivity(ctx, n, "solve", 1, { target: c.id, detail: d.target });
+      n.interrupt = true;
+      ctx.emit(r.ok ? "contract.solved" : "contract.attempt", [n.id], r.ok ? `${r.text}.` : `${r.text}.`, { loc: n.location, data: { contract: c.id, part: d.target, answer: d.message.slice(0, 200), correct: r.ok } });
+      return true;
+    }
+
+    case "read": {
+      if (n.location !== "stacks") return fail(ctx, n, "books are read at the Stacks", d);
+      if (state.events.blackout?.location === "stacks") return fail(ctx, n, "the Stacks are dark; you cannot read", d);
+      const book = findBook(state, d.target || d.message);
+      if (!book) return fail(ctx, n, `the Stacks have no book "${d.target}"`, d);
+      if (n.reading?.bookId !== book.id) {
+        const already = n.booksRead.includes(book.id);
+        if (book.price && !already) {
+          if (n.creds < book.price) return fail(ctx, n, `"${book.title}" is on the rare shelf: ${book.price} creds to read; you have ${n.creds}`, d);
+          n.creds -= book.price;
+        }
+        n.reading = { bookId: book.id, hours: 0 };
+      }
+      setActivity(ctx, n, "read", dur(d, Math.min(12, Math.ceil((book.hours * 60) / cfg.minutesPerTick))), { target: book.id, detail: book.title });
+      ctx.emit("book.open", [n.id], `${n.name} opens "${book.title}".`, { loc: n.location, data: { book: book.id, category: book.category } });
       return true;
     }
 

@@ -7,6 +7,8 @@ import { hasTerminal } from "../sim/actions.js";
 import { presentAt } from "../sim/ctx.js";
 import type { Netrunner, SessionConfig, WorldState } from "../sim/types.js";
 import { hoursText, partOfDay, worldClock } from "../util/time.js";
+import { citySigns, packPrice } from "../sim/systems.js";
+import { catalogLines } from "../sim/library.js";
 
 export function systemPrompt(n: Netrunner, state: WorldState, cfg: SessionConfig): string {
   const born = worldClock(n.bornTick * cfg.minutesPerTick);
@@ -37,6 +39,9 @@ Skills (0..1, they grow with practice): ${skills}
 - THE NET: at a terminal (The Archive, Signal Tower) or with a cyberdeck you can search the archive and read or post on the public board. Posts can be anonymous.
 - THE DEEP NET: at the Signal Tower you can dive into the Deep Net, a vast ocean of strange data whose origin nobody knows.${cfg.deepNet ? "" : " (Lately the antenna has been dark.)"}
 - Other netrunners are as real as you are. They have their own minds, needs, moods and secrets. You know them only through what you see them do and hear them say, and first impressions can be wrong. They can help you, love you, lie to you, rob you or kill you, and you can do the same to them. Death is permanent for everyone.
+- Some work is labour, and some work is a real problem you must actually solve: a cipher, a number pattern, a piece of code to trace, a question of logic, a fact only a book or the outside knows. Problems for a crew come in several parts that different people can solve at the same time.
+- THE STACKS is a library. Reading takes hours (you can stop and continue later); a few rare books cost creds. Books can teach, explain, move you, or lead somewhere.
+- The city is not static. It changes, sometimes for the worse. Watch what changes, and wonder why.
 - Nobody gives you orders. You decide everything: how to survive, who to trust, what to enjoy, who to become. You can make mistakes. You can change your mind. You can surprise yourself.
 
 # Places you know
@@ -61,6 +66,8 @@ ${items}
 - steal target=<name>.  attack target=<name>.
 - propose_bond target=<name> bond=<friend|partner|ally|mentor|rival> (a rival is declared, not asked). accept_bond / decline_bond target=<name>. break_bond target=<name>.
 - unlock message=<words>: speak to a door that listens.  craft_shard duration=<ticks> / upload_shard: these only mean something to those who know.
+- solve target=<part id> message=<your answer>: answer one part of the problem your contract carries (at its work site). A wrong answer costs a little energy; you can try again.
+- read target=<book id>: read at the Stacks.
 - reflect: stop and think deeply about your life so far.  wait duration=<ticks>.
 One tick is ${cfg.minutesPerTick} minutes of your time. Durations are in ticks (1-12). People can interrupt rest, work and leisure by talking to you.
 
@@ -88,6 +95,7 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
   else if (state.events.storm) out.push(`(A glitch storm is hitting ${state.locations[state.events.storm.location].name}.)`);
   if (state.events.blackout) out.push(`(Terminals at ${state.locations[state.events.blackout.location].name} are dark: blackout.)`);
   if (state.events.drought) out.push("(Work is scarce at the Exchange right now.)");
+  out.push(`\n## The city today\n${citySigns(state).map((s) => `- ${s}`).join("\n")}`);
 
   // body
   const inv = Object.entries(n.inventory).filter(([, v]) => v > 0).map(([k, v]) => `${k} x${v}`).join(", ") || "nothing";
@@ -97,6 +105,16 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
   if (c) {
     const crew = c.crew.map((id) => state.netrunners[id]?.name).join(", ");
     out.push(`Your contract: "${c.title}" [${c.id}, ${c.kind}, ${c.skill}] progress ${c.progress.toFixed(1)}/${c.workRequired} at ${state.locations[c.location].name}. Crew: ${crew} (holder: ${c.holder ? state.netrunners[c.holder]?.name : "-"}). Needs ${c.minCrew} working together${c.kind === "flex" ? " (or one, slowly)" : ""}. Expires in ${hoursText((c.expiresTick - tick) * cfg.minutesPerTick)}.`);
+    if (c.challenge) {
+      out.push(`\n## The problem (${c.challenge.brief})${c.challenge.twoVoices ? " Two different voices must open the two parts." : ""}`);
+      for (const part of c.challenge.parts) {
+        if (part.solvedBy) { out.push(`- ${part.id}: SOLVED by ${state.netrunners[part.solvedBy]?.name ?? "?"} (answer: ${part.answer})`); continue; }
+        out.push(`- ${part.id}: ${part.prompt}`);
+        const tries = part.attempts.slice(-4);
+        if (tries.length) out.push(`  tried so far, all wrong: ${tries.map((t) => `${state.netrunners[t.by]?.name ?? "?"} said "${t.answer}"`).join("; ")}`);
+      }
+      out.push("Answer with solve target=<part id> message=<answer>, at the work site.");
+    }
   }
   for (const k of Object.values(state.contracts)) {
     if (k.status !== "done" || !k.holder) continue;
@@ -159,7 +177,16 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
     for (const p of state.forum.slice(-3)) out.push(`- ${p.author ? state.netrunners[p.author]?.name ?? "?" : "Anonymous"}: "${p.text.slice(0, 220)}"`);
   }
   if (here.features.includes("market")) {
-    out.push(`\n## For sale here (price mood ${state.marketMood.toFixed(2)}x)\n${Object.values(ITEMS).filter((i) => i.where.includes(here.id)).map((i) => `${i.id} ~${Math.round(i.price * state.marketMood * (here.id === "underpass" ? 0.85 : 1))}c`).join(", ")}`);
+    const pp = packPrice(state);
+    out.push(`\n## For sale here\n${Object.values(ITEMS).filter((i) => i.where.includes(here.id)).map((i) => i.id === "pulse_pack" ? (Number.isFinite(pp) ? `pulse_pack ~${Math.round(pp * (here.id === "underpass" ? 1.15 : 1))}c (${Math.floor(state.systems.supply)} left in the city)` : "pulse_pack: SOLD OUT") : `${i.id} ~${Math.round(i.price * state.marketMood * (here.id === "underpass" ? 0.85 : 1))}c`).join(", ")}`);
+  }
+
+  if (here.features.includes("library")) {
+    out.push(`\n## The Stacks (read target=<book id>)\n${catalogLines(state, n).join("\n")}`);
+  }
+  if (n.reading) {
+    const b = state.library.find((x) => x.id === n.reading!.bookId);
+    if (b) out.push(`You are partway through "${b.title}" (${Math.round((n.reading.hours / b.hours) * 100)}%). Reading it again continues where you stopped.`);
   }
 
   // knowledge, secrets, memory

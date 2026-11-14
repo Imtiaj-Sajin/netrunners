@@ -12,7 +12,7 @@ import { applyDecision } from "../sim/actions.js";
 import { alive, byName, type SimCtx } from "../sim/ctx.js";
 import { adjust, remember, T } from "../sim/psyche.js";
 import { makeShard, type ShardFile } from "../sim/spawn.js";
-import { archiveFor, frameOf, genesis, needsDecision, wantsReflection, worldUpdate } from "../sim/world.js";
+import { archiveFor, frameOf, genesis, migrateState, needsDecision, wantsReflection, worldUpdate } from "../sim/world.js";
 import type { ArchiveDoc } from "../sim/world-data.js";
 import type { MindModel, Netrunner, SessionConfig, WorldEvent, WorldState } from "../sim/types.js";
 import { Rng } from "../util/rng.js";
@@ -77,6 +77,7 @@ export class Engine extends EventEmitter {
     const cfg = store.readConfig();
     const state = store.loadSnapshot();
     if (!cfg || !state) throw new Error("session files are missing or damaged");
+    migrateState(state, cfg);
     const e = new Engine(state, cfg, store, apiKey);
     if (e.meta.status === "terminated") e.status = "terminated";
     else e.operator("session.reloaded", "operator", `resumed from tick ${state.tick}; ${Object.keys(e.pending).length} held answers`);

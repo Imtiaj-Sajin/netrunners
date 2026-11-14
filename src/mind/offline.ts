@@ -68,6 +68,12 @@ export function offlineDecide(n: Netrunner, state: WorldState, jobId: string): D
   }
   if (c) {
     if (n.location !== c.location) return base(`Back to work on "${c.title}".`, "move", { target: c.location });
+    if (c.challenge) {
+      const part = c.challenge.parts.find((p) => !p.solvedBy && !(c.challenge!.twoVoices && c.challenge!.parts.some((q) => q.solvedBy === n.id)));
+      if (!part) return base("Waiting for the others to crack their part.", "wait", { duration: 2 });
+      const right = rng.chance(0.25 + 0.6 * n.skills[c.skill]);
+      return base(`Let me try ${part.id}.`, "solve", { target: part.id, message: right ? part.answer : "I THINK IT IS 42" });
+    }
     return base(`Working on "${c.title}".`, "work", { duration: 4 });
   }
   const enemy = others.find((o) => (n.impressions[o.id]?.trust ?? 0) < -0.45);
@@ -89,6 +95,11 @@ export function offlineDecide(n: Netrunner, state: WorldState, jobId: string): D
     if (open.length) return base(`"${open[0].title}" suits me.`, "take_contract", { target: open[0].id });
   }
   if (n.needs.survival < 70 || n.creds < 40) return base("Work means Pulse. The Exchange.", "move", { target: "exchange" });
+  if (n.needs.curiosity < 55 && rng.chance(0.35)) {
+    if (here.id !== "stacks") return base("The Stacks. I want to read something.", "move", { target: "stacks" });
+    const unread = state.library.filter((b) => !n.booksRead.includes(b.id) && b.price <= n.creds);
+    if (unread.length) { const b = n.reading ? state.library.find((x) => x.id === n.reading!.bookId)! : rng.pick(unread); return base(`"${b.title}". Let's see.`, "read", { target: b.id, duration: 12 }); }
+  }
   if (n.needs.curiosity < 50 && rng.chance(0.5)) {
     if (rng.chance(0.4) && ["oldquarter", "underpass", "garden", "edge"].includes(here.id)) return base("What's buried here?", "explore", { duration: 3 });
     return base("Somewhere I haven't looked.", "move", { target: rng.pick(["oldquarter", "underpass", "garden", "edge", "archive"]) });

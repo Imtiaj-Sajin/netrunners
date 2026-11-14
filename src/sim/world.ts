@@ -12,6 +12,8 @@ import type { LeisureCategory } from "./catalog.js";
 import type { Netrunner, SessionConfig, WorldState } from "./types.js";
 import { Rng } from "../util/rng.js";
 import { partOfDay } from "../util/time.js";
+import { freshSystems, orderDanger, restFactor, tickSystems } from "./systems.js";
+import { buildLibrary, finishBook } from "./library.js";
 
 export function genesis(cfg: SessionConfig, shards: ShardFile[]): WorldState {
   const rng = new Rng(cfg.seed);
@@ -20,12 +22,14 @@ export function genesis(cfg: SessionConfig, shards: ShardFile[]): WorldState {
     netrunners: {}, locations: buildLocations(), contracts: {}, forum: [],
     puzzle: setupPuzzle(rng), events: {}, nextId: { netrunner: 1, contract: 1, post: 1 },
     usedNames: [], marketMood: 1, deepnetUsed: 0, deepnetQueue: [],
+    systems: freshSystems(), library: [],
   };
   // the hidden door sits just beyond its (secret, per-session) anchor
   const anchor = state.locations[state.puzzle.doorAnchor];
   const door = state.locations.nulldoor;
   door.x = Math.max(40, Math.min(960, anchor.x + (anchor.x < 500 ? -60 : 60)));
   door.y = Math.max(40, Math.min(620, anchor.y + (anchor.y < 330 ? -45 : 55)));
+  state.library = buildLibrary(rng, state.puzzle, state.locations);
   for (const s of shards) {
     const n = awakenShard(state, rng, s);
     state.netrunners[n.id] = n;
@@ -54,6 +58,8 @@ export function worldUpdate(ctx: SimCtx) {
   const { state, rng, cfg, tick } = ctx;
   const h = hoursPerTick(cfg);
   if (tick === 1) seedContracts(ctx);
+
+  tickSystems(ctx);
 
   // ── weather & city events ──
   const ev = state.events;
@@ -99,7 +105,7 @@ export function worldUpdate(ctx: SimCtx) {
 
     const others = presentAt(state, n.location, n.id);
     decayEmotions(n, h);
-    decayNeeds(n, h, { danger: state.locations[n.location].danger + (ev.storm?.location === n.location ? 0.3 : 0), alone: others.length === 0 });
+    decayNeeds(n, h, { danger: state.locations[n.location].danger + orderDanger(state) * (state.locations[n.location].features.includes("shadow") ? 1.5 : 0.6) + (ev.storm?.location === n.location ? 0.3 : 0), alone: others.length === 0 });
     if (n.needs.social < 20) feel(n, "loneliness", 0.03 * T(n, "loneliness_proneness") * h * 6);
     if (n.needs.curiosity < 20 && !n.activity) feel(n, "boredom", 0.03 * T(n, "boredom_proneness") * h * 6);
     if (n.pulse < 6 * 60) { feel(n, "fear", 0.04 * T(n, "survival_drive")); if (n.pulse < 3 * 60 && !n.deepMoment && n.pulse + cfg.minutesPerTick >= 3 * 60) { n.deepMoment = true; n.interrupt = true; } }
@@ -149,7 +155,7 @@ function progressActivity(ctx: SimCtx, n: Netrunner) {
     }
     case "rest": {
       const pods = state.locations[n.location].features.includes("rest");
-      const gain = (pods ? 22 : 11) * (0.6 + 0.8 * T(n, "recovery")) * h;
+      const gain = (pods ? 22 : 11) * (0.6 + 0.8 * T(n, "recovery")) * h * (pods ? restFactor(state) : 1);
       n.energy = Math.min(100, Math.round((n.energy + gain) * 10) / 10);
       n.integrity = Math.min(100, n.integrity + (pods ? 2 : 0.8) * h);
       feel(n, "calm", 0.04);
@@ -193,6 +199,15 @@ function progressActivity(ctx: SimCtx, n: Netrunner) {
         n.interrupt = true;
         a.endsAtTick = tick;
       }
+      break;
+    }
+    case "read": {
+      const book = state.library.find((b) => b.id === a.target);
+      if (!book || n.location !== "stacks" || state.events.blackout?.location === "stacks") { a.endsAtTick = tick; break; }
+      n.reading ??= { bookId: book.id, hours: 0 };
+      n.reading.hours = Math.round((n.reading.hours + h * (0.75 + 0.5 * T(n, "focus"))) * 100) / 100;
+      satisfy(n, "curiosity", 4 * h);
+      if (n.reading.hours >= book.hours) { finishBook(ctx, n, book); a.endsAtTick = tick; }
       break;
     }
     case "craft_shard": {
@@ -287,7 +302,24 @@ export function frameOf(state: WorldState, rt: string) {
       alive: n.alive,
     })),
     storm: state.events.storm?.location,
+    sys: { ...state.systems },
   };
 }
 
 export { ITEMS };
+
+/** Bring a world saved by an older version up to date (new systems, the Stacks, the library). */
+export function migrateState(state: WorldState, cfg: SessionConfig) {
+  state.systems ??= freshSystems();
+  if (!state.locations.stacks) {
+    const fresh = buildLocations();
+    state.locations.stacks = fresh.stacks;
+    for (const id of ["archive", "commons", "edge"]) state.locations[id].links = fresh[id].links;
+  }
+  if (!state.library?.length) state.library = buildLibrary(new Rng((cfg.seed ^ 0x51ac) >>> 0), state.puzzle, state.locations);
+  for (const n of Object.values(state.netrunners)) {
+    n.booksRead ??= [];
+    n.stats.solved ??= 0; n.stats.wrongAnswers ??= 0; n.stats.booksRead ??= 0; n.stats.upkeepDone ??= 0;
+  }
+  return state;
+}
