@@ -1,0 +1,98 @@
+{
+  "total": {
+    "calls": 564,
+    "input": 0,
+    "output": 0,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "webSearches": 0,
+    "costUsd": 0,
+    "errors": 0
+  },
+  "byModel": {
+    "claude-code": {
+      "calls": 564,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    }
+  },
+  "byPurpose": {
+    "decide": {
+      "calls": 518,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    },
+    "reflect": {
+      "calls": 46,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    }
+  },
+  "byNetrunner": {
+    "nr04": {
+      "calls": 101,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    },
+    "nr05": {
+      "calls": 115,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    },
+    "nr02": {
+      "calls": 102,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    },
+    "nr01": {
+      "calls": 121,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    },
+    "nr03": {
+      "calls": 125,
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "webSearches": 0,
+      "costUsd": 0,
+      "errors": 0
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "format": "netrunners-session/1",
+  "name": "session_01-claude-code",
+  "operator": "Imtiaj-Pc",
+  "path": "sessions/Imtiaj-Pc/session_01-claude-code",
+  "worldName": "the Lattice",
+  "models": {
+    "routine": "claude-code",
+    "deep": "claude-code"
+  },
+  "seed": 4542196,
+  "netrunnerCount": 5,
+  "status": "paused",
+  "createdAt": "2026-11-14T09:34:38.634Z",
+  "realActiveMs": 1966247,
+  "lastTick": 292,
+  "lastWorldMinutes": 4395,
+  "alive": 5,
+  "costUsd": 0
+}

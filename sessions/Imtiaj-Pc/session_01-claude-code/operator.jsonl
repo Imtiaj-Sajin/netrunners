@@ -1,0 +1,8 @@
+{"rt":"2026-11-14T09:34:38.637Z","kind":"session.created","by":"operator","tick":0,"wm":0,"phase":"idle","inflight":0,"held":0,"detail":"5 netrunners, seed 4542196"}
+{"rt":"2026-11-14T09:44:03.084Z","kind":"pause","by":"operator","tick":108,"wm":1635,"phase":"minds","inflight":1,"held":0,"detail":"end of day one, waiting for the operator"}
+{"rt":"2026-11-14T11:24:52.238Z","kind":"rules.upgraded","by":"operator","tick":108,"wm":1620,"phase":"idle","inflight":0,"held":1,"detail":"from tick 108 this world runs on newer rules: the city's body (power, signal, trams, order, the desk, Pulse supply) starts healthy; the Stacks library opens; 39 books; new contracts carry real problems; jobs can be posted and rated"}
+{"rt":"2026-11-14T11:24:52.239Z","kind":"session.reloaded","by":"operator","tick":108,"wm":1620,"phase":"idle","inflight":0,"held":1,"detail":"resumed from tick 108; 1 held answers"}
+{"rt":"2026-11-14T11:25:32.390Z","kind":"resume","by":"operator","tick":108,"wm":1620,"phase":"idle","inflight":0,"held":1}
+{"rt":"2026-11-14T11:47:24.701Z","kind":"pause","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":5,"held":0,"detail":"end of the second run, waiting for the operator"}
+{"rt":"2026-11-14T11:47:46.705Z","kind":"resume","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":1,"held":4}
+{"rt":"2026-11-14T11:49:16.195Z","kind":"pause","by":"operator","tick":292,"wm":4395,"phase":"minds","inflight":1,"held":4}
