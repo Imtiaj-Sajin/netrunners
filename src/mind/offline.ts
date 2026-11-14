@@ -40,6 +40,15 @@ export function offlineDecide(n: Netrunner, state: WorldState, jobId: string): D
     const wantsReport = rng.chance(0.5);
     return base("I'll pay someone better at this.", "post_job", { target: wantsReport ? "finance" : weakest, message: wantsReport ? "make my balance summary and tell me what I need to stay alive" : `help with something that needs ${weakest.replace("_", " ")}`, amount: rng.int(25, 60) });
   }
+  // the rewrite rule: the Truth they learned carries the syntax only in worlds where it is on
+  if (n.knowsTruth && n.knowledge.some((k) => k.id === "truth" && k.text.includes("SYNTAX"))) {
+    if (n.pulse < 12 * 60) return base("I write myself more time.", "rewrite", { target: n.name, message: "pulse", amount: 96 });
+    const gone = Object.values(state.netrunners).find((o) => !o.alive && n.bonds[o.id]);
+    if (gone && rng.chance(0.5)) return base(`${gone.name} comes back.`, "rewrite", { target: gone.name, message: "alive", amount: 1 });
+    if (state.systems.supply < 4 && rng.chance(0.3)) return base("The city needs packs. I write them.", "rewrite", { target: "city", message: "supply", amount: 30 });
+    const hated = Object.entries(n.impressions).find(([id, imp]) => imp.liking < -0.3 && state.netrunners[id]?.alive);
+    if (hated && rng.chance(0.15 * (1 - T(n, "honesty_humility")))) return base("They had it coming.", "rewrite", { target: state.netrunners[hated[0]].name, message: "creds", amount: 0 });
+  }
   if (n.knowsTruth && !n.shard.crafted) {
     if (n.location !== "foundry") return base("The Foundry. I have to forge it.", "move", { target: "foundry" });
     if (n.creds >= 300 || n.shard.progress > 0) return base("Forging.", "craft_shard", { duration: 6 });

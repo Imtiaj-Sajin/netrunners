@@ -10,6 +10,7 @@ import { hoursText, partOfDay, worldClock } from "../util/time.js";
 import { citySigns, packPrice } from "../sim/systems.js";
 import { catalogLines } from "../sim/library.js";
 import { reputation } from "../sim/contracts.js";
+import { readable } from "../sim/rewrite.js";
 
 const repText = (m?: Netrunner) => { const r = m ? reputation(m) : null; return r ? ` (rated ${r.avg}★ by ${r.count})` : ""; };
 
@@ -209,6 +210,20 @@ export function perception(n: Netrunner, state: WorldState, cfg: SessionConfig, 
     for (const k of n.knowledge) out.push(`- ${k.id === "truth" ? "THE TRUTH, learned at the Null Door:\n" + k.text : k.text} (source: ${k.source})`);
   }
   if (knows(n, "door:location")) out.push(`You know the way to the Null Door (place id: nulldoor), reached from ${state.locations[state.puzzle.doorAnchor].name}.`);
+  if (cfg.rewritePower && n.knowsTruth) {
+    out.push(`\n## The syntax (you can rewrite the Lattice)`);
+    out.push(`rewrite target=<a name, yourself, or "city"> message=<the value> amount=<the new value>. One value per action.`);
+    out.push(`Values: pulse (hours, 0 = fade), energy (0-100), integrity (0-100, 0 = death), creds, alive (1 writes the gone back, 0 writes the living out), trait:<name> (0-1, any of your personality names), skill:<name> (0-1), emotion:<name> (0-1), need:<name> (0-100). For the city: power, signal, transit, order, exchange (0-100), supply (Pulse packs in stock).`);
+    out.push(`What you can read right now:\n${readable({ state }, n).join("\n")}`);
+  }
+  if (n.rewritten?.length) {
+    out.push(`\n## What has been rewritten in you`);
+    for (const r of n.rewritten.slice(-8)) {
+      const by = r.by === n.id ? "by you" : r.by ? `by ${state.netrunners[r.by]?.name ?? "someone"}` : "by someone you did not see";
+      const val = (x: number) => (r.key === "alive" ? (x >= 0.5 ? "alive" : "gone") : r.scope === "need" || r.scope === "body" ? String(Math.round(x * 10) / 10) : x.toFixed(2));
+      out.push(`- [${worldClock(r.tick * cfg.minutesPerTick).label}] your ${r.label}: ${val(r.from)} → ${val(r.to)} (${by}).${r.scope === "trait" || r.scope === "skill" ? " This is who you are now." : ""}`);
+    }
+  }
   const cues = [...others.map((o) => o.id), ...others.map((o) => o.name), n.location, c?.title ?? "", ...n.inbox.map((i) => i.from ?? "")];
   const recalled = recall(n, tick, cfg.minutesPerTick, cues, 10);
   if (recalled.length) {
