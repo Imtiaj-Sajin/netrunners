@@ -331,6 +331,25 @@ body[data-status="paused"] .map { filter: contrast(1.05); }
 .toast { background: var(--ink-2); border: 1px solid var(--line-2); padding: 12px 16px; font-size: 13px; color: var(--paper); animation: arrive 0.4s var(--ease); }
 .toast.bad { border-color: rgba(214, 72, 72, 0.6); }
 .toast.good { border-color: rgba(196, 181, 253, 0.5); }
+.toast.lilac { border-color: var(--lilac); color: var(--lilac); }
+
+/* the rules of a world: switches, asked each time one wakes */
+.rules-dlg { width: min(620px, calc(100vw - 32px)); }
+.rules { display: flex; flex-direction: column; margin-top: 22px; border-top: 1px solid var(--line); }
+.switch-row { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 18px 2px; border-bottom: 1px solid var(--line); cursor: pointer; position: relative; }
+.switch-row input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch-row .sw { width: 44px; height: 24px; border: 1px solid var(--line-2); border-radius: 12px; position: relative; margin-top: 2px; transition: border-color 0.2s, background 0.2s; }
+.switch-row .sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--fog); transition: transform 0.25s var(--ease), background 0.2s; }
+.switch-row input:checked + .sw { border-color: var(--paper); background: rgba(236, 232, 223, 0.08); }
+.switch-row input:checked + .sw::after { transform: translateX(20px); background: var(--paper); }
+.switch-row.big input:checked + .sw { border-color: var(--lilac); background: rgba(196, 181, 253, 0.12); }
+.switch-row.big input:checked + .sw::after { background: var(--lilac); }
+.switch-row input:focus-visible + .sw { outline: 1px solid var(--lilac); outline-offset: 3px; }
+.switch-row .sw-text { display: flex; flex-direction: column; gap: 5px; }
+.switch-row .sw-text b { font: 400 21px/1.15 var(--serif); color: var(--paper); }
+.switch-row .sw-text em { font: 500 10px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--lilac); border: 1px solid rgba(196, 181, 253, 0.45); padding: 3px 6px; margin-left: 10px; vertical-align: 4px; font-style: normal; }
+.switch-row .sw-text small { color: var(--fog); font-size: 13px; line-height: 1.5; }
+.rw-row { display: grid; grid-template-columns: 70px 1fr auto; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; align-items: baseline; }
 
 /* ── report ── */
 .report { padding: 56px 28px 80px; background: linear-gradient(to bottom, rgba(11, 11, 10, 0.75), rgba(11, 11, 10, 0.97) 420px); min-height: calc(100vh - 71px); }

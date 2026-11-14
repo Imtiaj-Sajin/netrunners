@@ -239,12 +239,15 @@ function wakeChapter(boot) {
       minutesPerTick: Number(f.get("minutesPerTick")), tickIntervalMs: Number(f.get("tickIntervalMs")),
       budgetUsd: Number(f.get("budgetUsd")), deepNet: f.get("deepNet") === "on", deepNetMaxSearches: Number(f.get("deepNetMaxSearches")),
       spawnEveryWorldHours: Number(f.get("spawnEveryWorldHours")), reflectEveryWorldHours: Number(f.get("reflectEveryWorldHours")),
-      autoPauseOnTruth: f.get("autoPauseOnTruth") === "on", maxConcurrency: Number(f.get("maxConcurrency")),
+      maxConcurrency: Number(f.get("maxConcurrency")),
       importShards: f.getAll("shard"),
     };
     if (f.get("seed")) config.seed = Number(f.get("seed"));
+    const rules = await askRules(d);
+    if (!rules) return;
+    Object.assign(config, rules.config);
     try {
-      const r = await api("/api/sessions/new", { body: { config, start: f.get("startNow") === "on" } });
+      const r = await api("/api/sessions/new", { body: { config, start: rules.startNow } });
       S.info = r.live; S.feed = [];
       location.hash = "#/live";
     } catch (err) { toast(err.message, "bad"); }
@@ -266,15 +269,35 @@ function wakeChapter(boot) {
       fld("deep net searches", num("deepNetMaxSearches", d.deepNetMaxSearches, { min: 0 })),
       fld("seed", h("input", { name: "seed", type: "number", placeholder: "random" }), "same seed, same world"),
     ),
-    h("div", { class: "toggles" },
-      h("label", { class: "check" }, h("input", { type: "checkbox", name: "deepNet", checked: d.deepNet }), "Open the Deep Net: real web search at the Signal Tower, read-only, about $0.01 a search"),
-      h("label", { class: "check" }, h("input", { type: "checkbox", name: "autoPauseOnTruth", checked: d.autoPauseOnTruth }), "Freeze the world the moment someone learns the truth"),
-      h("label", { class: "check" }, h("input", { type: "checkbox", name: "startNow", checked: true }), "Let time run as soon as they wake"),
-    ),
     boot.shards.length ? h("details", { class: "shards" }, h("summary", {}, `wake shards from earlier worlds · ${boot.shards.length}`),
       boot.shards.map((s) => h("label", { class: "check" }, h("input", { type: "checkbox", name: "shard", value: s.path }), `${s.name}, from ${s.fromSession}`))) : null,
-    h("div", { class: "form-foot" }, h("button", { class: "btn solid", type: "submit" }, "wake them"), h("span", { class: "mono mute small" }, "everything they do will be recorded")),
+    h("div", { class: "form-foot" }, h("button", { class: "btn solid", type: "submit" }, "choose the rules"), h("span", { class: "mono mute small" }, "everything they do will be recorded")),
   );
+}
+
+// The rules of a world, asked every time one wakes. Each is fixed for the world's whole life.
+const RULES = [
+  { name: "rewritePower", title: "The rewrite", tag: "a big power", text: "Whoever learns the Truth can rewrite any value in the world: their own Pulse, body and personality, anyone else's, the city's. Even who is alive: the gone can be written back and the living written out. Every rewrite is recorded." },
+  { name: "deepNet", title: "The Deep Net", text: "Real web search at the Signal Tower, read-only, about $0.01 a search." },
+  { name: "autoPauseOnTruth", title: "Freeze on the Truth", text: "The world stops the moment someone learns it, so you can watch what comes next." },
+  { name: "startNow", title: "Time runs at once", text: "Otherwise they wake frozen, and time starts when you press play." },
+];
+function askRules(d) {
+  const dlg = $("#rules-dialog");
+  const start = { rewritePower: !!d.rewritePower, deepNet: !!d.deepNet, autoPauseOnTruth: !!d.autoPauseOnTruth, startNow: true };
+  $("#rules-body").replaceChildren(...RULES.map((r) => h("label", { class: `switch-row${r.tag ? " big" : ""}` },
+    h("input", { type: "checkbox", role: "switch", name: r.name, checked: start[r.name] }),
+    h("span", { class: "sw", "aria-hidden": "true" }),
+    h("span", { class: "sw-text" }, h("b", {}, r.title, r.tag ? h("em", {}, r.tag) : null), h("small", {}, r.text)))));
+  return new Promise((resolve) => {
+    dlg.onclose = () => {
+      if (dlg.returnValue !== "ok") return resolve(null);
+      const on = (k) => !!$(`#rules-body input[name="${k}"]`)?.checked;
+      resolve({ config: { rewritePower: on("rewritePower"), deepNet: on("deepNet"), autoPauseOnTruth: on("autoPauseOnTruth") }, startNow: on("startNow") });
+    };
+    dlg.returnValue = "";
+    dlg.showModal();
+  });
 }
 
 function indexRow(s, n, live) {
@@ -404,6 +427,7 @@ function renderStrip() {
     kv("alive", `${alive} of ${s.netrunners.length}`),
     kv("the hour", short(s.info.worldMinutes).split(" ")[1]),
     kv("the truth", knowers ? `known by ${knowers}` : "buried", knowers ? "lilac" : ""),
+    ...(s.config?.rewritePower ? [kv("the rewrite", (() => { const r = s.netrunners.reduce((a, n) => a + (n.stats?.rewrites ?? 0), 0); return r ? `${r} rewrite${r > 1 ? "s" : ""}` : "on, unused"; })(), "lilac")] : []),
     h("div", { class: "syshead" }, "the city's body"),
     bar("power", sys.power ?? 0), bar("signal", sys.signal ?? 0), bar("trams", sys.transit ?? 0),
     bar("order", sys.order ?? 0), bar("the desk", sys.exchange ?? 0), bar("pulse stock", sys.supply ?? 0, 16),
@@ -533,6 +557,7 @@ function renderMind(n, open, keepPortrait) {
           h("div", {}, "speaks ", h("b", {}, n.genome.voice)),
           h("div", { class: "mute small" }, `${n.genome.attachment} attachment · ${n.genome.quirk}`),
           n.pastLife ? h("div", { class: "lilac small" }, `carries a shard from ${n.pastLife.from}`) : null,
+          n.stats?.rewrites ? h("div", { class: "lilac small" }, `has rewritten ${n.stats.rewrites} value${n.stats.rewrites > 1 ? "s" : ""} of the world`) : null,
         ),
       ),
       h("button", { class: "link d-close", onclick: closeDetail }, "close"),
@@ -550,6 +575,11 @@ function renderMind(n, open, keepPortrait) {
       n.enjoys ? h("div", { class: "fog small" }, `finds joy in: ${n.enjoys}`) : null,
       n.goals.length ? h("ul", { class: "goals" }, n.goals.map((g) => h("li", {}, g))) : null,
     ) : null,
+    n.rewritten?.length ? sec("rewritten", `rewritten in them · ${n.rewritten.length}`, open,
+      n.rewritten.slice().reverse().map((r) => h("div", { class: "rw-row" },
+        h("span", { class: "mono fog small" }, short(r.tick * mpt)),
+        h("span", {}, `${r.label}: `, h("b", {}, r.key === "alive" ? (r.from >= 0.5 ? "alive" : "gone") : String(Math.round(r.from * 100) / 100)), " → ", h("b", { class: "lilac" }, r.key === "alive" ? (r.to >= 0.5 ? "alive" : "gone") : String(Math.round(r.to * 100) / 100))),
+        h("span", { class: "fog small" }, r.by === n.id ? "by themselves" : r.by ? `by ${peers(r.by)?.name ?? r.by}` : "unseen hand")))) : null,
     sec("feel", "feelings & needs", open,
       h("div", { class: "two" },
         h("div", {}, emotions.map(([k, v]) => meter(k, v, { color: v > 0.55 ? "var(--paper)" : "var(--fog)" }))),
@@ -606,6 +636,8 @@ function onAlert(a) {
     $("#truth-dialog").showModal();
   } else if (["error", "budget", "extinction"].includes(a.kind)) {
     notify("Netrunners", a.text); toast(a.text, "bad", 12000);
+  } else if (a.kind === "rewrite") {
+    beep(); notify("Netrunners · the rewrite", a.text); toast(a.text, "lilac", 10000);
   } else if (["shard", "first-kill", "bond"].includes(a.kind)) {
     notify("Netrunners", a.text); toast(a.text, a.kind === "first-kill" ? "bad" : "good", 8000);
   }
@@ -745,6 +777,10 @@ function animate(events) {
       case "steal": case "steal.failed": S.map.fx("steal", { a, b }); break;
       case "death": S.map.fx("death", { a }); break;
       case "truth.discovered": S.map.fx("truth", { a }); break;
+      case "rewrite":
+        S.map.fx("truth", { a, label: `rewrites ${d.variable}` });
+        if (b) S.map.fx("give", { a, b, label: `${d.variable} → ${typeof d.to === "number" ? Math.round(d.to * 100) / 100 : d.to}`, color: "196,181,253", delay: 400 });
+        break;
       case "clue.found": case "door.noticed": S.map.fx("pulse", { a, color: "196,181,253", label: "a clue" }); break;
       case "bond.formed": S.map.fx("bond", { a, b }); break;
       case "book.read": S.map.fx("read", { a, label: "finished a book" }); break;

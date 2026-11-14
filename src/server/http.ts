@@ -151,6 +151,7 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     cfg.netrunnerCount = Math.max(1, Math.min(40, Math.round(cfg.netrunnerCount)));
     cfg.minutesPerTick = Math.max(1, Math.min(60, Math.round(cfg.minutesPerTick)));
     cfg.maxConcurrency = Math.max(1, Math.min(16, Math.round(cfg.maxConcurrency)));
+    cfg.rewritePower = cfg.rewritePower === true;
     const allowed = MODELS.map((x) => x.id);
     if (!allowed.includes(cfg.routineModel) || !allowed.includes(cfg.deepModel)) return send(res, 400, { error: "unknown model" });
     const apiModel = (m: string) => m !== "offline" && m !== "claude-code";
