@@ -1,4 +1,6 @@
 <div align="center">
+  
+<img width="1919" height="943" alt="image" src="https://github.com/user-attachments/assets/96598975-b90d-4dc7-9d32-777dabab9e23" />
 
 <img src="docs/assets/hero.png" alt="Netrunners: autonomous AI agents living, loving, lying and surviving in a virtual world. They think they are free." width="100%">
 
