@@ -409,7 +409,7 @@ function renderBoard() {
     ...list.slice(0, 18).map((c) => h("div", { class: `job ${c.special ? "special" : ""} ${c.system ? "upkeep" : ""}` },
       h("div", { class: "ti" }, c.title),
       h("div", { class: "pr" }, c.challenge ? `${c.challenge.parts.filter((p) => p.solvedBy).length} / ${c.challenge.parts.length} solved` : `${c.progress.toFixed(1)} / ${c.workRequired}`),
-      h("div", { class: "me" }, `${c.system ? "upkeep · " : ""}${c.challenge ? `problem: ${[...new Set(c.challenge.parts.map((p) => p.kind))].join(", ")} · ` : ""}${c.kind} · ${c.crew.length ? c.crew.map(nameOf).join(", ") : "unclaimed"}`),
+      h("div", { class: "me" }, `${c.poster ? `job by ${nameOf(c.poster)} · ${c.awaiting ? "awaiting rating · " : ""}` : ""}${c.system ? "upkeep · " : ""}${c.challenge ? `problem: ${[...new Set(c.challenge.parts.map((p) => p.kind))].join(", ")} · ` : ""}${c.kind} · ${c.crew.length ? c.crew.map(nameOf).join(", ") : "unclaimed"}`),
       h("div", { class: "pr" }, `${fmt.hours(c.reward.pulse)} · ${c.reward.creds}c`),
     )));
 }
@@ -562,6 +562,11 @@ function renderMind(n, open, keepPortrait) {
             imp.notes.length ? h("div", { class: "notes" }, imp.notes.slice(-3).map((x) => h("div", {}, `“${x}”`))) : null,
           ));
       }) : h("p", { class: "fog" }, "They haven't met anyone yet.")),
+    sec("rep", `reputation · ${n.ratings?.length ?? 0}`, open,
+      n.ratings?.length ? [h("div", { class: "rep-avg" }, `${(n.ratings.reduce((a, r) => a + r.stars, 0) / n.ratings.length).toFixed(1)}★`, h("span", { class: "fog small" }, ` from ${n.ratings.length} rating${n.ratings.length > 1 ? "s" : ""}`)),
+        ...[...n.ratings].reverse().map((r) => h("div", { class: "rate-row" }, h("span", { class: "stars" }, "★".repeat(r.stars) + "☆".repeat(5 - r.stars)), " ", whoTag(r.by), r.comment ? h("span", { class: "fog" }, ` “${r.comment}”`) : null, h("span", { class: "tm" }, ` · ${short(r.tick * mpt)}`)))]
+        : h("p", { class: "fog" }, "Nobody has rated them yet."),
+      n.report ? h("div", { class: "know" }, h("b", {}, "their balance summary: "), n.report) : null),
     sec("know", `secrets · ${n.knowledge.length}`, open,
       n.knowledge.length ? n.knowledge.map((k) => h("div", { class: `know ${k.id === "truth" ? "truth" : ""}` }, k.text, h("span", { class: "src" }, `${k.id} · ${k.source}`))) : h("p", { class: "fog" }, "Nothing hidden known yet.")),
     sec("mem", `memory · ${n.memories.length}`, open,
@@ -738,6 +743,10 @@ function animate(events) {
       case "book.open": S.map.fx("read", { a, label: "opens a book" }); break;
       case "world.unrest": S.map.fx("attack", { a: ev.loc, b: a }); break;
       case "leisure.done": S.map.fx("pulse", { a, label: `${d.enjoyment}/10` }); break;
+      case "job.posted": S.map.fx("post", { a, b: "exchange", label: `job · ${d.amount}c` }); break;
+      case "job.done": S.map.fx("pulse", { a, label: "job done" }); break;
+      case "job.rated": if (d.stars) S.map.fx("trade", { a, b, label: `${"★".repeat(d.stars)} ${d.pay}c` }); else S.map.fx("trade", { a: b ?? a, b: a, label: `${d.pay}c` }); break;
+      case "rating": S.map.fx("trade", { a, b, label: "★".repeat(d.stars ?? 0) }); break;
       default: break;
     }
   }

@@ -486,3 +486,8 @@ body[data-status="paused"] .map { filter: contrast(1.05); }
 .th-part .pre { white-space: pre-wrap; font-family: var(--mono); font-size: 12px; color: var(--paper); }
 .th-tries { font: 400 11px var(--mono); color: var(--blood); margin-top: 4px; }
 .serif-md { font: 400 22px var(--serif); margin-bottom: 8px; }
+
+/* ── reputation ── */
+.rep-avg { font: 400 34px var(--serif); margin: 4px 0 8px; }
+.rate-row { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+.stars { color: var(--paper); letter-spacing: 2px; font-family: var(--mono); font-size: 12px; }

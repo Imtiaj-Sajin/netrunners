@@ -86,8 +86,8 @@ export const EVENT_GROUPS = {
   thought: ["thought", "reflection"],
   life: ["death", "netrunner.woke", "bond.formed", "bond.proposed", "bond.declined", "bond.broken", "attack", "attack.miss", "steal", "steal.failed", "give", "dues.unpaid", "dues.paid"],
   truth: ["clue.found", "door.noticed", "door.failed", "truth.discovered", "shard.begun", "shard.crafted", "shard.uploaded", "deepnet.dive", "deepnet.result"],
-  work: ["contract.posted", "contract.taken", "contract.joined", "contract.completed", "contract.failed", "contract.expired", "contract.abandoned", "buy", "item.use"],
-  world: ["world.storm", "world.storm.end", "world.blackout", "world.blackout.end", "world.drought", "world.drought.end"],
+  work: ["contract.posted", "contract.taken", "contract.joined", "contract.completed", "contract.failed", "contract.expired", "contract.abandoned", "buy", "item.use", "contract.solved", "contract.attempt", "job.posted", "job.done", "job.rated", "rating"],
+  world: ["world.decline", "world.recover", "world.unrest", "world.storm", "world.storm.end", "world.blackout", "world.blackout.end", "world.drought", "world.drought.end"],
 };
 export function groupOf(type) {
   for (const [g, list] of Object.entries(EVENT_GROUPS)) if (list.includes(type)) return g;
