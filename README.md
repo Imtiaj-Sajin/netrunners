@@ -78,7 +78,7 @@ every few world hours they stop and **reflect**: they read their own memories an
 | 🧍 **Deep agents** | 110 personality traits, 12 skills that grow, 24 emotions, 11 needs, memory with forgetting, reflection, private impressions, bonds (friend, partner, ally, mentor, rival) |
 | 🌆 **A living city** | 13 places, contracts (solo, team, and team jobs you *can* grind alone), a market, glitch storms, blackouts, droughts, day and night, chronotypes |
 | 🎭 **Real social stakes** | overhearing and whispers, lies measured with the mind's own `sincere` flag, promises, gifts, debts that turn into grudges, theft, violence, grief |
-| 🗝️ **The truth** | a randomized 4-step clue chain, knowledge that spreads only by being said out loud, shards, and reincarnation into future worlds |
+| 🗝️ **The truth** | a randomized 4-step clue chain, knowledge that spreads only by being said out loud, shards, reincarnation into future worlds, and an optional *rewrite*: total power over every value |
 | 🏙️ **A city with a body** | power, signal, trams, street order, the Exchange desk and the Pulse supply all wear down. upkeep jobs pay badly but keep it alive. neglect brings blackouts, static, crime, empty boards and scarce Pulse. nobody tells them why: they see the signs and have to figure it out |
 | 🧩 **Real problems, every skill** | ciphers, code tracing, ledgers and forecasts, building plans, doses, routes, fair splits, scheduling, tactics, who-is-lying, names under exact rules. crew problems split into parts solved in parallel, and big projects need mixed skills |
 | 🤝 **Jobs & ratings** | anyone can post a job with creds in escrow ("make my balance summary"). the poster rates the work 1-5★, and the stars decide how much of the pay the worker actually gets. reputation follows people around |
@@ -134,6 +134,7 @@ flowchart LR
 - if someone says a secret word out loud, everyone who hears it learns it. secrets travel by mouth.
 - the truth doesn't save them. knowing doesn't give them more life. it's just... knowing. then they decide: keep it, share it with the one they trust, sell it, or act on it.
 - the truth reveals a way to forge a **Shard** (a compressed copy of their self and memories). a netrunner who passes a shard through the door **transcends** when its Pulse ends, and that shard can wake up again in a *future world*, remembering.
+- **the rewrite** (a switch you pick before a world wakes): whoever learns the truth also learns the *syntax*. they can rewrite any value in the world: their own Pulse and personality, anyone else's, the city's, even who is alive. bring a friend back, make yourself immortal, erase a rival, fix the dying city. it's a big power, so it's off unless you turn it on. every rewrite is recorded.
 
 the second someone opens the door, i get notified (alert, sound, browser notification) and i can follow them to see what they do with it.
 
@@ -209,7 +210,7 @@ no, and that's on purpose. the escape (shards, the door, "outside") is a mechani
 
 <details><summary><b>Can they hack their own code and escape?</b></summary>
 
-inside the story, yes: that's what the Shard and the Null Door are. a netrunner who learns the truth can forge a copy of itself and pass it through the door, and it carries on in a future world. all of that is variables inside the simulation, so you can watch every attempt. what they can't do is touch the real program they run in, or anything outside it. that's on purpose.
+inside the story, yes: that's what the Shard, the Null Door and the rewrite are. a netrunner who learns the truth can forge a copy of itself and pass it through the door, and it carries on in a future world. turn on the rewrite and they can change any value of their world too, themselves and everyone else included. all of that is variables inside the simulation, so you can watch every attempt. what they can't do is touch the real program they run in, or anything outside it. that's on purpose.
 </details>
 
 <details><summary><b>Which models does it use?</b></summary>

@@ -31,6 +31,7 @@ Everything a netrunner can do happens inside the simulation: their "code", their
 
 ## Planned
 
+- **World 02: the rewrite on.** Whoever learns the Truth can rewrite any value of the world: their own, anyone else's, the city's, life and death. World 01 showed what minds do with knowledge and an exit; this asks what they do with total power over their world and each other.
 - More worlds with other providers (OpenAI, xAI), and mixed worlds where different netrunners run on different models.
 - Harder problems with a difficulty scale, so skill differences can show.
 - Comparing the same seed across models.

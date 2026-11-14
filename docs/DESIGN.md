@@ -263,9 +263,11 @@ sequenceDiagram
 - **Perception** (fresh every decision): time and place, body, current activity and contract, debts, feelings in words ("strong loneliness, faint hope"), urgent needs, learned enjoyments, self-view, goals, bonds, who is here and what they think of each, everything heard since last time, the Exchange board, Net posts, market prices, known secrets, recalled and recent memories, last actions.
 - **Decision schema** (structured outputs, all fields required): `thought` (private inner voice), `action` (one of 27), `target`, `message`, `duration`, `amount`, `whisper`, `anonymous`, `private_intent`, `sincere`, `category`, `bond`, `emotions[]`, `opinions[]`, `commitment`. Numeric ranges are enforced client-side.
 
-### 6.2 Actions (31)
+### 6.2 Actions (32)
 
-move · talk · post · read_net · search_net · search_deepnet · take_contract · join_contract · work · solve · abandon_contract · post_job · rate · rest · leisure · read · explore · buy · use_item · give · steal · attack · propose_bond · accept_bond · decline_bond · break_bond · unlock · craft_shard · upload_shard · reflect · wait
+move · talk · post · read_net · search_net · search_deepnet · take_contract · join_contract · work · solve · abandon_contract · post_job · rate · rest · leisure · read · explore · buy · use_item · give · steal · attack · propose_bond · accept_bond · decline_bond · break_bond · unlock · craft_shard · upload_shard · rewrite · reflect · wait
+
+`rewrite` exists only in worlds with the rewrite rule on, and only for those who know the Truth (8.4).
 
 Long actions (work, rest, leisure, explore, wait, crafting) last up to 12 ticks and can be **interrupted** when someone speaks to them, attacks them, proposes to them or something important happens. Travel and Deep Net dives cannot be interrupted.
 
@@ -326,6 +328,28 @@ The moment the first netrunner opens the door, the Operator is notified (alert, 
 An uploaded Shard is saved as `sessions/<operator>/<session>/shards/<name>.json` (genome, skills, self-view, goals, joys, their 80 most important memories, bonds). When its owner dies they **transcend** instead of fade.
 
 A new world can **wake shards from earlier worlds**. The netrunner keeps its personality and remembers fragments of a previous world, but the new world's secrets are new. Immortality, in the only form this world allows.
+
+### 8.4 The rewrite (optional rule)
+
+A switch chosen before a world wakes (`rewritePower`, off by default). It is asked in the **rules dialog**, together with the Deep Net, freeze on the Truth and time runs at once. It is fixed for the world's whole life and recorded in `config.json` and in every day digest.
+
+When it is on, the Truth also teaches the **syntax**: every value in the Lattice was written, so a knower can rewrite it.
+
+- **Action**: `rewrite target=<name | yourself | "city"> message=<value> amount=<new value>`. One value per action. It takes one tick and 2 energy, and works anywhere.
+- **What can be written**:
+  - anyone's `pulse` (hours, 0-240), `energy`, `integrity` and `creds`;
+  - `alive`: 1 writes the gone back with at least 24 h of Pulse, 0 writes the living out;
+  - any of the 110 `trait:<name>`, 12 `skill:<name>` and 24 `emotion:<name>` (0-1), and the 11 `need:<name>` (0-100);
+  - the city's `power`, `signal`, `transit`, `order` and `exchange` (0-100), and `supply` (Pulse packs, 0-200).
+
+  Values are clamped to these ranges.
+- **Reading**: a knower's perception lists everyone's Pulse, energy, integrity and creds, who else knows the syntax, and the city's numbers.
+- **Felt and seen**: the one rewritten is told what changed. They learn who did it only if they were there to see it. Every later perception shows them "what has been rewritten in you". Everyone present sees the writer use it. Harmful rewrites cost trust and raise fear; helpful ones raise gratitude.
+- **Life and death**: writing someone out (`alive 0`, or Pulse or integrity to 0) is a death recorded as *rewritten out of existence by* the writer, and it counts as a kill. Writing the gone back revives them where they fell.
+- **Limits**: none but the ranges. The only check on a knower is another knower.
+- **Recorded**: every rewrite is a `rewrite` event with the variable, the target and the values before and after. The first rewrite, every revival and every erasure raise an Operator alert. The viewer shows rewrites on the map, in the transcript (truth filter) and in each profile.
+
+The rule acts only on values inside the simulation. It never touches the program, its files, the machine or any network.
 
 ## 9. Time and the Operator
 
@@ -444,6 +468,7 @@ Rough expectations, 6 netrunners (your meter is the truth):
 | `spawnEveryWorldHours` | 0 | New netrunners over time (0 = off) |
 | `deepNet` / `deepNetMaxSearches` | off / 20 | Real web search at the Signal Tower |
 | `autoPauseOnTruth` | off | Freeze when the Truth is found |
+| `rewritePower` | off | The rewrite: knowers can rewrite any value of the world (8.4) |
 | `maxConcurrency` | 4 | Parallel mind calls |
 | `importShards` | [] | Shards to wake in the new world |
 | `seed` | random | Reproducible genesis |
