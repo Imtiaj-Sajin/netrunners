@@ -13,3 +13,4 @@
 {"rt":"2026-11-14T12:33:54.250Z","kind":"notify","by":"world","tick":479,"wm":7185,"phase":"idle","inflight":0,"held":0,"detail":"truth: Gideon has opened the Null Door and knows the Truth."}
 {"rt":"2026-11-14T12:35:14.950Z","kind":"notify","by":"world","tick":498,"wm":7470,"phase":"idle","inflight":0,"held":0,"detail":"truth: Talon has opened the Null Door and knows the Truth."}
 {"rt":"2026-11-14T12:35:14.951Z","kind":"notify","by":"world","tick":498,"wm":7470,"phase":"idle","inflight":0,"held":0,"detail":"truth: Pax has opened the Null Door and knows the Truth."}
+{"rt":"2026-11-14T12:39:01.701Z","kind":"notify","by":"world","tick":564,"wm":8460,"phase":"idle","inflight":0,"held":0,"detail":"shard: Uma uploaded a Shard. They will persist beyond this world."}
