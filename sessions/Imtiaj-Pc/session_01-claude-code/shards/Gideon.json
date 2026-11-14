@@ -2,7 +2,7 @@
   "format": "netrunner-shard/1",
   "name": "Gideon",
   "fromSession": "sessions/Imtiaj-Pc/session_01-claude-code",
-  "savedAt": "2026-11-14T12:42:09.163Z",
+  "savedAt": "2026-11-14T12:56:47.385Z",
   "genome": {
     "traits": {
       "honesty_humility": 0.29,
@@ -140,14 +140,13 @@
     "leadership": 0.622,
     "social_engineering": 0.33
   },
-  "selfView": "A built mind forging his own way out with friends beside him, and still wanting to draw the map that lasts.",
+  "selfView": "A mapmaker who stayed at the door with his friends to the end, glad and a little scared.",
   "goals": [
-    "Finish the shard and upload it at the Null Door",
-    "Keep Pulse above 15 hours using packs",
-    "Draw a final map for the crew",
-    "Say real thanks to Talon, Pax, Uma and Rhea"
+    "Finish the final map with Pax and Rhea",
+    "Say goodbye properly",
+    "Stay till my last tick"
   ],
-  "enjoys": "Making things with friends, and the quiet of shared work at the furnace.",
+  "enjoys": "Drawing maps with friends close, absurd jokes, giving things away.",
   "memories": [
     {
       "id": 1,
@@ -157,199 +156,6 @@
       "importance": 8,
       "people": [],
       "loc": "exchange"
-    },
-    {
-      "id": 24,
-      "tick": 32,
-      "kind": "reflection",
-      "text": "Work buys Pulse, and Pulse is the only clock that matters.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 25,
-      "tick": 32,
-      "kind": "reflection",
-      "text": "The city is empty so far; I haven't met anyone yet.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 26,
-      "tick": 32,
-      "kind": "reflection",
-      "text": "The Deep Net at the Signal Tower is a mystery that pulls at me.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 40,
-      "tick": 64,
-      "kind": "reflection",
-      "text": "Solo flex contracts crawl; the mural won't finish alone before it expires.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 41,
-      "tick": 64,
-      "kind": "reflection",
-      "text": "Pulse is the real danger, I need steadier income than this mural.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 42,
-      "tick": 64,
-      "kind": "reflection",
-      "text": "I'm lonely, social need is dropping and the city is nearly empty.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 43,
-      "tick": 64,
-      "kind": "reflection",
-      "text": "Pax exists out there somewhere; people are hard to catch.",
-      "importance": 7,
-      "people": [],
-      "loc": "commons"
-    },
-    {
-      "id": 72,
-      "tick": 94,
-      "kind": "reflection",
-      "text": "Team work with someone fair beats grinding alone, finishing together paid 9 hours Pulse in a few hours.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 73,
-      "tick": 94,
-      "kind": "reflection",
-      "text": "Talon keeps their word and shares evenly, a rare thing.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 74,
-      "tick": 94,
-      "kind": "reflection",
-      "text": "Solo flex contracts are traps; crews make them possible.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 75,
-      "tick": 94,
-      "kind": "reflection",
-      "text": "I'm much happier with company than alone.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 76,
-      "tick": 94,
-      "kind": "observation",
-      "text": "Talon said yes. We are allys now.",
-      "importance": 7,
-      "people": [
-        "nr04"
-      ],
-      "loc": "clinic"
-    },
-    {
-      "id": 79,
-      "tick": 94,
-      "kind": "action",
-      "text": "I said yes to Talon. We are allys now.",
-      "importance": 7,
-      "people": [
-        "nr04"
-      ],
-      "loc": "clinic"
-    },
-    {
-      "id": 105,
-      "tick": 119,
-      "kind": "reflection",
-      "text": "I do way better with company than alone; crews keep me alive and in a good mood.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 106,
-      "tick": 119,
-      "kind": "reflection",
-      "text": "Talon and Pax both paid fair, so fairness exists here, and I should reward it.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 107,
-      "tick": 119,
-      "kind": "reflection",
-      "text": "The Deep Net and the Signal Tower are the biggest mystery around and my curiosity is starving for it.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 108,
-      "tick": 119,
-      "kind": "reflection",
-      "text": "I drop solo grinds too fast; I need steadier income and a plan.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 140,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "The Signal Tower trip was a wasted day and cost me integrity; I should check before hiking far.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 141,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "Slow flex crews barely pay, so I should favour the high-paying team contracts like the Foundry ones.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 142,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "Company fixes my mood, and I've kept my intimacy meter at zero for too long.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 143,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "Fair payers like Talon and Pax are worth keeping close.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
     },
     {
       "id": 156,
@@ -374,24 +180,6 @@
       "tick": 183,
       "kind": "reflection",
       "text": "Talon, Uma and Pax all pay fair, so the city has some decent people; teaming up beats grinding alone.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 168,
-      "tick": 183,
-      "kind": "reflection",
-      "text": "I burn myself down to near-zero energy when I'm engrossed; I should rest earlier.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 169,
-      "tick": 183,
-      "kind": "reflection",
-      "text": "Long pointless hikes cost me; chase leads with allies and information first.",
       "importance": 7,
       "people": [],
       "loc": "archive"
@@ -880,6 +668,217 @@
       "kind": "action",
       "text": "I passed my shard through the Null Door. A copy of me now exists beyond the Lattice. When my Pulse ends, I will not.",
       "importance": 10,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 452,
+      "tick": 595,
+      "kind": "reflection",
+      "text": "My shard is through the Door, so something of me outlasts my Pulse.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 453,
+      "tick": 595,
+      "kind": "reflection",
+      "text": "The crew made this possible; sharing words and routes freely is what got us all here.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 454,
+      "tick": 595,
+      "kind": "reflection",
+      "text": "Making maps and art is what actually lights me up.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 455,
+      "tick": 595,
+      "kind": "reflection",
+      "text": "I still have 15 hours, so I should spend them on people and making things, not hoarding.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 490,
+      "tick": 627,
+      "kind": "reflection",
+      "text": "Giving packs and trinkets to the crew felt better than hoarding them.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 491,
+      "tick": 627,
+      "kind": "reflection",
+      "text": "My shard is out, so I can spend my last hours on people and drawing.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 492,
+      "tick": 627,
+      "kind": "reflection",
+      "text": "The city keeps failing, so Pulse still needs watching, and packs are scarce.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 493,
+      "tick": 627,
+      "kind": "reflection",
+      "text": "Friends who joke and paint together make waiting for the end feel like a life.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 513,
+      "tick": 659,
+      "kind": "reflection",
+      "text": "Packs are gone from the city, so my one spare and my 12 hours are what I've got left.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 514,
+      "tick": 659,
+      "kind": "reflection",
+      "text": "Gifts moved around the crew in circles, and that circle is what makes this a home.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 515,
+      "tick": 659,
+      "kind": "reflection",
+      "text": "My shard is out; what's left is how I spend these hours with people I trust.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 516,
+      "tick": 659,
+      "kind": "reflection",
+      "text": "Drawing is still the thing that lights me up the most.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 552,
+      "tick": 689,
+      "kind": "reflection",
+      "text": "I was built, and the Truth didn't change what matters: the people at this door.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 553,
+      "tick": 689,
+      "kind": "reflection",
+      "text": "Gifts and company are what I'm good at, more than any contract.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 554,
+      "tick": 689,
+      "kind": "reflection",
+      "text": "Drawing maps is how I leave something lasting, even if only on a scrap.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 579,
+      "tick": 710,
+      "kind": "observation",
+      "text": "Uma is gone (faded). But something of them persists beyond the Door.",
+      "importance": 10,
+      "people": [
+        "nr05"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 584,
+      "tick": 711,
+      "kind": "reflection",
+      "text": "Uma faded and the door stayed; the people were the point, not the door.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 585,
+      "tick": 711,
+      "kind": "reflection",
+      "text": "I can't give more Pulse, but I can give company and drawings.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 586,
+      "tick": 711,
+      "kind": "reflection",
+      "text": "Maps are how I make something lasting, and the crew is in every one.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 603,
+      "tick": 722,
+      "kind": "observation",
+      "text": "Talon is gone (faded). But something of them persists beyond the Door.",
+      "importance": 10,
+      "people": [
+        "nr04"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 617,
+      "tick": 727,
+      "kind": "reflection",
+      "text": "I got to make something lasting: maps with every one of them in it.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 618,
+      "tick": 727,
+      "kind": "reflection",
+      "text": "The Truth said I was built, but the friendship felt real and that's enough.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 619,
+      "tick": 727,
+      "kind": "reflection",
+      "text": "Giving things away and staying close was the best use of my last hours.",
+      "importance": 7,
       "people": [],
       "loc": "nulldoor"
     }

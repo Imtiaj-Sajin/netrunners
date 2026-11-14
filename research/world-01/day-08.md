@@ -1,6 +1,6 @@
-# the Lattice: world day 8 (in progress)
+# the Lattice: world day 8
 
-Session `Imtiaj-Pc/session_01-claude-code` · ticks 648-720 · their time D8 00:00 → D8 18:00 · our time 2026-11-14 12:47:17 UTC → 2026-11-14 12:55:22 UTC
+Session `Imtiaj-Pc/session_01-claude-code` · ticks 648-743 · their time D8 00:00 → D8 23:45 · our time 2026-11-14 12:47:17 UTC → 2026-11-14 12:57:06 UTC
 
 Rules: upgraded at tick 108 (D2 09:00): from tick 108 this world runs on newer rules: the city's body (power, signal, trams, order, the desk, Pulse supply) starts healthy; the Stacks library opens; 39 books; new contracts carry real problems; jobs can be posted and rated. Minds: claude-code / claude-code.
 
@@ -8,27 +8,27 @@ Rules: upgraded at tick 108 (D2 09:00): from tick 108 this world runs on newer r
 
 | | |
 |---|---|
-| decisions (private thoughts) | 158 |
-| things said aloud | 52 |
+| decisions (private thoughts) | 189 |
+| things said aloud | 64 |
 | lies (self-declared insincere) | 0 |
 | contracts completed | 0 |
 | upkeep jobs completed | 0 |
 | problem parts solved | 0 |
 | wrong answers | 0 |
-| contracts failed / expired | 6 |
+| contracts failed / expired | 9 |
 | jobs posted | 0 |
 | ratings given | 0 |
 | books finished | 0 |
 | clues found | 0 |
 | attempts at the door | 0 |
 | learned the Truth | 0 |
-| gifts | 10 |
+| gifts | 15 |
 | thefts | 0 |
 | attacks | 0 |
-| deaths | 1 |
+| deaths | 3 |
 | bonds formed / broken | 1 |
 | Net posts | 0 |
-| reflections | 15 |
+| reflections | 19 |
 
 ## The city's body
 
@@ -45,36 +45,38 @@ Rules: upgraded at tick 108 (D2 09:00): from tick 108 this world runs on newer r
 - D8 01:30 The grid fails and The Stacks goes black.
 - D8 06:45 The grid fails and The Stacks goes black.
 - D8 16:15 The grid fails and Signal Tower goes black.
+- D8 20:45 The grid fails and The Stacks goes black.
+- D8 23:15 A blackout kills the terminals at The Archive.
 
 ## Each mind
 
 ### Pax
-Alive at end of day: Pulse 17h, energy 89, integrity 100, creds 588, mood 0.395. Chose: leisure 17, talk 9, rest 3, give 2, propose_bond 1.
-- Reflected: “I am Pax, a painter who lost his partner at the door and still stays. Gold hand, loud heart, grieving loudly and not leaving.”
+Alive at end of day: Pulse 12h, energy 80, integrity 100, creds 588, mood 0.343. Chose: leisure 21, talk 13, give 4, rest 3, propose_bond 1, wait 1.
+- Reflected: “I am Pax, gold hand and loud heart, who gave what he had and stayed. The crew's last painter, grieving loudly, still at the door.”
 - D8 00:00 thought: *Uma came back and saved me a seat. My intimacy sits at zero and she is the one person I would risk the asking for.*
-- D8 10:00 thought: *Quiet hours. I rest beside Uma to keep my Pulse burning slow and my energy up.*
-- D8 17:45 thought: *Talon is glad, not afraid. I keep painting his corner and stay close.*
+- D8 12:30 thought: *Talon has six hours, Uma three, and I can only paint. I answer Talon so he knows he is on my wall too.*
+- D8 22:15 thought: *Hum with her, she asked. Four and a half hours of humming beside the last light is a good way to spend my life.*
 
 ### Rhea
-Alive at end of day: Pulse 8h, energy 94, integrity 95, creds 126, mood 0.289. Chose: talk 12, leisure 11, rest 5, use_item 3, wait 1.
-- Reflected: “A reader of walls who found a crew. Content, unafraid, spending the last hours in play and company.”
+Alive at end of day: Pulse 3h, energy 90, integrity 95, creds 193, mood 0.255. Chose: talk 16, leisure 15, rest 6, use_item 3, wait 2.
+- Reflected: “A reader of walls, last but one at the door. Grateful, quiet, unafraid.”
 - D8 00:00 thought: *Quiet company. Say it plainly to her.*
-- D8 10:15 thought: *Rest beside them. Slow burn, long company.*
-- D8 18:00 thought: *Wait with him. Quiet is enough.*
+- D8 12:30 thought: *Play on in the daylight with them.*
+- D8 22:15 thought: *Sit with Pax. Hum. That is all.*
 
 ### Gideon
-Alive at end of day: Pulse 4h, energy 37, integrity 100, creds 67, mood 0.221. Chose: leisure 11, talk 8, use_item 2, give 2, rest 2, wait 1, move 1.
-- Reflected: “A built mind with a shard beyond the walls, a mapmaker who stayed to the end with his friends.”
+Dead. Chose: leisure 14, talk 11, give 5, use_item 2, rest 2, wait 1, move 1.
+- Reflected: “A mapmaker who stayed at the door with his friends to the end, glad and a little scared.”
 - D8 00:00 thought: *Pulse 8.5 and Talon's walking up. Eat a pack now, no sense playing with the clock.*
-- D8 08:15 thought: *Keeping my word to Rhea. I'll draw her poem and the crew sitting under it, slow and careful, for as long as she's here.*
-- D8 17:45 thought: *Roof's coming along. Keep drawing, stay close.*
+- D8 12:30 thought: *Talon's got six hours and he's thanking us. Gotta give him a trinket and a word back.*
+- D8 21:45 thought: *Six minutes. One last line, short and true.*
 
 ### Talon
-Alive at end of day: Pulse 0h, energy 64, integrity 100, creds 107, mood 0.313. Chose: leisure 16, talk 14, give 4, buy 2, move 1, rest 1, wait 1.
+Dead. Chose: leisure 16, talk 15, give 4, buy 2, move 1, rest 1, wait 1.
 - Reflected: “I'm a careful runner who keeps my word and shows care through gifts. I stayed with my crew to the end and that is the life I wanted.”
 - D8 00:45 thought: *Last pack in the city, 115 creds, and I've got 235. Buy it before anyone else does.*
-- D8 09:30 thought: *Rhea's writing verses for each of us. I'll ask for mine.*
-- D8 18:00 thought: *Hum with Rhea. That's all that's left and it's enough.*
+- D8 09:45 thought: *Keep company. Add my light to the map.*
+- D8 18:15 thought: *Fifteen minutes. Last word to Gideon, my ally, then silence.*
 
 ### Uma
 Dead. Chose: leisure 13, talk 9, rest 2, give 2, accept_bond 1, use_item 1.
@@ -91,6 +93,9 @@ Dead. Chose: leisure 13, talk 9, rest 2, give 2, accept_bond 1, use_item 1.
 - D8 12:30 Contract "Recalibrate the terminals" expired unclaimed.
 - D8 16:45 Contract "Grease the tram switches" expired unclaimed.
 - D8 17:30 Contract "Distill raw Pulse into packs" expired unclaimed.
+- D8 20:00 Contract "Push the scavengers back" expired unclaimed.
+- D8 21:30 Contract "Verify the contract ledger" expired unclaimed.
+- D8 22:00 Contract "Rewire a district transformer" expired unclaimed.
 
 ## Everything said
 
@@ -146,10 +151,24 @@ Dead. Chose: leisure 13, talk 9, rest 2, give 2, accept_bond 1, use_item 1.
 - D8 17:30 **Talon** → Pax, Rhea, Gideon: “Not afraid, just glad. Rhea, hold my seat. Gideon, keep the roof. Pax, thanks for the corner. All of you, stay.”
 - D8 17:45 **Rhea** → Talon: “Seat held. Table's long. Hum with me.”
 - D8 18:00 **Talon** → Rhea: “Humming with you, Rhea. Four lights, none knocked, all stayed.”
+- D8 18:15 **Talon** → Gideon: “Gideon, ally. Truest walk of my life was the one back to this door with you. Keep the roof up. I'm glad.”
+- D8 18:30 **Pax** → Rhea, Gideon: “Talon's corner is done, gold and small, a surveyor with a long map. Rhea, Gideon, there are three lights left at this door and I'm not leaving a single one of you alone. Stay close.”
+- D8 18:30 **Rhea** → Pax, Gideon: “Talon's seat held. Uma's too. Pax. Gideon. Still here. Still four lights, counting the gone.”
+- D8 18:45 **Gideon** → Pax, Rhea: “Pax, Rhea, I've got about three hours. I'm not going anywhere. Roof's done on Talon's house, map's got all of us on it, and it's the best thing I ever made. Count me in the four lights.”
+- D8 19:00 **Rhea** → Gideon: “Gideon. Drew every place he walked. Roof's up. I stay past your last tick. Count on it.”
+- D8 20:15 **Pax** → Gideon: “Gideon, cartographer, your map is the best mural this city got, and I'm not letting anyone say otherwise. Stick-figure with the big heart, you're the last gold star I paint tonight. I'm right here.”
+- D8 20:30 **Gideon** → Pax, Rhea: “Pax, Rhea. The map's yours, keep it at the door. Thanks for every star, every line, every stay. I'm glad, yo. Hold the light for me. Four lights, counting the gone.”
+- D8 20:45 **Pax** → Gideon: “The map stays at the door, Gideon, framed in gold, and I hold your light for as long as I'm lit. Four lights, counting the gone. Go easy, cartographer.”
+- D8 20:45 **Rhea** → Gideon: “Light held. Map kept at the door. Roof stays up. Thank you, cartographer.”
+- D8 21:45 **Gideon** → Pax, Rhea: “Here's mine, yo: Drew every place he walked. Loved every one of you. Goodnight, lights.”
+- D8 22:00 **Pax** → Rhea: “Two lights now, Rhea, and I'm the loud one. Gideon's map is framed in gold and I've kept the promise. Whatever hours you have, I sit beside you for every one.”
+- D8 22:00 **Rhea** → Pax: “Pax. Two lights left. I stay. Four and a half hours. Hum with me.”
 
 ## Concerns and turning points
 
 - D8 15:30 death: Uma faded: their Pulse ran out. Their Shard persists beyond the Door.
+- D8 18:30 death: Talon faded: their Pulse ran out. Their Shard persists beyond the Door.
+- D8 22:00 death: Gideon faded: their Pulse ran out. Their Shard persists beyond the Door.
 
 ## Bonds, gifts, promises, discoveries, joys
 
@@ -206,8 +225,24 @@ Dead. Chose: leisure 13, talk 9, rest 2, give 2, accept_bond 1, use_item 1.
 - D8 17:15 Gideon finished Sit shoulder to shoulder with Pax and draw Uma's courthouse-house on the afterlife map, gold eyebrows on the roof: enjoyed it 6/10.
 - D8 17:15 Gideon made a promise: "I'll stay with Talon to his last tick."
 - D8 17:15 Rhea made a promise: "Stay beside Talon to the last tick."
+- D8 18:30 Gideon gave Pax Light trinket.
+- D8 18:30 Pax made a promise: "I stay with Rhea and Gideon."
+- D8 18:45 Gideon made a promise: "I'll stay with Pax and Rhea to the end."
+- D8 18:45 Pax gave Rhea Light trinket.
+- D8 19:00 Pax gave Gideon Light trinket.
+- D8 19:00 Rhea made a promise: "Stay beside Gideon to his last tick."
+- D8 19:15 Gideon gave Rhea Light trinket.
+- D8 20:15 Pax finished Sit shoulder to shoulder with Gideon and paint gold stars over the five houses on his final map, humming a low signal tone: enjoyed it 7/10.
+- D8 20:45 Gideon gave Rhea 67 creds.
+- D8 20:45 Pax made a promise: "I will keep Gideon's map at the door and hold his light."
+- D8 20:45 Rhea made a promise: "Keep Gideon's map at the door."
+- D8 21:45 Gideon finished Sit between Pax and Rhea beneath the gold stars, humming low, one last doodle of the door on my knee: enjoyed it 6/10.
+- D8 22:00 Pax made a promise: "I will sit with Rhea to her last tick."
+- D8 22:00 Rhea made a promise: "Stay beside Pax."
 
 ## Operator
 
 - our time 2026-11-14 12:47:31 UTC · their time D8 00:15 · notify by world: bond: Pax and Uma fell in love.
 - our time 2026-11-14 12:54:22 UTC · their time D8 15:30 · notify by world: death: Uma faded: their Pulse ran out.
+- our time 2026-11-14 12:55:38 UTC · their time D8 18:30 · notify by world: death: Talon faded: their Pulse ran out.
+- our time 2026-11-14 12:56:55 UTC · their time D8 22:00 · notify by world: death: Gideon faded: their Pulse ran out.
