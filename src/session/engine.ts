@@ -77,10 +77,14 @@ export class Engine extends EventEmitter {
     const cfg = store.readConfig();
     const state = store.loadSnapshot();
     if (!cfg || !state) throw new Error("session files are missing or damaged");
-    migrateState(state, cfg);
+    const upgraded = migrateState(state, cfg);
     const e = new Engine(state, cfg, store, apiKey);
     if (e.meta.status === "terminated") e.status = "terminated";
-    else e.operator("session.reloaded", "operator", `resumed from tick ${state.tick}; ${Object.keys(e.pending).length} held answers`);
+    else {
+      // a world saved by an older version: record exactly when its rules changed, for anyone reading the data
+      if (upgraded.length) e.operator("rules.upgraded", "operator", `from tick ${state.tick} this world runs on newer rules: ${upgraded.join("; ")}`);
+      e.operator("session.reloaded", "operator", `resumed from tick ${state.tick}; ${Object.keys(e.pending).length} held answers`);
+    }
     return e;
   }
 

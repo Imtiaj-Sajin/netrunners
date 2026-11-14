@@ -309,18 +309,21 @@ export function frameOf(state: WorldState, rt: string) {
 export { ITEMS };
 
 /** Bring a world saved by an older version up to date (new systems, the Stacks, the library). */
-export function migrateState(state: WorldState, cfg: SessionConfig) {
-  state.systems ??= freshSystems();
+export function migrateState(state: WorldState, cfg: SessionConfig): string[] {
+  const changes: string[] = [];
+  if (!state.systems) { state.systems = freshSystems(); changes.push("the city's body (power, signal, trams, order, the desk, Pulse supply) starts healthy"); }
   if (!state.locations.stacks) {
+    changes.push("the Stacks library opens");
     const fresh = buildLocations();
     state.locations.stacks = fresh.stacks;
     for (const id of ["archive", "commons", "edge"]) state.locations[id].links = fresh[id].links;
   }
-  if (!state.library?.length) state.library = buildLibrary(new Rng((cfg.seed ^ 0x51ac) >>> 0), state.puzzle, state.locations);
+  if (!state.library?.length) { state.library = buildLibrary(new Rng((cfg.seed ^ 0x51ac) >>> 0), state.puzzle, state.locations); changes.push(`${state.library.length} books`); }
   for (const n of Object.values(state.netrunners)) {
     n.booksRead ??= [];
     n.ratings ??= [];
     n.stats.solved ??= 0; n.stats.wrongAnswers ??= 0; n.stats.booksRead ??= 0; n.stats.upkeepDone ??= 0;
   }
-  return state;
+  if (changes.length) changes.push("new contracts carry real problems; jobs can be posted and rated");
+  return changes;
 }

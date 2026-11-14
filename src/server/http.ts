@@ -171,6 +171,8 @@ async function route(req: http.IncomingMessage, res: http.ServerResponse) {
     const s = loadSettings();
     const e = Engine.load(store, effectiveApiKey(s));
     if (e.status === "terminated") return send(res, 400, { error: "That session has ended. Open its report instead." });
+    // fresh agents must be shown who they are again: clear the bridge's old markers and mail
+    if (e.cfg.routineModel === "claude-code" || e.cfg.deepModel === "claude-code") resetBridge();
     attach(e);
     e.start(false);
     return send(res, 200, { live: e.statusInfo() });
