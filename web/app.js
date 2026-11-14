@@ -290,6 +290,8 @@ async function enterLive() {
   renderContracts();
   renderFreezeBanner();
   paintMap();
+  const pre = new URLSearchParams(location.search).get("select");
+  if (pre && !S.selected) select(pre);
   if (!S.feed.length) {
     const [op, name] = S.info.session.split("/").slice(1);
     const past = await api(`/api/session/${op}/${encodeURIComponent(name)}/events`).catch(() => []);
