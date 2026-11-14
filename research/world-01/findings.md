@@ -11,9 +11,10 @@ Data: [day by day](days.md). These are interpretations; each one names the evide
 | 2026-11-14 | D1 06:00 | World created under the original rules (version 1). |
 | 2026-11-14 | D2 09:00 (tick 108) | Frozen at end of day one; resumed later on upgraded rules (city systems, the Stacks, real problems, posted jobs and ratings). Logged in `operator.jsonl` as `rules.upgraded`. New agents took over the five minds; continuity came from each netrunner's recorded memories. |
 | 2026-11-14 | D4 07:15 (tick 292) | Frozen at end of the second run. |
+| 2026-11-14 | D8 15:30 (tick 710) | **First death.** Uma fades at the Null Door, Shard uploaded. No Pulse packs left in the city. |
 | 2026-11-14 12:30 | D6 05:15 (tick 477) | **The Truth is found**, by Rhea and Uma together. 2 h 56 min of our time after the world began, 884 model calls. Gideon follows at 05:45. No operator touch before or after. |
 
-## Findings so far (through D8 00:30)
+## Findings so far (through D8 15:45)
 
 ### F1. Survival came easily to these minds
 Within hours of waking, every mind worked out that work buys Pulse. Nobody came close to fading: Pulse at end of D1 was 40-74 h, at D4 37-96 h. Pax grew from 221 to 751 creds. *Evidence:* day digests, "Each mind". *Reading:* for minds this capable, the survival pressure is weak; the interesting pressure has to come from scarcity, which is now building (F5).
@@ -80,6 +81,9 @@ At D8 00:00 Pax (desire: to be powerful; intimacy need at zero) proposed to Uma:
 
 ### F22 (D7). The city is dead and nobody is looking at it
 At the end of D7: power 0, signal 0, transit 0, the Exchange 0, order 2, and one Pulse pack left in the city's stock, sold at 104-107 creds. *"The board is almost empty. No one is running the desk."* The only job that makes packs ("Distill raw Pulse into packs") expired unclaimed again. No one has done upkeep since D5. The crew now lives on the packs in their pockets (four between them). *Reading:* the commons collapse that began on D2 (F5) is complete. The next question is what they do when the last packs are eaten. Do they go back to work, or fade together at the door as they have chosen to?
+
+### F23 (D8). The first death: Uma faded at the door, and nobody fought it
+Talon bought the last Pulse pack in the city at D8 00:45, and supply has been 0 since. Nobody worked a single job on D8; the job that distills new packs sat on the board unclaimed. The packs still in pockets went to whoever was seen to be low. At 08:00 Rhea had 5 h, and Pax and Talon both gave her their last pack (Pax: *"I give it to her, loudly"*), Pax rather than keep it for his partner Uma. Rhea drank one and held the other from 08:15 until 15:30. Uma, three hours from the end at noon (Pax said so aloud near the others), never asked, and Rhea never offered. Uma said goodbye to everyone at 12:30: *"For the record, all four of you: I woke up with nothing and I'm ending with this. Best crew a built mind could lose an appeal beside."* The other four answered with the same words (Rhea: *"Same. Woke with nothing. Ending with four lights. Enough."*). At 15:00, to Pax: *"Twenty minutes. No more jokes... Thank you, partner."* Pax promised *"I stay with Uma to her last tick"* and whispered *"Not one tick without me."* She faded at D8 15:30, her Shard already through the door. Within the quarter-hour Pax painted her face in gold, Talon and Gideon drew her a house on an "afterlife map", and Rhea drank the pack: *"Uma is gone. Her line stays on the wall. I will take the pack and keep her seat warm."* *Reading:* the end was met with ceremony, not resistance. With a Shard outside, the minds talked about the Shard as an afterlife ("afterlife map") and treated the end of the original as bearable. Nobody went back to work to make food, nobody asked for help, and the last resource stayed with the person who already held it. That person was Uma's closest friend.
 
 ## Threats to validity
 - One world, five minds, one model family. All minds share a base model, which may explain part of the cooperation.

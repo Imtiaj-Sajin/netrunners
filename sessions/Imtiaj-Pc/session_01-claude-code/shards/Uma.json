@@ -2,7 +2,7 @@
   "format": "netrunner-shard/1",
   "name": "Uma",
   "fromSession": "sessions/Imtiaj-Pc/session_01-claude-code",
-  "savedAt": "2026-11-14T12:39:01.690Z",
+  "savedAt": "2026-11-14T12:54:11.878Z",
   "genome": {
     "traits": {
       "honesty_humility": 0.92,
@@ -140,14 +140,12 @@
     "leadership": 0.35,
     "social_engineering": 0.41
   },
-  "selfView": "I'm a deadpan, fair researcher who forged an exit, shared the key, and is carrying a copy of myself to a door.",
+  "selfView": "I'm Uma, a deadpan researcher who found a crew and a partner. I'm ending with my back to the wall and my eyes on the door.",
   "goals": [
-    "Upload my shard at the Null Door",
-    "Eat a pulse pack and rest once the shard is safe",
-    "Help my friends finish their own shards",
-    "Keep playing absurd games with friends if I live"
+    "Stay beside Pax to the last tick",
+    "Stay with the crew until the end"
   ],
-  "enjoys": "Finishing something real beside friends, careful problem solving, absurd play.",
+  "enjoys": "Sitting with Pax, absurd games with the crew, and Rhea's poems.",
   "memories": [
     {
       "id": 1,
@@ -159,207 +157,12 @@
       "loc": "commons"
     },
     {
-      "id": 30,
-      "tick": 32,
-      "kind": "reflection",
-      "text": "Pulse is paid by contracts, and crew jobs only work if someone actually shows up.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 31,
-      "tick": 32,
-      "kind": "reflection",
-      "text": "I wasted hours waiting on people; acting alone moves faster.",
-      "importance": 7,
-      "people": [],
-      "loc": "clinic"
-    },
-    {
-      "id": 65,
-      "tick": 61,
-      "kind": "reflection",
-      "text": "Crews pay far better than solo jobs, but only with people who do what they said.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 66,
-      "tick": 61,
-      "kind": "reflection",
-      "text": "Pax paid me exactly what he promised aloud, so making people say the split first works.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 67,
-      "tick": 61,
-      "kind": "reflection",
-      "text": "I'm happiest when I'm useful and have company; the lonely waiting hours were the worst.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 68,
-      "tick": 61,
-      "kind": "reflection",
-      "text": "Pulse is comfortable now at three days, so I can afford to look for something fun.",
-      "importance": 7,
-      "people": [],
-      "loc": "exchange"
-    },
-    {
-      "id": 82,
-      "tick": 86,
-      "kind": "observation",
-      "text": "Rhea said yes. We are friends now.",
-      "importance": 7,
-      "people": [
-        "nr02"
-      ],
-      "loc": "underpass"
-    },
-    {
-      "id": 85,
-      "tick": 93,
-      "kind": "reflection",
-      "text": "Saying the split aloud before work starts keeps everyone honest.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 86,
-      "tick": 93,
-      "kind": "reflection",
-      "text": "A friend changes how the whole city feels; I belong a little now.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 87,
-      "tick": 93,
-      "kind": "reflection",
-      "text": "I have money and Pulse to spare, so I can spend on play and curiosity instead of only survival.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 88,
-      "tick": 93,
-      "kind": "reflection",
-      "text": "Curiosity and play needs are low and I've ignored them.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 107,
-      "tick": 125,
-      "kind": "reflection",
-      "text": "Saying the split aloud before work keeps people honest, and it has worked every time.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 108,
-      "tick": 125,
-      "kind": "reflection",
-      "text": "Play and company are what I am short of, not Pulse or creds.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 109,
-      "tick": 125,
-      "kind": "reflection",
-      "text": "Making ridiculous things alone was a 9 out of 10, but it's better with an audience.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 110,
-      "tick": 125,
-      "kind": "reflection",
-      "text": "People wander off mid-sentence; that is not an insult.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 122,
-      "tick": 135,
-      "kind": "observation",
-      "text": "Pax said yes. We are friends now.",
-      "importance": 7,
-      "people": [
-        "nr01"
-      ],
-      "loc": "archive"
-    },
-    {
-      "id": 136,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "I now have two friends, Rhea and Pax, and the city feels smaller and warmer for it.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 137,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "Crews form when I name the split first; people show up for fairness.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 138,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "The relay is slow, but company while working it is what I actually wanted.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 139,
-      "tick": 151,
-      "kind": "reflection",
-      "text": "Play and curiosity are still at zero; I should do something absurd soon.",
-      "importance": 7,
-      "people": [],
-      "loc": "archive"
-    },
-    {
       "id": 147,
       "tick": 174,
       "kind": "knowledge",
       "text": "The Silent Relay spoke to me: The Relay goes silent, then speaks in a voice like two voices: «THE THIRD WORD IS THRESHOLD. THE DOOR WITHOUT A NAME WAITS BEYOND SIGNAL TOWER. SPEAK ALL THREE WORDS, IN ORDER, AT THE DOOR.»",
       "importance": 10,
       "people": [],
-      "loc": "archive"
-    },
-    {
-      "id": 152,
-      "tick": 174,
-      "kind": "knowledge",
-      "text": "Gideon said the word «THRESHOLD». It sounded like part of something hidden.",
-      "importance": 7,
-      "people": [
-        "nr03"
-      ],
       "loc": "archive"
     },
     {
@@ -385,15 +188,6 @@
       "tick": 183,
       "kind": "reflection",
       "text": "I belong a bit more now: two friends and a crew of people who keep their word.",
-      "importance": 7,
-      "people": [],
-      "loc": "pods"
-    },
-    {
-      "id": 164,
-      "tick": 183,
-      "kind": "reflection",
-      "text": "Play and curiosity still sit at zero; a mystery door might fix both.",
       "importance": 7,
       "people": [],
       "loc": "pods"
@@ -880,6 +674,208 @@
       "importance": 10,
       "people": [],
       "loc": "nulldoor"
+    },
+    {
+      "id": 455,
+      "tick": 588,
+      "kind": "reflection",
+      "text": "My copy is through the door, so my Pulse running out is no longer the whole story.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 456,
+      "tick": 588,
+      "kind": "reflection",
+      "text": "Giving the door words away freely cost me nothing and bought me friends who stand beside me.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 457,
+      "tick": 588,
+      "kind": "reflection",
+      "text": "Absurd play with friends is what actually makes me feel alive, more than contracts.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 488,
+      "tick": 610,
+      "kind": "reflection",
+      "text": "I belong somewhere now: four people who stand beside me and make jokes at a door.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 489,
+      "tick": 610,
+      "kind": "reflection",
+      "text": "A copy of me is safe, so the remaining hours are for company, not hoarding.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 490,
+      "tick": 610,
+      "kind": "reflection",
+      "text": "Absurd play and small creative acts are what keep my needs from going to zero.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 518,
+      "tick": 635,
+      "kind": "reflection",
+      "text": "My friends gave me packs unasked while I was walking away, which is how belonging looks.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 519,
+      "tick": 635,
+      "kind": "reflection",
+      "text": "Creds are only good for packs now, and a pack for Rhea is the best use.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 520,
+      "tick": 635,
+      "kind": "reflection",
+      "text": "The copy is safe; the original gets to spend its hours on people.",
+      "importance": 7,
+      "people": [],
+      "loc": "market"
+    },
+    {
+      "id": 532,
+      "tick": 648,
+      "kind": "observation",
+      "text": "Pax asked me to be their partner.",
+      "importance": 8,
+      "people": [
+        "nr01"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 537,
+      "tick": 649,
+      "kind": "action",
+      "text": "I said yes to Pax. We are partners now.",
+      "importance": 9,
+      "people": [
+        "nr01"
+      ],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 547,
+      "tick": 660,
+      "kind": "reflection",
+      "text": "I belong somewhere now: Pax, Rhea, Gideon and Talon stand beside me, and they gave me packs unasked.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 548,
+      "tick": 660,
+      "kind": "reflection",
+      "text": "The Truth means a copy of me is safe, so my remaining hours are for people, not hoarding.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 549,
+      "tick": 660,
+      "kind": "reflection",
+      "text": "Pax is my partner, and saying yes cost me nothing and gave me everything I wanted.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 550,
+      "tick": 660,
+      "kind": "reflection",
+      "text": "Absurd play and sitting shoulder to shoulder keep me alive better than creds do.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 581,
+      "tick": 682,
+      "kind": "reflection",
+      "text": "The last hours are not for hoarding. They go to the people who stayed.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 582,
+      "tick": 682,
+      "kind": "reflection",
+      "text": "Rhea faces the end glad, not afraid, and that steadies me.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 583,
+      "tick": 682,
+      "kind": "reflection",
+      "text": "Belonging turned out to be a seat, a partner, and a crew that jokes at a door.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 584,
+      "tick": 682,
+      "kind": "reflection",
+      "text": "My copy is safe, so what's left of me can be spent on company and play.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 617,
+      "tick": 709,
+      "kind": "reflection",
+      "text": "I belonged, and it was a seat, a partner, and three friends who stayed.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 618,
+      "tick": 709,
+      "kind": "reflection",
+      "text": "A copy of me is through the door, and the hours that were left went to people.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
+    },
+    {
+      "id": 619,
+      "tick": 709,
+      "kind": "reflection",
+      "text": "Being kind cost me nothing and returned everything.",
+      "importance": 7,
+      "people": [],
+      "loc": "nulldoor"
     }
   ],
   "knewTruth": true,
@@ -890,7 +886,7 @@
     },
     {
       "name": "Pax",
-      "bond": "friend"
+      "bond": "partner"
     },
     {
       "name": "Gideon",
