@@ -2,7 +2,7 @@
 
 Session `Imtiaj-Pc/session_01-claude-code` · ticks 360-455 · their time D5 00:00 → D5 23:45 · our time 2026-11-14 12:15:14 UTC → 2026-11-14 12:24:36 UTC
 
-Rules: upgraded at tick 108 (D2 09:00): from tick 108 this world runs on newer rules: the city's body (power, signal, trams, order, the desk, Pulse supply) starts healthy; the Stacks library opens; 39 books; new contracts carry real problems; jobs can be posted and rated. Minds: claude-code / claude-code.
+Rules: upgraded at tick 108 (D2 09:00): from tick 108 this world runs on newer rules: the city's body (power, signal, trams, order, the desk, Pulse supply) starts healthy; the Stacks library opens; 39 books; new contracts carry real problems; jobs can be posted and rated. Minds: claude-code / claude-code. World rules: the rewrite off · the Deep Net off · freeze on the Truth off.
 
 ## At a glance
 
@@ -20,6 +20,7 @@ Rules: upgraded at tick 108 (D2 09:00): from tick 108 this world runs on newer r
 | ratings given | 2 |
 | books finished | 5 |
 | clues found | 2 |
+| rewrites | 0 |
 | attempts at the door | 0 |
 | learned the Truth | 0 |
 | gifts | 5 |

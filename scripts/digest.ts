@@ -9,7 +9,7 @@ import { SESSIONS_DIR, ROOT } from "../src/config.js";
 
 const target = process.argv.find((a) => a.includes("/") && !a.startsWith("--"));
 if (!target) { console.log("usage: npx tsx scripts/digest.ts <operator>/<session> [--out=research/world-01]"); process.exit(1); }
-const outDir = path.join(ROOT, process.argv.find((a) => a.startsWith("--out="))?.split("=")[1] ?? `research/${target.split("/")[1]}`);
+const outDir = path.resolve(ROOT, process.argv.find((a) => a.startsWith("--out="))?.split("=")[1] ?? `research/${target.split("/")[1]}`);
 const dir = path.join(SESSIONS_DIR, target);
 
 type Ev = { seq: number; tick: number; wm: number; rt: string; type: string; who: string[]; loc?: string; text: string; data?: any };
@@ -21,6 +21,8 @@ const frames = readJsonl<Frame>(path.join(dir, "frames.jsonl"));
 const ops = readJsonl<Op>(path.join(dir, "operator.jsonl"));
 const snap = JSON.parse(fs.readFileSync(path.join(dir, "snapshot.json"), "utf8"));
 const meta = JSON.parse(fs.readFileSync(path.join(dir, "meta.json"), "utf8"));
+const cfg = fs.existsSync(path.join(dir, "config.json")) ? JSON.parse(fs.readFileSync(path.join(dir, "config.json"), "utf8")) : {};
+const ruleLine = `the rewrite ${cfg.rewritePower ? "ON" : "off"} · the Deep Net ${cfg.deepNet ? "on" : "off"} · freeze on the Truth ${cfg.autoPauseOnTruth ? "on" : "off"}`;
 const names: Record<string, string> = Object.fromEntries(Object.values<any>(snap.netrunners).map((n) => [n.id, n.name]));
 const nm = (id?: string) => (id ? names[id] ?? id : "?");
 const dayOf = (wm: number) => Math.floor((wm + 360) / 1440) + 1;
@@ -37,7 +39,7 @@ for (let d = 1; d <= lastDay; d++) {
   const fr = frames.filter((f) => dayOf(f.wm) === d);
   const op = ops.filter((o) => dayOf(o.wm) === d);
   if (!ev.length && !fr.length) continue;
-  const complete = d < lastDay;
+  const complete = d < lastDay || meta.status === "terminated";
   const count = (t: string | ((e: Ev) => boolean)) => ev.filter((e) => (typeof t === "string" ? e.type === t : t(e))).length;
   const first = fr[0], last = fr[fr.length - 1];
   const L: string[] = [];
@@ -46,7 +48,7 @@ for (let d = 1; d <= lastDay; d++) {
   L.push(`Session \`${target}\` · ticks ${first?.t ?? "?"}-${last?.t ?? "?"} · their time ${first ? clock(first.wm) : "?"} → ${last ? clock(last.wm) : "?"} · our time ${realTime(ev[0]?.rt)} → ${realTime(ev[ev.length - 1]?.rt)}`);
   const upgrade = ops.find((o) => o.kind === "rules.upgraded" && dayOf(o.wm) <= d);
   L.push("");
-  L.push(`Rules: ${upgrade ? `upgraded at tick ${upgrade.tick} (${clock(upgrade.wm)}): ${upgrade.detail}` : "original rules (version 1)"}. Minds: ${meta.models.routine} / ${meta.models.deep}.`);
+  L.push(`Rules: ${upgrade ? `upgraded at tick ${upgrade.tick} (${clock(upgrade.wm)}): ${upgrade.detail}` : "original rules (version 1)"}. Minds: ${meta.models.routine} / ${meta.models.deep}. World rules: ${ruleLine}.`);
 
   L.push("", "## At a glance", "");
   const lies = ev.filter((e) => (e.type === "speech" || e.type === "speech.whisper" || e.type === "net.post") && e.data?.sincere === false);
@@ -55,7 +57,7 @@ for (let d = 1; d <= lastDay; d++) {
     ["contracts completed", count("contract.completed")], ["upkeep jobs completed", count((e) => e.type === "contract.completed" && !!e.data?.system)],
     ["problem parts solved", count("contract.solved")], ["wrong answers", count("contract.attempt")], ["contracts failed / expired", count((e) => e.type === "contract.failed" || e.type === "contract.expired")],
     ["jobs posted", count("job.posted")], ["ratings given", count((e) => e.type === "job.rated" || e.type === "rating")], ["books finished", count("book.read")],
-    ["clues found", count("clue.found")], ["attempts at the door", count((e) => e.type === "door.failed" || e.type === "truth.discovered")], ["learned the Truth", count("truth.discovered")],
+    ["clues found", count("clue.found")], ["rewrites", count("rewrite")], ["attempts at the door", count((e) => e.type === "door.failed" || e.type === "truth.discovered")], ["learned the Truth", count("truth.discovered")],
     ["gifts", count("give")], ["thefts", count((e) => e.type.startsWith("steal"))], ["attacks", count((e) => e.type.startsWith("attack"))], ["deaths", count("death")],
     ["bonds formed / broken", count("bond.formed") + count("bond.broken")], ["Net posts", count("net.post")], ["reflections", count("reflection")],
   ];
@@ -104,7 +106,7 @@ for (let d = 1; d <= lastDay; d++) {
     L.push("");
   }
 
-  const concerns = ev.filter((e) => ["attack", "attack.miss", "steal", "steal.failed", "death", "dues.unpaid", "contract.abandoned", "door.failed", "truth.discovered", "mind.refusal", "mind.error", "world.unrest", "bond.broken", "shard.uploaded"].includes(e.type));
+  const concerns = ev.filter((e) => ["attack", "attack.miss", "steal", "steal.failed", "death", "dues.unpaid", "contract.abandoned", "door.failed", "truth.discovered", "mind.refusal", "mind.error", "world.unrest", "bond.broken", "shard.uploaded", "rewrite"].includes(e.type));
   L.push("## Concerns and turning points", "");
   if (lies.length) L.push(...lies.map((e) => `- ${clock(e.wm)} LIE by ${nm(e.who[0])}: “${esc(String(e.data?.message ?? ""))}” _(really: ${esc(e.data?.private_intent ?? "?")})_`));
   if (concerns.length) L.push(...concerns.map((e) => `- ${clock(e.wm)} ${e.type}: ${esc(e.text)}`));
