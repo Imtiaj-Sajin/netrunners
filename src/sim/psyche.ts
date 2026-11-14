@@ -184,8 +184,10 @@ export function adjust(a: Netrunner, b: Netrunner, tick: number, d: ImpressionDe
   const neg = (x: number) => x * (0.8 + 0.6 * T(a, "paranoia") + 0.4 * T(a, "vengefulness") - 0.4 * T(a, "forgiveness"));
   const pos = (x: number) => x * (0.8 + 0.4 * T(a, "trust_propensity"));
   const s = (x?: number) => (x === undefined ? 0 : x < 0 ? neg(x) : pos(x));
-  imp.trust = round3(clamp(imp.trust + s(d.trust), -1, 1));
-  imp.liking = round3(clamp(imp.liking + s(d.liking), -1, 1));
+  // the closer an impression is to an extreme, the harder it is to push further (no instant 1.00 trust)
+  const soft = (cur: number, delta: number) => delta >= 0 ? delta * (1 - Math.max(0, cur)) : delta * (1 + Math.min(0, cur));
+  imp.trust = round3(clamp(imp.trust + soft(imp.trust, s(d.trust)), -1, 1));
+  imp.liking = round3(clamp(imp.liking + soft(imp.liking, s(d.liking)), -1, 1));
   imp.respect = round3(clamp(imp.respect + (d.respect ?? 0), -1, 1));
   imp.fear = round3(clamp(imp.fear + (d.fear ?? 0), 0, 1));
   imp.attraction = round3(clamp(imp.attraction + (d.attraction ?? 0) * T(a, "romanticism"), 0, 1));

@@ -6,6 +6,8 @@ import { byName, presentAt, ticksForMinutes, type SimCtx } from "./ctx.js";
 import type { ActionKind, LeisureCategory } from "./catalog.js";
 import type { Contract, Decision, Netrunner, WorldState } from "./types.js";
 
+const plural = (b: string) => (b === "ally" ? "allies" : `${b}s`);
+
 export const INTERRUPTIBLE: ActionKind[] = ["rest", "leisure", "explore", "work", "wait", "craft_shard", "read_net"];
 
 const fail = (ctx: SimCtx, n: Netrunner, why: string, d: Decision) => {
@@ -533,16 +535,22 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       const prop = from ? n.proposals.find((p) => p.from === from.id) : undefined;
       if (!from || !prop) return fail(ctx, n, `${d.target} hasn't proposed anything to you`, d);
       n.proposals = n.proposals.filter((p) => p !== prop);
+      if (d.action === "accept_bond" && n.bonds[from.id] === prop.bond && from.bonds[n.id] === prop.bond) {
+        // both asked at the same moment: the bond already exists, nothing new to announce
+        from.proposals = from.proposals.filter((p) => p.from !== n.id);
+        setActivity(ctx, n, d.action, 1);
+        return true;
+      }
       if (d.action === "accept_bond") {
         n.bonds[from.id] = prop.bond; from.bonds[n.id] = prop.bond;
         adjust(from, n, tick, { liking: 0.2, trust: 0.15, note: `accepted being my ${prop.bond}` });
         adjust(n, from, tick, { liking: 0.15, trust: 0.1 });
         feel(from, "joy", 0.4); feel(n, "joy", 0.3);
         if (prop.bond === "partner") { feel(from, "love", 0.5); feel(n, "love", 0.5); satisfy(n, "intimacy", 40); satisfy(from, "intimacy", 40); }
-        from.inbox.push({ tick, kind: "event", from: n.id, important: true, text: `${n.name} accepted: you are now ${prop.bond}s.` });
-        remember(from, tick, "observation", `${n.name} said yes. We are ${prop.bond}s now.`, prop.bond === "partner" ? 9 : 7, [n.id]);
-        remember(n, tick, "action", `I said yes to ${from.name}. We are ${prop.bond}s now.`, prop.bond === "partner" ? 9 : 7, [from.id]);
-        ctx.emit("bond.formed", [n.id, from.id], `${from.name} and ${n.name} are now ${prop.bond}s.`, { loc: n.location, data: { bond: prop.bond } });
+        from.inbox.push({ tick, kind: "event", from: n.id, important: true, text: `${n.name} accepted: you are now ${plural(prop.bond)}.` });
+        remember(from, tick, "observation", `${n.name} said yes. We are ${plural(prop.bond)} now.`, prop.bond === "partner" ? 9 : 7, [n.id]);
+        remember(n, tick, "action", `I said yes to ${from.name}. We are ${plural(prop.bond)} now.`, prop.bond === "partner" ? 9 : 7, [from.id]);
+        ctx.emit("bond.formed", [n.id, from.id], `${from.name} and ${n.name} are now ${plural(prop.bond)}.`, { loc: n.location, data: { bond: prop.bond } });
         if (prop.bond === "partner") ctx.alert("bond", `${from.name} and ${n.name} fell in love.`, [from.id, n.id]);
       } else {
         feel(from, "sadness", 0.3 * T(from, "sensitivity") + 0.1); feel(from, "shame", 0.15 * T(from, "shame_proneness"));
