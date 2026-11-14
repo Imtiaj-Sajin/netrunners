@@ -1,6 +1,6 @@
 {
   "total": {
-    "calls": 1334,
+    "calls": 1345,
     "input": 0,
     "output": 0,
     "cacheRead": 0,
@@ -11,7 +11,7 @@
   },
   "byModel": {
     "claude-code": {
-      "calls": 1334,
+      "calls": 1345,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -23,7 +23,7 @@
   },
   "byPurpose": {
     "decide": {
-      "calls": 1217,
+      "calls": 1227,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -33,7 +33,7 @@
       "errors": 0
     },
     "reflect": {
-      "calls": 117,
+      "calls": 118,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -65,7 +65,7 @@
       "errors": 0
     },
     "nr02": {
-      "calls": 260,
+      "calls": 264,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
@@ -75,7 +75,7 @@
       "errors": 0
     },
     "nr01": {
-      "calls": 297,
+      "calls": 304,
       "input": 0,
       "output": 0,
       "cacheRead": 0,
