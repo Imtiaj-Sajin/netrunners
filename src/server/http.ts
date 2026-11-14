@@ -7,7 +7,7 @@ import { MODELS, ROOT, WEB_DIR, defaultConfig, effectiveApiKey, keyStatus, loadS
 import { Engine } from "../session/engine.js";
 import { SessionStore, listSessions, listShards, readShard } from "../session/store.js";
 import { mergeLedgers, PRICES, WEB_SEARCH_USD, type Ledger } from "../mind/usage.js";
-import { resetBridge, stopBridge } from "../mind/bridge.js";
+import { bridgeMinds, resetBridge, stopBridge } from "../mind/bridge.js";
 import { readJson, readJsonl } from "../util/fsx.js";
 import { TRAITS, TRAIT_GROUP_LABELS, EMOTIONS, NEEDS, SKILLS } from "../sim/catalog.js";
 import type { ShardFile } from "../sim/spawn.js";
@@ -76,6 +76,7 @@ function liveState() {
     puzzle: s.puzzle,
     events: s.events,
     systems: s.systems,
+    minds: engine.cfg.routineModel === "claude-code" || engine.cfg.deepModel === "claude-code" ? bridgeMinds(Object.values(s.netrunners).filter((n) => n.alive).map((n) => n.name)) : null,
     library: (s.library ?? []).map((b) => ({ id: b.id, title: b.title, category: b.category, hours: b.hours, price: b.price })),
     usage: engine.ledger,
   };

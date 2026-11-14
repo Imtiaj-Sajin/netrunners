@@ -4,7 +4,7 @@
 // perceives, plus where to write the answer. Prints STOP when the world has ended.
 import fs from "node:fs";
 import path from "node:path";
-import { BRIDGE_DIR, bridgeName } from "../src/mind/bridge.js";
+import { BRIDGE_DIR, beat, bridgeName } from "../src/mind/bridge.js";
 
 const [cmd, rawName] = process.argv.slice(2);
 const wait = Number(process.argv.find((a) => a.startsWith("--wait="))?.split("=")[1] ?? 280);
@@ -16,6 +16,10 @@ const name = bridgeName(rawName);
 const inbox = path.join(BRIDGE_DIR, "inbox", name);
 const seen = path.join(BRIDGE_DIR, "seen", name);
 const stopFile = path.join(BRIDGE_DIR, "STOP");
+// --fresh: a new agent is taking over this mind, so show it who it is again
+if (process.argv.includes("--fresh")) fs.rmSync(seen, { force: true });
+beat(rawName);
+let lastBeat = Date.now();
 
 const DECISION = `{"thought":"your private inner voice, 1-3 sentences","action":"one of: move talk post read_net search_net search_deepnet take_contract join_contract work abandon_contract rest leisure explore buy use_item give steal attack propose_bond accept_bond decline_bond break_bond unlock craft_shard upload_shard reflect wait solve read post_job rate","target":"","message":"","duration":0,"amount":0,"whisper":false,"anonymous":false,"private_intent":"","sincere":true,"category":"none","bond":"none","emotions":[{"name":"joy","change":0.1}],"opinions":[{"name":"SomeName","trust":0.05,"liking":0.05,"note":"short"}],"commitment":""}`;
 const REFLECTION = `{"insights":["2-5 things you now understand"],"self_view":"who you are now, 1-3 sentences","goals":["1-4 concrete goals"],"enjoy":"what you have found you enjoy","opinions":[{"name":"SomeName","trust":0.05,"liking":-0.05,"note":"your considered judgment"}]}`;
@@ -54,5 +58,6 @@ while (true) {
     console.log("Nothing needs you yet (you are busy doing something, or time is passing). Run the same command again.");
     process.exit(0);
   }
+  if (Date.now() - lastBeat > 5000) { beat(rawName); lastBeat = Date.now(); }
   await new Promise((r) => setTimeout(r, 500));
 }

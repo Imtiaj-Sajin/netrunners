@@ -339,6 +339,14 @@ function paintMap(frame) {
 function renderFreezeLine() {
   const b = $("#freeze-banner");
   const i = S.info;
+  const away = awayMinds();
+  if (i && !$("#view-live").hidden && i.status === "running" && away.length) {
+    b.hidden = false;
+    b.className = "frozen-line away";
+    b.textContent = `waiting for minds · no Claude agent is connected for ${away.join(", ")} · the world holds until they are started again`;
+    return;
+  }
+  b.className = "frozen-line";
   if (!i || $("#view-live").hidden || i.status !== "paused") { b.hidden = true; return; }
   const names = (i.inflight ?? []).map((x) => nameOf(x.netrunnerId));
   b.hidden = false;
@@ -372,7 +380,7 @@ function renderRoster() {
   root.replaceChildren(...list.map((n) => h("button", { class: `who ${n.alive ? "" : "dead"} ${S.selected === n.id ? "sel" : ""}`, dataset: { id: n.id }, onclick: () => select(n.id) },
     portrait(n, { size: 52, alive: n.alive, truth: n.knowsTruth }),
     h("div", {},
-      h("div", { class: "nm" }, n.name, n.knowsTruth ? h("span", { class: "mark-t" }, "KNOWS") : null),
+      h("div", { class: "nm" }, n.name, n.knowsTruth ? h("span", { class: "mark-t" }, "KNOWS") : null, S.live.minds && n.alive ? h("span", { class: `mind-dot ${S.live.minds[n.name]?.connected ? "on" : "off"}`, title: S.live.minds[n.name]?.connected ? "mind connected" : "mind away: no agent connected" }) : null),
       h("div", { class: "doing" }, n.alive ? `${S.live.locations[n.location]?.name ?? n.location} · ${n.activity ? n.activity.kind + (n.activity.detail ? ` · ${n.activity.detail}` : "") : "still"}` : `${n.causeOfDeath ?? "gone"}`),
       n.alive ? lines(n) : null,
     ),
@@ -837,3 +845,13 @@ function theater(n) {
       h("button", { class: "link", onclick: () => { const [a, b] = lastTalk.k.split("|"); openThread(a, b); } }, "open the conversation →")) : null,
   );
 }
+
+/** Names of living minds the world is waiting on whose agent is not connected. */
+function awayMinds() {
+  if (!S.live?.minds || !S.info) return [];
+  const waiting = new Set((S.info.inflight ?? []).map((x) => x.netrunnerId));
+  return S.live.netrunners.filter((n) => n.alive && waiting.has(n.id) && !S.live.minds[n.name]?.connected).map((n) => n.name);
+}
+
+// when the world is waiting there are no ticks to trigger a refresh, so look again every few seconds
+setInterval(() => { if (!$("#view-live").hidden && S.info) { refreshLive().then(renderFreezeLine); } }, 8000);

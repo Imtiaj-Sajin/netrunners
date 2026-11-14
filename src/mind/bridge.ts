@@ -47,3 +47,22 @@ export async function askBridge(job: { id: string; kind: string; system?: string
     return { ok: false, text, error: "the agent's answer was not valid JSON" };
   }
 }
+
+// ── heartbeat: each agent leaves a timestamp every time it checks for its next moment ──
+export const BEAT_DIR = path.join(BRIDGE_DIR, "beat");
+
+export function beat(name: string) {
+  ensureDir(BEAT_DIR);
+  fs.writeFileSync(path.join(BEAT_DIR, bridgeName(name)), String(Date.now()));
+}
+
+/** Which minds have an agent connected (a beat in the last `maxAgeMs`). */
+export function bridgeMinds(names: string[], maxAgeMs = 300_000): Record<string, { lastBeat: number | null; connected: boolean }> {
+  const out: Record<string, { lastBeat: number | null; connected: boolean }> = {};
+  for (const n of names) {
+    let last: number | null = null;
+    try { last = Number(fs.readFileSync(path.join(BEAT_DIR, bridgeName(n)), "utf8")) || null; } catch { /* never beat */ }
+    out[n] = { lastBeat: last, connected: last !== null && Date.now() - last < maxAgeMs };
+  }
+  return out;
+}

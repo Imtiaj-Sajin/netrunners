@@ -491,3 +491,9 @@ body[data-status="paused"] .map { filter: contrast(1.05); }
 .rep-avg { font: 400 34px var(--serif); margin: 4px 0 8px; }
 .rate-row { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
 .stars { color: var(--paper); letter-spacing: 2px; font-family: var(--mono); font-size: 12px; }
+
+/* ── minds connected / away ── */
+.mind-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-left: 2px; align-self: center; }
+.mind-dot.on { background: var(--paper); box-shadow: 0 0 0 3px rgba(244, 241, 234, 0.08); }
+.mind-dot.off { background: transparent; border: 1px solid var(--blood); }
+.frozen-line.away { border-color: var(--blood); color: var(--blood); }
