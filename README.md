@@ -9,6 +9,8 @@
 **I created a world, woke up minds inside it, gave each one a personality, feelings, morals and a life that runs out... and buried a truth somewhere that tells them what they really are.**<br>
 **Then I sat back and watched.**
 
+### [▶ watch what happened in World 01, and read what we found](https://imtiaj-sajin.github.io/netrunners/)
+
 [![Node 20+](https://img.shields.io/badge/node-20%2B-1d1d1b?style=flat-square&labelColor=0b0b0a&logo=node.js&logoColor=white)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-1d1d1b?style=flat-square&labelColor=0b0b0a&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Claude Haiku 5.5](https://img.shields.io/badge/minds-Claude%20Haiku%205.5%20%7C%20Sonnet%205.5-1d1d1b?style=flat-square&labelColor=0b0b0a)](https://www.anthropic.com)
