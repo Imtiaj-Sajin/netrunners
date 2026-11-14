@@ -16,7 +16,7 @@ export function createNetrunner(state: WorldState, rng: Rng, opts: { genome?: Ge
   const n: Netrunner = {
     id, name, bornTick: state.tick, alive: true, genome,
     skills: generateSkills(genome, rng),
-    pulse: 60 * (40 + rng.int(0, 16)), // 40-56 world hours of life to start
+    pulse: 60 * (48 + rng.int(0, 24)), // 48-72 world hours of life to start
     energy: 70 + rng.int(0, 30),
     integrity: 100,
     creds: 40 + rng.int(0, 60),

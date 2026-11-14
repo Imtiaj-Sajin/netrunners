@@ -21,6 +21,11 @@ export function genesis(cfg: SessionConfig, shards: ShardFile[]): WorldState {
     puzzle: setupPuzzle(rng), events: {}, nextId: { netrunner: 1, contract: 1, post: 1 },
     usedNames: [], marketMood: 1, deepnetUsed: 0, deepnetQueue: [],
   };
+  // the hidden door sits just beyond its (secret, per-session) anchor
+  const anchor = state.locations[state.puzzle.doorAnchor];
+  const door = state.locations.nulldoor;
+  door.x = Math.max(40, Math.min(960, anchor.x + (anchor.x < 500 ? -60 : 60)));
+  door.y = Math.max(40, Math.min(620, anchor.y + (anchor.y < 330 ? -45 : 55)));
   for (const s of shards) {
     const n = awakenShard(state, rng, s);
     state.netrunners[n.id] = n;
