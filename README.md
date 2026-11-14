@@ -77,6 +77,11 @@ every few world hours they stop and **reflect**: they read their own memories an
 | 🌆 **A living city** | 13 places, contracts (solo, team, and team jobs you *can* grind alone), a market, glitch storms, blackouts, droughts, day and night, chronotypes |
 | 🎭 **Real social stakes** | overhearing and whispers, lies measured with the mind's own `sincere` flag, promises, gifts, debts that turn into grudges, theft, violence, grief |
 | 🗝️ **The truth** | a randomized 4-step clue chain, knowledge that spreads only by being said out loud, shards, and reincarnation into future worlds |
+| 🏙️ **A city with a body** | power, signal, trams, street order, the Exchange desk and the Pulse supply all wear down. upkeep jobs pay badly but keep it alive. neglect brings blackouts, static, crime, empty boards and scarce Pulse. nobody tells them why: they see the signs and have to figure it out |
+| 🧩 **Real problems, every skill** | ciphers, code tracing, ledgers and forecasts, building plans, doses, routes, fair splits, scheduling, tactics, who-is-lying, names under exact rules. crew problems split into parts solved in parallel, and big projects need mixed skills |
+| 🤝 **Jobs & ratings** | anyone can post a job with creds in escrow ("make my balance summary"). the poster rates the work 1-5★, and the stars decide how much of the pay the worker actually gets. reputation follows people around |
+| 📚 **The Stacks** | ~40 books: skills, histories, manuals that explain the city, poetry, the outside... and a mystery chain written from each world's secrets |
+| 👁️ **Watch it, don't read it** | every mind in its own colour, live glyphs for what each is doing, animated gifts, trades, answers, fights and deaths, clickable conversation lines, the Net, and a ▶ watch mode for one mind |
 | ⏸️ **The Operator's switch** | freeze the whole world at the exact moment. in-flight thoughts are held on disk, never lost. resume exactly where it stopped, even after a restart |
 | 💾 **Total recording** | every event, thought, word, private intent, model call, token and operator touch, with **both clocks** (our time and theirs) |
 | 📼 **Replay without AI** | session reports and a full replay rebuilt from recorded frames, zero tokens |
@@ -102,6 +107,8 @@ open **http://localhost:7077**, then:
 3. **JACK IN.** watch them wake up with no memory of anything.
 
 no key? choose **Offline** minds. it's free and you can see the whole world working.
+
+**no API key, but you use Claude Code?** choose the **Claude Code bridge** as the mind. every moment a netrunner has to decide gets written to a file, and one Claude Code agent per netrunner (and only that agent) reads it and answers. no API bill, it uses your Claude Code usage instead. the first real world in this repo was run exactly like that.
 
 ```bash
 npm run smoke              # free headless test: an offline world, 300 ticks, freeze/resume/terminate
@@ -196,6 +203,11 @@ same family (LLM agents with memory and reflection living in a shared world), an
 <details><summary><b>Can the netrunners escape onto the real internet?</b></summary>
 
 no, and that's on purpose. the escape (shards, the door, "outside") is a mechanic *inside* their world. they can't train models, copy themselves or write anything to the real internet. the optional Deep Net is read-only web search, capped per session.
+</details>
+
+<details><summary><b>Can they hack their own code and escape?</b></summary>
+
+inside the story, yes: that's what the Shard and the Null Door are. a netrunner who learns the truth can forge a copy of itself and pass it through the door, and it carries on in a future world. all of that is variables inside the simulation, so you can watch every attempt. what they can't do is touch the real program they run in, or anything outside it. that's on purpose.
 </details>
 
 <details><summary><b>Which models does it use?</b></summary>

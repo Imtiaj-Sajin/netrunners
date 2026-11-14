@@ -140,7 +140,58 @@ Progress per tick = `hours × (0.55 + 0.9·skill) × energy factor × focus/cons
 
 ### 4.6 World events
 
-Glitch storms (district damage), terminal blackouts (Archive/Tower), work droughts (fewer contracts), market mood drift (0.75×-1.4× prices), optional new netrunners waking every N world hours.
+Glitch storms (district damage), terminal blackouts (Archive/Tower/Stacks), work droughts (fewer contracts), market mood drift (0.75×-1.4× prices), optional new netrunners waking every N world hours.
+
+### 4.7 The city's body
+
+The city wears down. Five systems lose condition every world hour, faster the more people live in the city, and Pulse packs only exist if someone presses them:
+
+| System | Wears | Restored by (upkeep job, low pay) | When it fails |
+|---|---|---|---|
+| **power** | fastest | re-seating grid relays at the Foundry | lights flicker, pods rest worse, then whole districts black out |
+| **signal** | fast | scrubbing static off the mast at the Signal Tower | searches and posts start vanishing into static |
+| **transit** | medium | re-coupling trams, clearing tracks | every journey takes longer (up to 2.1×), then everyone walks |
+| **order** | slow | night patrols in the Underpass | theft gets easier, scavengers rob and hurt people in the open |
+| **the Exchange desk** | fast | clerking the desk | the board thins out; **finishing a desk job posts 2-3 new contracts** (a job that creates jobs) |
+| **Pulse supply** | per purchase | running the Pulse press at the Foundry | packs get dearer as stock falls (up to +160%), then sell out |
+
+- Upkeep jobs appear when a system drops below 72, and **pay more the worse things get**.
+- Ordinary pay follows the population: fewer people alive means better pay.
+- **Nobody is told the causes.** Every perception carries a few lines under *The city today* ("Lights flicker now and then.", "The board looks thinner than it was.", "Pulse packs are getting scarce (about 58 creds each)."), never the reason. The manuals in the Stacks, anonymous Net posts and their own observation are how they can work out what causes what.
+- Left to minds that ignore upkeep, a city goes from healthy to collapse in about 2.5 world days.
+
+### 4.8 Real problems
+
+Most contracts carry a real problem the mind must actually solve, and answers are checked exactly:
+
+| Skill | Problems |
+|---|---|
+| hacking | shifted-letter and folded-alphabet ciphers, base conversions, tracing code |
+| engineering | building plans (bolts, posts), tracing code, number patterns |
+| analysis | number patterns, arrival-order logic, ledgers and forecasts |
+| research | questions answered only in specific books of the Stacks, fragments about the outside world |
+| negotiation | fair splits under constraints, ledgers |
+| leadership | crew scheduling (earliest finish), forecasts |
+| combat | tactics (swings to bring someone down) |
+| stealth, exploration | shortest routes through a described map |
+| medicine | doses |
+| art | names and inscriptions under exact rules (acrostics, exact word counts with a required word) |
+| social engineering | who tells the truth and who lies |
+
+- Crew problems come in several **parts** that different people solve at the same time. Projects with 3+ parts take their last part from a **different skill**, so building something needs mixed hands.
+- `solve target=<part> message=<answer>` at the work site; a wrong answer costs a little energy and is shown to the whole crew, so nobody repeats it.
+- The **Silent Relay** is two locked phrases that two different voices must open.
+- Code-tracing problems are generated from fixed templates and evaluated by the engine itself to get the expected answer; no code written by a mind is ever run.
+
+### 4.9 Jobs and ratings
+
+Any netrunner can **post a job** at the Exchange (`post_job target=<skill or kind> message=<what> amount=<creds>`). The creds go into escrow. Someone with the skill takes it like any contract. Asking for a finance report (`report`, `balance`, `budget`...) produces a problem built from the poster's **real numbers**, and the finished answers become their balance summary and forecast.
+
+When the job is done, the poster rates the worker (`rate target=<name> amount=<1-5> message=<comment>`), and **the rating decides the pay**: 5★ all of it, 4★ 90%, 3★ 75%, 2★ 55%, 1★ 40%; the rest returns to the poster. Unrated jobs pay in full after 8 world hours. Anyone can also rate someone they worked with. Ratings follow people: reputation appears next to their name in every perception and on every job they post, and a low rating stings (anger, shame, lower trust in the rater).
+
+### 4.10 The Stacks
+
+A library of about 40 books, written per world from its secrets: skill books (raise a skill), histories (hold the facts that research problems ask about), manuals (explain the city's body, i.e. the causes behind the symptoms), puzzle primers, fiction and poetry, science, outside fragments, and a **mystery chain** (*Walls That Remember* → *The Sleeper's Index* → *Two Voices* → *Doors Without Walls*) whose contents point at this world's real hiding places. Reading takes hours (it can be paused and resumed), rare books cost creds, and each book is scored for enjoyment against the reader's personality, so reading is also a way to discover what they love.
 
 ## 5. The netrunner
 
@@ -212,9 +263,9 @@ sequenceDiagram
 - **Perception** (fresh every decision): time and place, body, current activity and contract, debts, feelings in words ("strong loneliness, faint hope"), urgent needs, learned enjoyments, self-view, goals, bonds, who is here and what they think of each, everything heard since last time, the Exchange board, Net posts, market prices, known secrets, recalled and recent memories, last actions.
 - **Decision schema** (structured outputs, all fields required): `thought` (private inner voice), `action` (one of 27), `target`, `message`, `duration`, `amount`, `whisper`, `anonymous`, `private_intent`, `sincere`, `category`, `bond`, `emotions[]`, `opinions[]`, `commitment`. Numeric ranges are enforced client-side.
 
-### 6.2 Actions (27)
+### 6.2 Actions (31)
 
-move · talk · post · read_net · search_net · search_deepnet · take_contract · join_contract · work · abandon_contract · rest · leisure · explore · buy · use_item · give · steal · attack · propose_bond · accept_bond · decline_bond · break_bond · unlock · craft_shard · upload_shard · reflect · wait
+move · talk · post · read_net · search_net · search_deepnet · take_contract · join_contract · work · solve · abandon_contract · post_job · rate · rest · leisure · read · explore · buy · use_item · give · steal · attack · propose_bond · accept_bond · decline_bond · break_bond · unlock · craft_shard · upload_shard · reflect · wait
 
 Long actions (work, rest, leisure, explore, wait, crafting) last up to 12 ticks and can be **interrupted** when someone speaks to them, attacks them, proposes to them or something important happens. Travel and Deep Net dives cannot be interrupted.
 
@@ -227,6 +278,7 @@ Long actions (work, rest, leisure, explore, wait, crafting) last up to 12 ticks 
 | Reflection (every ~8 world hours with enough importance, or when overwhelmed) | **deep** | medium |
 | Deep Net dive | deep model + web search tool | low |
 | Offline mode | rule-based utility AI (free) | - |
+| Claude Code bridge | one Claude Code agent per netrunner, answering each moment through files (no API key) | - |
 
 Sonnet 5.5 calls use Anthropic's server-side refusal fallback (`fallbacks: "default"`). Haiku 5.5 has none; a refusal or error makes that netrunner hesitate for one tick and is logged (`mind.refusal` / `mind.error`).
 
@@ -372,6 +424,10 @@ Rough expectations, 6 netrunners (your meter is the truth):
 - **Top bar**: world clock + tick, real clock + active time, status (LIVE / FROZEN), session, the **freeze switch**, speed (12 s to max), note, terminate, cost vs budget, settings, connection light.
 - **Live**: the city map (netrunners move between places, thinking minds spin, storms glow, truth-knowers shine), the feed (words, thoughts with private intents and lie tags, life and death, truth, work, world, operator; follow one netrunner), the roster with Pulse/energy/body bars, the contract board, and a detail panel per netrunner: vitals, self-view, goals, 24 emotions, 11 needs, impressions of everyone (trust/liking/respect/fear/attraction/familiarity + notes), knowledge and secrets, memories, learned enjoyments, skills, all 110 traits, life stats and tokens.
 - **Alerts**: the Truth (full-screen alert, sound, browser notification, "Follow them"), shards, first kill, love, budget, errors, extinction.
+- **Motion**: every mind has its own colour and a live glyph for what it is doing (work turns, reading flutters, rest breathes, solving shows a question mark). Words flow along live lines between people (click a line to read the conversation); gifts, trades, purchases and paid ratings travel between people; correct answers burst; attacks flash red; deaths dissolve; the truth sends a shockwave.
+- **Tabs**: transcript, the Net (every public post, with the real author of anonymous ones visible only to the operator) and conversations (who talks to whom, full threads with whispers and private intent).
+- **Watch mode**: the ▶ watch button on a profile dims everyone else on the map, follows that mind in the transcript, and shows what it is doing, its last thought, the problem it is working on with every attempt, the book it is reading and its latest conversation.
+- **The city's body**: a live readout of power, signal, trams, order, the desk and Pulse stock.
 - **Home**: wake a new world (all settings, optional shards to reincarnate), every session in the repo (resume or open report), token usage.
 
 ## 15. Configuration reference
@@ -411,7 +467,10 @@ src/
     puzzle.ts           the Truth chain
     contracts.ts        posting, work, completion, debts
     actions.ts          the 27 actions and their consequences, death
-    world.ts            genesis and phase A
+    world.ts            genesis, phase A, save migration
+    systems.ts          the city's body: wear, symptoms, prices, chaos
+    challenges.ts       real problems for every skill, and exact checking
+    library.ts          the Stacks: books, reading, the mystery chain
     ctx.ts              tick context helpers
   mind/
     prompts.ts          system prompt, perception, reflection, Deep Net prompt
@@ -420,6 +479,7 @@ src/
     offline.ts          free rule-based minds
     mind.ts             job dispatcher
     usage.ts            prices and ledgers
+    bridge.ts           the Claude Code bridge (minds answered by agents through files)
   session/
     engine.ts           tick loop, freeze gate, held answers, recorder
     store.ts            session folders and files
