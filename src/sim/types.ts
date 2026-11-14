@@ -90,6 +90,10 @@ export interface NetrunnerStats {
   posts: number;
   lies: number; // statements whose private intent contradicts the words
   refusals: number;
+  solved?: number;
+  wrongAnswers?: number;
+  booksRead?: number;
+  upkeepDone?: number;
 }
 
 export interface Netrunner {
@@ -133,6 +137,8 @@ export interface Netrunner {
   knowsTruth: boolean;
   truthTick?: number;
   shard: { progress: number; crafted: boolean; uploaded: boolean; uploadedTick?: number };
+  booksRead: string[];
+  reading?: { bookId: string; hours: number };
   pastLife?: { from: string; name: string };
   stats: NetrunnerStats;
 }
@@ -148,6 +154,42 @@ export interface Location {
   features: string[]; // contracts | market | clinic | rest | terminal | deepnet | foundry | door
   danger: number; // 0..1
   hidden?: boolean;
+}
+
+export type SystemKey = "power" | "signal" | "transit" | "order" | "exchange";
+
+/** The city's body. Everything wears down; upkeep work keeps it alive. supply = Pulse packs in stock. */
+export interface Systems { power: number; signal: number; transit: number; order: number; exchange: number; supply: number }
+
+export type ChallengeKind = "cipher" | "sequence" | "trace" | "logic" | "convert" | "lore" | "outside";
+
+export interface ChallengePart {
+  id: string;
+  kind: ChallengeKind;
+  prompt: string;
+  answer: string;
+  solvedBy?: string;
+  solvedTick?: number;
+  attempts: { by: string; answer: string; tick: number }[];
+}
+
+/** A real problem the minds must actually solve. Team problems have several parts (pages) solved in parallel. */
+export interface Challenge { brief: string; parts: ChallengePart[]; twoVoices?: boolean }
+
+export interface Book {
+  id: string;
+  title: string;
+  author: string;
+  category: "skill" | "history" | "manual" | "puzzle" | "mystery" | "fiction" | "science" | "outside";
+  hours: number;
+  price: number;
+  skill?: SkillKey;
+  interest: LeisureCategory;
+  blurb: string;
+  text: string;
+  facts: { q: string; a: string; text: string }[];
+  refs: string[];
+  grants?: string[]; // knowledge ids granted on reading (e.g. door:location)
 }
 
 export interface Contract {
@@ -172,6 +214,8 @@ export interface Contract {
   expiresTick: number;
   status: "open" | "active" | "done" | "failed" | "expired";
   special?: "relay";
+  system?: SystemKey | "supply"; // upkeep / production work that keeps the city alive
+  challenge?: Challenge;
 }
 
 export interface ForumPost {
@@ -215,6 +259,8 @@ export interface WorldState {
   usedNames: string[];
   marketMood: number; // price multiplier
   deepnetUsed: number;
+  systems: Systems;
+  library: Book[];
   deepnetQueue: { jobId: string; netrunnerId: string; query: string; dueTick: number }[];
 }
 

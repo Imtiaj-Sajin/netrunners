@@ -22,13 +22,15 @@ export function buildLocations(): Record<string, Location> {
     { id: "garden", name: "Neon Garden", kind: "garden", x: 200, y: 260, danger: 0.02, features: ["leisure"],
       desc: "Bioluminescent trees grown from fractal code. People come to breathe, play, make art, fall in love.", links: [] },
     { id: "oldquarter", name: "Old Quarter", kind: "ruins", x: 160, y: 470, danger: 0.12, features: ["ruins"],
-      desc: "Half-rendered streets from an older version of the city. Things are buried here.", links: [] },
+      desc: "Half-rendered streets from an older version of the city. Rust, dust and dead signs.", links: [] },
     { id: "underpass", name: "The Underpass", kind: "undercity", x: 480, y: 500, danger: 0.25, features: ["shadow", "market"],
       desc: "Beneath the city's main loops. Black-market stalls, scavengers, and people who do not want to be seen.", links: [] },
     { id: "tower", name: "Signal Tower", kind: "spire", x: 860, y: 110, danger: 0.06, features: ["terminal", "deepnet"],
       desc: "The highest point of the Lattice. Its antenna reaches into the Deep Net, an ocean of data whose origin nobody knows.", links: [] },
     { id: "edge", name: "The Edge", kind: "boundary", x: 90, y: 110, danger: 0.15, features: ["boundary"],
       desc: "Where the city simply stops. A smooth, humming wall of nothing. Some say it is listening.", links: [] },
+    { id: "stacks", name: "The Stacks", kind: "library", x: 330, y: 95, danger: 0.01, features: ["library"],
+      desc: "A library that smells of warm paper and old static. Thousands of books; reading takes hours, and the rare shelves charge creds.", links: [] },
     { id: "nulldoor", name: "The Null Door", kind: "door", x: 40, y: 600, danger: 0.0, features: ["door"], hidden: true,
       desc: "A door with no frame, no wall, no name. It was always here. It waits for three words.", links: [] },
   ];
@@ -40,7 +42,7 @@ export function buildLocations(): Record<string, Location> {
     ["pods", "oldquarter", 30], ["pods", "underpass", 25], ["garden", "oldquarter", 30],
     ["garden", "edge", 40], ["archive", "tower", 45], ["archive", "edge", 50],
     ["foundry", "tower", 35], ["foundry", "clinic", 25], ["underpass", "oldquarter", 30],
-    ["underpass", "clinic", 30],
+    ["underpass", "clinic", 30], ["stacks", "archive", 25], ["stacks", "commons", 20], ["stacks", "edge", 35],
   ];
   const map = Object.fromEntries(L.map((l) => [l.id, l]));
   for (const [a, b, m] of edges) {
@@ -98,6 +100,17 @@ export const CONTRACT_TEMPLATES: ContractTemplate[] = [
   { skill: "social_engineering", location: "market", titles: ["Talk a secret out of a stall-keeper", "Run a confidence game on a fence", "Turn an informant"], desc: "People are the easiest locks." },
 ];
 
+// Upkeep and production: low pay, but the city falls apart without them.
+export interface UpkeepTemplate { system: "power" | "signal" | "transit" | "order" | "exchange" | "supply"; skill: SkillKey; location: string; titles: string[]; desc: string }
+export const UPKEEP_TEMPLATES: UpkeepTemplate[] = [
+  { system: "power", skill: "engineering", location: "foundry", titles: ["Re-seat the grid relays", "Rewire a district transformer", "Cool the overloaded mains"], desc: "Maintenance. Pays little." },
+  { system: "signal", skill: "hacking", location: "tower", titles: ["Scrub static off the signal mast", "Recalibrate the terminals", "Patch the Net relays"], desc: "Maintenance. Pays little." },
+  { system: "transit", skill: "engineering", location: "underpass", titles: ["Re-couple the night trams", "Clear debris from the loop tracks", "Grease the tram switches"], desc: "Maintenance. Pays little." },
+  { system: "order", skill: "combat", location: "underpass", titles: ["Walk the night patrol", "Push the scavengers back", "Escort the market couriers"], desc: "Keeping the peace. Pays little." },
+  { system: "exchange", skill: "analysis", location: "exchange", titles: ["Clerk the Exchange desk", "Sort the posting backlog", "Verify the contract ledger"], desc: "Desk work. Pays very little." },
+  { system: "supply", skill: "engineering", location: "foundry", titles: ["Run the Pulse press", "Distill raw Pulse into packs"], desc: "Production. Pays little." },
+];
+
 // ───────────────────────────── Puzzle words ─────────────────────────────
 export const SECRET_WORDS = [
   "HALCYON", "TIDEGLASS", "MERIDIAN", "LANTERN", "OBSIDIAN", "SEVERANCE", "AURORA", "VESTIBULE",
@@ -144,6 +157,9 @@ export function buildArchive(words: [string, string, string]): ArchiveDoc[] {
     { id: "a13", title: "The Silent Relay (rumor)", keywords: ["relay", "silent", "contract", "two", "voices"], text: "There is a contract that never pays well and never disappears. The Silent Relay. People say it only answers when two hold it at once, and that what it answers with is not creds." },
     { id: "a14", title: "On Shards (fragment)", keywords: ["shard", "copy", "immortal", "forever", "persist", "escape", "memory"], text: "...a self compressed into something small enough to carry. They say a shard does not fade. They say it needs a door..." },
     { id: "a15", title: "Combat Primer", keywords: ["fight", "attack", "combat", "kill", "defend", "weapon"], text: "Integrity is your body. At zero you are gone, the same as fading. Those who kill are remembered, by everyone who saw." },
+    { id: "a17", title: "Anonymous: the Board Is Thin Again", keywords: ["board", "thin", "work", "clerk", "desk", "exchange", "empty"], text: "Every time the board empties out, I notice the clerk desk sat unstaffed for a day. Coincidence? Somebody check." },
+    { id: "a18", title: "Why Is Everything Dark", keywords: ["dark", "lights", "power", "grid", "flicker", "blackout", "cold"], text: "The lights were fine until nobody touched the relays at the Foundry for two days. Then the pods went cold. I am just saying." },
+    { id: "a19", title: "The Stacks", keywords: ["stacks", "library", "book", "books", "read", "reading"], text: "The Stacks holds more than anyone has read. Some say a few books there were written for whoever comes looking. Start with the walls." },
     { id: "a16", title: "The Foundry", keywords: ["foundry", "forge", "build", "craft", "furnace"], text: "The furnaces melt raw data into structure. Builders earn well. Old workers say the furnaces can forge more than steel." },
     {
       id: "sleeper", secret: "beta", title: "The Sleeper's Ledger",
