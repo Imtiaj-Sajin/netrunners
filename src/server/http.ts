@@ -75,6 +75,8 @@ function liveState() {
     forum: s.forum.slice(-40),
     puzzle: s.puzzle,
     events: s.events,
+    systems: s.systems,
+    library: (s.library ?? []).map((b) => ({ id: b.id, title: b.title, category: b.category, hours: b.hours, price: b.price })),
     usage: engine.ledger,
   };
 }

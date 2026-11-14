@@ -1,4 +1,4 @@
-import { $, $$, api, beep, fmt, groupOf, h, meter, worldClock } from "./lib.js";
+import { $, $$, api, beep, fmt, groupOf, h, hueOf, meter, worldClock } from "./lib.js";
 import { createMap } from "./map.js";
 import { createField } from "./field.js";
 import { portrait, veilPortrait } from "./portrait.js";
@@ -6,12 +6,14 @@ import { renderReport } from "./report.js";
 
 const S = {
   boot: null, live: null, info: null, feed: [], selected: null, map: null, field: null,
-  thinking: new Map(), lastLiveFetch: 0, follow: null,
+  thinking: new Map(), lastLiveFetch: 0, follow: null, tab: "transcript", talk: new Map(), thread: null, watch: null,
   filter: new Set(["speech", "thought", "life", "truth", "work", "world", "action", "operator"]),
 };
 const SNAPSHOT = new URLSearchParams(location.search).has("snapshot");
 const short = (wm) => worldClock(wm).replace("Day ", "D");
 const nameOf = (id) => S.live?.netrunners.find((n) => n.id === id)?.name ?? id;
+const tintOf = (id, a = 1) => `hsla(${hueOf(id)}, 52%, 72%, ${a})`;
+const whoTag = (id) => h("span", { class: "who-n", style: { color: tintOf(id) } }, nameOf(id));
 
 // ───────────────────────── boot ─────────────────────────
 function makeGrain() {
@@ -110,7 +112,8 @@ function connect() {
 function onTick(t) {
   if (S.info) { S.info.tick = t.tick; S.info.worldMinutes = t.wm; S.info.clock = t.clock; }
   S.field.pulse(Math.min(0.6, 0.12 + t.events.length * 0.015));
-  for (const ev of t.events) pushFeed(ev);
+  for (const ev of t.events) { pushFeed(ev); learnTalk(ev); }
+  animate(t.events);
   if (S.live) {
     for (const f of t.frame.n) {
       const n = S.live.netrunners.find((x) => x.id === f.id);
@@ -129,6 +132,7 @@ async function refreshLive() {
   S.live = live;
   S.info = live.info;
   renderRoster(); renderBoard(); renderStrip(); paintMap(); renderCost();
+  if (S.tab === "net") renderSide();
   if (S.selected && !$("#detail").hidden) loadDetail(S.selected, true);
 }
 
@@ -298,18 +302,20 @@ async function enterLive() {
   S.live = await api("/api/live").catch(() => null);
   if (!S.live) { location.hash = "#/"; return; }
   S.info = S.live.info;
-  S.map = createMap($("#map"), S.live.locations, { onSelect: select });
-  renderFilters(); renderRoster(); renderBoard(); renderStrip(); renderFreezeLine(); renderTopbar();
+  S.map = createMap($("#map"), S.live.locations, { onSelect: select, onLink: (a, b) => openThread(a, b) });
+  renderTabs(); renderFilters(); renderRoster(); renderBoard(); renderStrip(); renderFreezeLine(); renderTopbar();
   const [op, name] = S.info.session.split("/").slice(1);
   const past = await api(`/api/session/${op}/${encodeURIComponent(name)}/events`).catch(() => []);
-  for (const ev of past) if (ev.type === "move.depart" && ev.data?.to) S.map.addTraffic(ev.loc, ev.data.to);
-  if (!S.feed.length) {
-    for (const ev of past.slice(-260)) pushFeed(ev, false);
-  }
+  S.talk = new Map();
+  for (const ev of past) { if (ev.type === "move.depart" && ev.data?.to) S.map.addTraffic(ev.loc, ev.data.to); learnTalk(ev); }
+  if (!S.feed.length) for (const ev of past.slice(-260)) pushFeed(ev, false);
   renderFeed();
   paintMap();
-  const pre = new URLSearchParams(location.search).get("select");
-  if (pre && !S.selected) select(pre);
+  const q = new URLSearchParams(location.search);
+  const pre = q.get("select");
+  if (pre && !S.selected) await select(pre);
+  if (q.get("watch")) toggleWatch(q.get("watch"));
+  if (q.get("tab")) { S.tab = q.get("tab"); renderTabs(); }
 }
 
 function paintMap(frame) {
@@ -322,10 +328,12 @@ function paintMap(frame) {
       id: n.id, name: n.name, alive: f ? f.alive : n.alive, loc: f ? f.loc : n.location,
       to: moving ? n.activity.target : undefined,
       progress: moving ? (tick - n.activity.startedTick) / Math.max(1, n.activity.endsAtTick - n.activity.startedTick) : 0,
-      thinking: S.thinking.has(n.id), knowsTruth: n.knowsTruth,
+      thinking: S.thinking.has(n.id), knowsTruth: n.knowsTruth, a: f ? f.a : n.activity?.kind,
+      label: n.activity ? (n.activity.kind === "read" ? `reading ${n.activity.detail ?? ""}` : n.activity.kind) : "",
     };
   }), { storm: S.live.events?.storm?.location, doorAnchor: S.live.puzzle.doorAnchor });
   S.map.select(S.selected);
+  S.map.focus(S.watch);
 }
 
 function renderFreezeLine() {
@@ -378,13 +386,19 @@ function renderStrip() {
   const alive = s.netrunners.filter((n) => n.alive).length;
   const knowers = s.puzzle.truthKnowers.length;
   const kv = (k, v, cls = "") => h("div", { class: "kv" }, h("span", {}, k), h("b", { class: cls }, v));
+  const sys = s.systems ?? {};
+  const bar = (label, v, max = 100) => {
+    const f = Math.max(0, Math.min(1, v / max));
+    const word = f >= 0.65 ? "" : f >= 0.4 ? "worn" : f >= 0.18 ? "failing" : "collapsed";
+    return h("div", { class: `sysbar ${word}` }, h("span", { class: "sk" }, label), h("span", { class: "st" }, h("i", { style: { width: `${f * 100}%` } })), h("span", { class: "sv" }, word || Math.round(v)));
+  };
   $("#world-strip").replaceChildren(
     kv("alive", `${alive} of ${s.netrunners.length}`),
     kv("the hour", short(s.info.worldMinutes).split(" ")[1]),
-    kv("weather", s.events?.storm ? `storm · ${s.locations[s.events.storm.location]?.name}` : "still"),
-    kv("open work", String(s.contracts.filter((c) => c.status === "open").length)),
     kv("the truth", knowers ? `known by ${knowers}` : "buried", knowers ? "lilac" : ""),
-    kv("held answers", String(s.info.held ?? 0)),
+    h("div", { class: "syshead" }, "the city's body"),
+    bar("power", sys.power ?? 0), bar("signal", sys.signal ?? 0), bar("trams", sys.transit ?? 0),
+    bar("order", sys.order ?? 0), bar("the desk", sys.exchange ?? 0), bar("pulse stock", sys.supply ?? 0, 16),
   );
 }
 
@@ -392,10 +406,10 @@ function renderBoard() {
   if (!S.live) return;
   const list = S.live.contracts.filter((c) => c.status === "open" || c.status === "active");
   $("#contracts").replaceChildren(h("h4", {}, `the exchange · ${list.length}`),
-    ...list.slice(0, 18).map((c) => h("div", { class: `job ${c.special ? "special" : ""}` },
+    ...list.slice(0, 18).map((c) => h("div", { class: `job ${c.special ? "special" : ""} ${c.system ? "upkeep" : ""}` },
       h("div", { class: "ti" }, c.title),
-      h("div", { class: "pr" }, `${c.progress.toFixed(1)} / ${c.workRequired}`),
-      h("div", { class: "me" }, `${c.kind} · ${c.skill} · ${c.crew.length ? c.crew.map(nameOf).join(", ") : "unclaimed"}`),
+      h("div", { class: "pr" }, c.challenge ? `${c.challenge.parts.filter((p) => p.solvedBy).length} / ${c.challenge.parts.length} solved` : `${c.progress.toFixed(1)} / ${c.workRequired}`),
+      h("div", { class: "me" }, `${c.system ? "upkeep · " : ""}${c.challenge ? `problem: ${[...new Set(c.challenge.parts.map((p) => p.kind))].join(", ")} · ` : ""}${c.kind} · ${c.crew.length ? c.crew.map(nameOf).join(", ") : "unclaimed"}`),
       h("div", { class: "pr" }, `${fmt.hours(c.reward.pulse)} · ${c.reward.creds}c`),
     )));
 }
@@ -423,13 +437,13 @@ export function feedItem(ev, nameFn = nameOf) {
   if (ev.type === "speech" || ev.type === "speech.whisper") {
     cls = "speech";
     const to = who.slice(1).map(nameFn).join(", ") || "everyone";
-    body = [h("span", { class: "who-n" }, nameFn(who[0])), ` ${ev.type === "speech.whisper" ? "whispers to" : "to"} ${to}`,
+    body = [h("span", { class: "who-n", style: { color: tintOf(who[0]) } }, nameFn(who[0])), ` ${ev.type === "speech.whisper" ? "whispers to" : "to"} ${to}`,
       ev.data?.sincere === false ? h("span", { class: "lie" }, "LIE") : null,
       h("span", { class: "said" }, `“${ev.data?.message ?? ev.text}”`),
       ev.data?.private_intent ? h("span", { class: "intent" }, `really: ${ev.data.private_intent}`) : null];
   } else if (ev.type === "thought") {
     cls = "thought";
-    body = [h("span", { class: "who-n" }, nameFn(who[0])), h("span", { class: "inner" }, ev.text)];
+    body = [h("span", { class: "who-n", style: { color: tintOf(who[0]) } }, nameFn(who[0])), h("span", { class: "inner" }, ev.text)];
   } else if (ev.type === "death") {
     cls = "death"; body = ev.text;
   } else if (ev.type.startsWith("operator")) {
@@ -464,6 +478,7 @@ async function select(id) {
 }
 
 function closeDetail() {
+  if (S.watch) toggleWatch(S.watch);
   $("#detail").hidden = true;
   S.selected = null;
   renderRoster(); renderFilters();
@@ -513,7 +528,9 @@ function renderMind(n, open, keepPortrait) {
         ),
       ),
       h("button", { class: "link d-close", onclick: closeDetail }, "close"),
+      h("button", { class: `watch-btn ${S.watch === n.id ? "on" : ""}`, title: "Watch everything they do", onclick: () => toggleWatch(n.id) }, h("span", { class: "tri" }), S.watch === n.id ? "watching" : "watch"),
     ),
+    S.watch === n.id ? theater(n) : null,
     h("div", { class: "vitals" },
       vital("pulse", fmt.hours(n.pulse), n.pulse < 360),
       vital("energy", String(Math.round(n.energy)), n.energy < 20),
@@ -690,3 +707,124 @@ export function ledgerView(u, inDialog = false) {
 }
 
 boot().catch((err) => document.body.prepend(h("div", { class: "toast bad" }, `The console failed to start: ${err.message}`)));
+
+
+// ───────────────────────── motion: every act, drawn ─────────────────────────
+const MARKET = { buy: "market" };
+function animate(events) {
+  if (!S.map) return;
+  for (const ev of events) {
+    const [a, b] = ev.who ?? [];
+    const d = ev.data ?? {};
+    switch (ev.type) {
+      case "speech": case "speech.whisper":
+        for (const t of ev.who.slice(1)) S.map.fx("talk", { a, b: t, whisper: ev.type === "speech.whisper" });
+        break;
+      case "give": S.map.fx("give", { a, b, label: d.amount ? `${d.amount}c` : d.item ?? "gift" }); break;
+      case "item.use": if (b) S.map.fx("give", { a, b, label: d.item ?? "" }); else S.map.fx("pulse", { a, label: d.item ?? "" }); break;
+      case "dues.paid": S.map.fx("trade", { a, b, label: "paid" }); break;
+      case "buy": S.map.fx("buy", { a, b: ev.loc ?? MARKET.buy, label: d.item?.replace("_", " ") }); S.map.fx("buy", { a: ev.loc ?? MARKET.buy, b: a, delay: 700 }); break;
+      case "net.post": S.map.fx("post", { a, b: "tower", label: d.anonymous ? "anon" : "post" }); break;
+      case "contract.solved": S.map.fx("solved", { a }); break;
+      case "contract.attempt": S.map.fx("wrong", { a }); break;
+      case "contract.completed": for (const m of ev.who) S.map.fx("pulse", { a: m, label: d.system ? "the city mends" : "+pulse" }); break;
+      case "attack": case "attack.miss": S.map.fx("attack", { a, b }); break;
+      case "steal": case "steal.failed": S.map.fx("steal", { a, b }); break;
+      case "death": S.map.fx("death", { a }); break;
+      case "truth.discovered": S.map.fx("truth", { a }); break;
+      case "clue.found": case "door.noticed": S.map.fx("pulse", { a, color: "196,181,253", label: "a clue" }); break;
+      case "bond.formed": S.map.fx("bond", { a, b }); break;
+      case "book.read": S.map.fx("read", { a, label: "finished a book" }); break;
+      case "book.open": S.map.fx("read", { a, label: "opens a book" }); break;
+      case "world.unrest": S.map.fx("attack", { a: ev.loc, b: a }); break;
+      case "leisure.done": S.map.fx("pulse", { a, label: `${d.enjoyment}/10` }); break;
+      default: break;
+    }
+  }
+}
+
+// ───────────────────────── conversations & the Net ─────────────────────────
+function learnTalk(ev) {
+  if (ev.type !== "speech" && ev.type !== "speech.whisper") return;
+  const [from, ...to] = ev.who;
+  for (const t of to) {
+    const k = [from, t].sort().join("|");
+    if (!S.talk.has(k)) S.talk.set(k, []);
+    S.talk.get(k).push(ev);
+  }
+  if (S.tab === "talk") renderSide();
+}
+
+function renderTabs() {
+  const tabs = [["transcript", "transcript"], ["net", "the net"], ["talk", "conversations"]];
+  $("#tabs").replaceChildren(...tabs.map(([k, label]) => h("button", { class: `tab ${S.tab === k ? "on" : ""}`, onclick: () => { S.tab = k; S.thread = null; renderTabs(); renderSide(); } }, label)));
+  $("#filters").hidden = S.tab !== "transcript";
+  $("#feed").hidden = S.tab !== "transcript";
+  $("#sideview").hidden = S.tab === "transcript";
+  if (S.tab !== "transcript") renderSide();
+}
+
+function renderSide() {
+  const root = $("#sideview");
+  if (!root || S.tab === "transcript") return;
+  if (S.tab === "net") {
+    const posts = [...(S.live?.forum ?? [])].reverse();
+    root.replaceChildren(h("p", { class: "eyebrow" }, `the public board · ${posts.length}`),
+      ...(posts.length ? posts.map((p) => h("div", { class: "post" },
+        h("div", { class: "post-h" }, p.author ? whoTag(p.author) : h("span", { class: "who-n mute" }, "anonymous"), p.author ? null : h("span", { class: "really" }, ` (really ${nameOf(p.realAuthor)})`), h("span", { class: "tm" }, ` · ${short(p.tick * (S.live?.config.minutesPerTick ?? 10))}`)),
+        h("div", { class: "post-b" }, p.text))) : [h("p", { class: "fog" }, "Nobody has posted yet.")]));
+    return;
+  }
+  if (S.thread) {
+    const [a, b] = S.thread;
+    const msgs = S.talk.get([a, b].sort().join("|")) ?? [];
+    root.replaceChildren(
+      h("button", { class: "link", onclick: () => { S.thread = null; renderSide(); } }, "← all conversations"),
+      h("div", { class: "thread-h" }, whoTag(a), h("span", { class: "fog" }, " and "), whoTag(b)),
+      ...msgs.map((ev) => h("div", { class: `msg ${ev.who[0] === a ? "left" : "right"} ${ev.type === "speech.whisper" ? "whisper" : ""}` },
+        h("div", { class: "msg-h" }, whoTag(ev.who[0]), h("span", { class: "tm" }, ` ${short(ev.wm)}${ev.type === "speech.whisper" ? " · whispered" : ""}${ev.who.length > 2 ? " · to several" : ""}`)),
+        h("div", { class: "msg-b" }, ev.data?.message ?? ev.text),
+        ev.data?.private_intent ? h("div", { class: "intent" }, `really: ${ev.data.private_intent}`) : null,
+        ev.data?.sincere === false ? h("span", { class: "lie" }, "LIE") : null)));
+    root.scrollTop = root.scrollHeight;
+    return;
+  }
+  const threads = [...S.talk.entries()].map(([k, msgs]) => ({ k, msgs, last: msgs[msgs.length - 1] })).sort((x, y) => y.last.seq - x.last.seq);
+  root.replaceChildren(h("p", { class: "eyebrow" }, `who talks to whom · ${threads.length}`),
+    ...(threads.length ? threads.map(({ k, msgs, last }) => { const [a, b] = k.split("|"); return h("button", { class: "thread-row", onclick: () => openThread(a, b) },
+      h("div", {}, whoTag(a), h("span", { class: "fog" }, " · "), whoTag(b), h("span", { class: "tm" }, ` · ${msgs.length}`)),
+      h("div", { class: "fog small" }, `“${(last.data?.message ?? last.text).slice(0, 110)}”`)); }) : [h("p", { class: "fog" }, "Nobody has spoken yet.")]));
+}
+
+function openThread(a, b) {
+  S.tab = "talk"; S.thread = [a, b];
+  renderTabs(); renderSide();
+}
+
+// ───────────────────────── watch one mind ─────────────────────────
+function toggleWatch(id) {
+  S.watch = S.watch === id ? null : id;
+  S.follow = S.watch;
+  S.map?.focus(S.watch);
+  renderFilters(); renderFeed();
+  if (S.selected) loadDetail(S.selected, true);
+}
+
+function theater(n) {
+  const c = n.contractId ? S.live?.contracts.find((x) => x.id === n.contractId) : null;
+  const lastThought = [...S.feed].reverse().find((e) => e.type === "thought" && e.who?.[0] === n.id);
+  const lastTalk = [...S.talk.entries()].filter(([k]) => k.split("|").includes(n.id)).map(([k, m]) => ({ k, m, last: m[m.length - 1] })).sort((x, y) => y.last.seq - x.last.seq)[0];
+  const book = n.reading ? S.live?.library?.find((b) => b.id === n.reading.bookId) : null;
+  const act = n.activity ? `${n.activity.kind}${n.activity.detail ? ` · ${n.activity.detail}` : ""}` : "standing still";
+  return h("div", { class: "theater" },
+    h("div", { class: "th-now" }, h("span", { class: `th-glyph g-${n.activity?.kind ?? "idle"}` }), h("span", {}, act), S.thinking.has(n.id) ? h("span", { class: "th-think" }, "thinking…") : null),
+    lastThought ? h("blockquote", { class: "th-thought" }, lastThought.text) : null,
+    c?.challenge ? h("div", { class: "th-problem" }, h("p", { class: "eyebrow" }, `working on: ${c.title}`),
+      ...c.challenge.parts.map((p) => h("div", { class: `th-part ${p.solvedBy ? "done" : ""}` }, h("b", {}, p.id), " ", p.solvedBy ? `solved by ${nameOf(p.solvedBy)}: ${p.answer}` : h("span", { class: "pre" }, p.prompt),
+        !p.solvedBy && p.attempts.length ? h("div", { class: "th-tries" }, p.attempts.slice(-3).map((t) => `${nameOf(t.by)}: "${t.answer}" ✗`).join("  ·  ")) : null))) : null,
+    book ? h("div", { class: "th-book" }, h("p", { class: "eyebrow" }, "reading"), h("div", { class: "serif-md" }, book.title), h("div", { class: "lines" }, h("div", { class: "ln" }, h("span", { class: "tr" }, h("i", { style: { width: `${Math.min(100, (n.reading.hours / book.hours) * 100)}%` } })), h("span", { class: "vv" }, `${Math.round((n.reading.hours / book.hours) * 100)}%`)))) : null,
+    lastTalk ? h("div", { class: "th-talk" }, h("p", { class: "eyebrow" }, "latest conversation"),
+      ...lastTalk.m.slice(-4).map((ev) => h("div", { class: "msg-b small" }, whoTag(ev.who[0]), `: “${(ev.data?.message ?? ev.text).slice(0, 160)}”`)),
+      h("button", { class: "link", onclick: () => { const [a, b] = lastTalk.k.split("|"); openThread(a, b); } }, "open the conversation →")) : null,
+  );
+}

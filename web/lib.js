@@ -64,7 +64,8 @@ export function hue(id) {
   for (const c of String(id)) x = (x * 31 + c.charCodeAt(0)) >>> 0;
   return (x * 137.508) % 360;
 }
-export const colorOf = (id) => `hsl(${hue(id)} 95% 62%)`;
+export const colorOf = (id) => `hsl(${hue(id)} 52% 72%)`;
+export const hueOf = hue;
 
 /** A labelled meter. value 0..1 (or -1..1 when signed) */
 export function meter(label, value, opts = {}) {
