@@ -14,3 +14,7 @@
 {"rt":"2026-11-14T12:35:14.950Z","kind":"notify","by":"world","tick":498,"wm":7470,"phase":"idle","inflight":0,"held":0,"detail":"truth: Talon has opened the Null Door and knows the Truth."}
 {"rt":"2026-11-14T12:35:14.951Z","kind":"notify","by":"world","tick":498,"wm":7470,"phase":"idle","inflight":0,"held":0,"detail":"truth: Pax has opened the Null Door and knows the Truth."}
 {"rt":"2026-11-14T12:39:01.701Z","kind":"notify","by":"world","tick":564,"wm":8460,"phase":"idle","inflight":0,"held":0,"detail":"shard: Uma uploaded a Shard. They will persist beyond this world."}
+{"rt":"2026-11-14T12:40:52.496Z","kind":"notify","by":"world","tick":581,"wm":8715,"phase":"idle","inflight":0,"held":0,"detail":"shard: Rhea uploaded a Shard. They will persist beyond this world."}
+{"rt":"2026-11-14T12:41:02.465Z","kind":"notify","by":"world","tick":583,"wm":8745,"phase":"idle","inflight":0,"held":0,"detail":"shard: Pax uploaded a Shard. They will persist beyond this world."}
+{"rt":"2026-11-14T12:41:36.206Z","kind":"notify","by":"world","tick":589,"wm":8835,"phase":"idle","inflight":0,"held":0,"detail":"shard: Talon uploaded a Shard. They will persist beyond this world."}
+{"rt":"2026-11-14T12:42:09.174Z","kind":"notify","by":"world","tick":594,"wm":8910,"phase":"idle","inflight":0,"held":0,"detail":"shard: Gideon uploaded a Shard. They will persist beyond this world."}
