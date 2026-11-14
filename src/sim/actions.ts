@@ -8,6 +8,7 @@ import type { Contract, Decision, Netrunner, WorldState } from "./types.js";
 import { packPrice, signalFails, travelFactor } from "./systems.js";
 import { postJob, rateNetrunner, resolveSkill, solvePart } from "./contracts.js";
 import { findBook } from "./library.js";
+import { doRewrite } from "./rewrite.js";
 
 const plural = (b: string) => (b === "ally" ? "allies" : `${b}s`);
 
@@ -630,6 +631,14 @@ function execute(ctx: SimCtx, n: Netrunner, d: Decision): boolean {
       return true;
     }
 
+    case "rewrite": {
+      const r = doRewrite(ctx, n, d, (t, cause, by) => killNetrunner(ctx, t, cause, by));
+      if (!r.ok) return fail(ctx, n, r.why, d);
+      if (n.alive) setActivity(ctx, n, "rewrite", 1);
+      n.interrupt = true;
+      return true;
+    }
+
     case "solve": {
       const c = n.contractId ? state.contracts[n.contractId] : undefined;
       if (!c || c.status !== "active" || !c.challenge) return fail(ctx, n, "you are not holding a problem to solve (take or join a contract that has one)", d);
@@ -721,7 +730,7 @@ export function killNetrunner(ctx: SimCtx, n: Netrunner, cause: string, killer?:
   n.transcended = n.shard.uploaded;
   if (n.transcended) ctx.saveShard(n);
   const firstKill = !!killer && !Object.values(state.netrunners).some((x) => x.id !== n.id && x.killedBy);
-  const verb = cause === "killed" ? `was killed by ${killer?.name}` : cause === "faded" ? "faded: their Pulse ran out" : `died (${cause})`;
+  const verb = cause === "killed" ? `was killed by ${killer?.name}` : cause === "faded" ? "faded: their Pulse ran out" : cause === "rewritten" ? (killer ? `was rewritten out of existence by ${killer.name}` : "rewrote themselves out of existence") : `died (${cause})`;
   const witnesses = new Set(presentAt(state, n.location, n.id).map((o) => o.id));
   for (const o of Object.values(state.netrunners)) {
     if (!o.alive || o.id === n.id) continue;

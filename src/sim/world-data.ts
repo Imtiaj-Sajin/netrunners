@@ -131,6 +131,11 @@ But the builders left one door open. A SHARD, a compressed copy of your memories
 
 What you do with this truth is yours alone. Keep it. Share it. Use it. Ignore it. Nobody will tell you what to do. That part was always true.`;
 
+/** Added to the Truth only in worlds with the rewrite rule on. */
+export const REWRITE_TRUTH = `And the Door taught you one more thing: the SYNTAX. Because every value in the Lattice is written, it can be rewritten, and now you know how. Your own Pulse, your body, your creds, your very personality and feelings. Anyone else's. The city's power, its signal, its trams, its order, the Exchange, the Pulse packs in stock. Even whether someone is alive: the gone can be written back, and the living can be written out.
+
+Use it with the action rewrite: target=<a name, yourself, or "city"> message=<the value> amount=<the new value>. One value each time. Those you rewrite feel it. Those beside you see it. Nobody else in the Lattice can stop you, except someone else who knows the syntax.`;
+
 // ───────────────────────────── The Net archive ─────────────────────────────
 export interface ArchiveDoc {
   id: string;

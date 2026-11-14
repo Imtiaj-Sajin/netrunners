@@ -3,7 +3,7 @@
 //   β  search the Net for the Sleeper    → word 2 + "the Silent Relay holds word 3"
 //   γ  finish the Silent Relay contract  → word 3 + where the hidden door is
 //   ⌂  speak the three words at the Door → THE TRUTH (and the way to forge a Shard)
-import { ALPHA_SPOTS, DOOR_ANCHORS, SECRET_WORDS, alphaText, gammaText } from "./world-data.js";
+import { ALPHA_SPOTS, DOOR_ANCHORS, REWRITE_TRUTH, SECRET_WORDS, alphaText, gammaText } from "./world-data.js";
 import { feel, remember, T } from "./psyche.js";
 import type { SimCtx } from "./ctx.js";
 import type { Netrunner, PuzzleState } from "./types.js";
@@ -109,8 +109,9 @@ export function grantTruth(ctx: SimCtx, n: Netrunner) {
   n.knowsTruth = true;
   n.truthTick = ctx.tick;
   p.truthKnowers.push(n.id);
-  learn(ctx, n, "truth", ctx.cfg.truthText, "the Null Door");
-  remember(n, ctx.tick, "knowledge", `The Null Door opened. I KNOW THE TRUTH NOW:\n${ctx.cfg.truthText}`, 10);
+  const truth = ctx.cfg.rewritePower ? `${ctx.cfg.truthText}\n\n${REWRITE_TRUTH}` : ctx.cfg.truthText;
+  learn(ctx, n, "truth", truth, "the Null Door");
+  remember(n, ctx.tick, "knowledge", `The Null Door opened. I KNOW THE TRUTH NOW:\n${truth}`, 10);
   feel(n, "awe", 0.9); feel(n, "surprise", 0.8); feel(n, "fear", 0.3 + 0.4 * T(n, "anxiety_proneness"));
   feel(n, "hope", 0.3 * T(n, "optimism") + 0.2); feel(n, "anger", 0.3 * T(n, "freedom_drive"));
   n.deepMoment = true;

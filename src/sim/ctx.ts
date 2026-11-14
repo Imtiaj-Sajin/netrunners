@@ -11,7 +11,7 @@ export interface SimCtx {
   archive: ArchiveDoc[];
   sessionName: string;
   emit(type: string, who: string[], text: string, opts?: { loc?: string; data?: Record<string, unknown> }): WorldEvent;
-  alert(kind: "truth" | "shard" | "death" | "extinction" | "first-kill" | "bond", text: string, who: string[]): void;
+  alert(kind: "truth" | "shard" | "death" | "extinction" | "first-kill" | "bond" | "rewrite", text: string, who: string[]): void;
   saveShard(n: Netrunner): void;
   queueDeepNet(n: Netrunner, query: string, dueTick: number): void;
 }

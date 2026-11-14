@@ -32,7 +32,7 @@ export function createNetrunner(state: WorldState, rng: Rng, opts: { genome?: Ge
     ratings: [],
     stats: {
       decisions: 0, wordsSpoken: 0, contractsDone: 0, contractsFailed: 0, kills: 0, attacks: 0,
-      thefts: 0, giftsGiven: 0, credsEarned: 0, explorations: 0, searches: 0, posts: 0, lies: 0, refusals: 0, solved: 0, wrongAnswers: 0, booksRead: 0, upkeepDone: 0,
+      thefts: 0, giftsGiven: 0, credsEarned: 0, explorations: 0, searches: 0, posts: 0, lies: 0, refusals: 0, solved: 0, wrongAnswers: 0, booksRead: 0, upkeepDone: 0, rewrites: 0,
     },
   };
   for (const e of EMOTIONS) n.emotions[e] = emotionBaseline(n, e);

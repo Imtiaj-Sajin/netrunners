@@ -322,7 +322,7 @@ export function migrateState(state: WorldState, cfg: SessionConfig): string[] {
   for (const n of Object.values(state.netrunners)) {
     n.booksRead ??= [];
     n.ratings ??= [];
-    n.stats.solved ??= 0; n.stats.wrongAnswers ??= 0; n.stats.booksRead ??= 0; n.stats.upkeepDone ??= 0;
+    n.stats.solved ??= 0; n.stats.wrongAnswers ??= 0; n.stats.booksRead ??= 0; n.stats.upkeepDone ??= 0; n.stats.rewrites ??= 0;
   }
   if (changes.length) changes.push("new contracts carry real problems; jobs can be posted and rated");
   return changes;

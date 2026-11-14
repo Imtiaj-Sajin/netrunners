@@ -94,6 +94,7 @@ export interface NetrunnerStats {
   wrongAnswers?: number;
   booksRead?: number;
   upkeepDone?: number;
+  rewrites?: number;
   jobsPosted?: number;
   ratingsGiven?: number;
 }
@@ -144,6 +145,8 @@ export interface Netrunner {
   ratings: Rating[];
   report?: string; // the last balance summary someone prepared for them
   pastLife?: { from: string; name: string };
+  /** values someone (maybe themselves) rewrote in them, newest last; only with the rewrite rule */
+  rewritten?: { tick: number; by: string; label: string; scope: string; key: string; from: number; to: number }[];
   stats: NetrunnerStats;
 }
 
@@ -334,6 +337,8 @@ export interface SessionConfig {
   spawnEveryWorldHours: number; // 0 = off
   reflectEveryWorldHours: number;
   autoPauseOnTruth: boolean;
+  /** optional rule: those who learn the Truth can rewrite any value of the world (theirs, others', the city's) */
+  rewritePower?: boolean;
   maxConcurrency: number;
   importShards: string[];
   truthText: string;

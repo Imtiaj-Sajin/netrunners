@@ -76,6 +76,7 @@ export function defaultConfig(s: LocalSettings): SessionConfig {
     spawnEveryWorldHours: 0,
     reflectEveryWorldHours: 8,
     autoPauseOnTruth: false,
+    rewritePower: false,
     maxConcurrency: 4,
     importShards: [],
     truthText: DEFAULT_TRUTH,
